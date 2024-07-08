@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  NotFoundException,
   UnauthorizedException
 } from '@nestjs/common'
 import { SignUpDto } from './dto/signUp.dto'
@@ -12,6 +13,9 @@ import { LoginDto } from './dto/login.dto'
 import { JwtService } from '@nestjs/jwt'
 import { RefreshToken } from './schemas/refresh-token.schema'
 import { v4 as uuidv4 } from 'uuid'
+import { nanoid } from 'nanoid'
+import { ResetToken } from './schemas/reset-token.schema'
+import { MailService } from 'src/services/mail.service'
 
 type UserId = string | mongoose.Types.ObjectId
 
@@ -21,7 +25,10 @@ export class AuthService {
     @InjectModel(User.name) private UserModel: Model<User>,
     @InjectModel(RefreshToken.name)
     private RefreshTokenModel: Model<RefreshToken>,
-    private jwtService: JwtService
+    @InjectModel(ResetToken.name)
+    private ResetTokenModel: Model<ResetToken>,
+    private jwtService: JwtService,
+    private mailService: MailService
   ) {}
 
   async signUp(signUpData: SignUpDto) {
@@ -57,6 +64,65 @@ export class AuthService {
       ...tokens,
       user: user.name
     }
+  }
+
+  async changePassword(userId, oldPassword: string, newPassword: string) {
+    const user = await this.UserModel.findById(userId)
+
+    if (!user) throw new NotFoundException('User not found')
+
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password)
+
+    if (!isPasswordValid) throw new UnauthorizedException('Wrong credentials')
+
+    const newHashedPassword = await bcrypt.hash(newPassword, 10)
+
+    user.password = newHashedPassword
+
+    await user.save()
+  }
+
+  async forgotPassword(email: string) {
+    const user = await this.UserModel.findOne({ email })
+
+    if (user) {
+      const expiryDate = new Date()
+      expiryDate.setHours(expiryDate.getHours() + 1)
+
+      const resetToken = nanoid(64)
+
+      await this.ResetTokenModel.create({
+        token: resetToken,
+        userId: user._id,
+        expiryDate
+      })
+
+      this.mailService.sendPasswordResetEmail(email, resetToken)
+    }
+
+    return {
+      message:
+        'If this user exists, an email will be sent to the provided email address.'
+    }
+  }
+
+  async resetPassword(newPassword: string, resetToken: string) {
+    const token = await this.ResetTokenModel.findOne({
+      token: resetToken,
+      expiryDate: {
+        $gte: new Date()
+      }
+    })
+
+    if (!token) throw new UnauthorizedException('Invalid link')
+
+    const user = await this.UserModel.findById(token.userId)
+
+    if (!user) throw new NotFoundException('User not found')
+
+    user.password = await bcrypt.hash(newPassword, 10)
+
+    await user.save()
   }
 
   async refreshToken(token: string) {
