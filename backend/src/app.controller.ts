@@ -1,6 +1,7 @@
 import { Controller, Get, Req, UseGuards } from '@nestjs/common'
 import { AppService } from './app.service'
 import { AuthGuard } from './guards/auth.guard'
+import { Messages } from './messages'
 
 @UseGuards(AuthGuard)
 @Controller()
@@ -9,6 +10,6 @@ export class AppController {
 
   @Get()
   someProtectedRoute(@Req() request) {
-    return { message: 'Access granted for: ', userId: request.userId }
+    return { message: Messages.ACCESS_GRANTED, userId: request.userId }
   }
 }

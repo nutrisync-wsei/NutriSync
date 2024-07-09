@@ -8,6 +8,7 @@ import {
 import { JwtService } from '@nestjs/jwt'
 import { Request } from 'express'
 import { Observable } from 'rxjs'
+import { Messages } from 'src/messages'
 
 type CtxRequest = Request & { userId?: string }
 
@@ -22,14 +23,14 @@ export class AuthGuard implements CanActivate {
 
     const token = this.extractTokenFromHeader(request)
 
-    if (!token) throw new UnauthorizedException('Invalid token')
+    if (!token) throw new UnauthorizedException(Messages.INVALID_TOKEN)
 
     try {
       const payload = this.jwtService.verify(token)
       request.userId = payload.userId
     } catch (error) {
       Logger.error(error.message)
-      throw new UnauthorizedException('Invalid token')
+      throw new UnauthorizedException(Messages.INVALID_TOKEN)
     }
 
     return true

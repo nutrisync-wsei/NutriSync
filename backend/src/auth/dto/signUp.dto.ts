@@ -1,4 +1,5 @@
 import { IsEmail, IsString, Matches, MinLength } from 'class-validator'
+import { Messages } from 'src/messages'
 
 export class SignUpDto {
   @IsString()
@@ -10,8 +11,7 @@ export class SignUpDto {
   @IsString()
   @MinLength(6)
   @Matches(/^(?=.*[0-9])/, {
-    message:
-      'Password must be at least 6 characters, containing min. one number'
+    message: Messages.MIN_6_CHARACTERS
   })
   password: string
 }

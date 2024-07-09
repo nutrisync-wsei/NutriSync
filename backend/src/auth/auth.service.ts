@@ -15,7 +15,7 @@ import { RefreshToken } from './schemas/refresh-token.schema'
 import { v4 as uuidv4 } from 'uuid'
 import { nanoid } from 'nanoid'
 import { ResetToken } from './schemas/reset-token.schema'
-import { MailService } from 'src/services/mail.service'
+import { MailerService } from '@nestjs-modules/mailer'
 
 type UserId = string | mongoose.Types.ObjectId
 
@@ -28,7 +28,7 @@ export class AuthService {
     @InjectModel(ResetToken.name)
     private ResetTokenModel: Model<ResetToken>,
     private jwtService: JwtService,
-    private mailService: MailService
+    private mailService: MailerService
   ) {}
 
   async signUp(signUpData: SignUpDto) {
@@ -66,7 +66,11 @@ export class AuthService {
     }
   }
 
-  async changePassword(userId, oldPassword: string, newPassword: string) {
+  async changePassword(
+    userId: UserId,
+    oldPassword: string,
+    newPassword: string
+  ) {
     const user = await this.UserModel.findById(userId)
 
     if (!user) throw new NotFoundException('User not found')
@@ -97,7 +101,7 @@ export class AuthService {
         expiryDate
       })
 
-      this.mailService.sendPasswordResetEmail(email, resetToken)
+      this.sendPasswordRecoveryEmail(email, resetToken)
     }
 
     return {
@@ -159,5 +163,18 @@ export class AuthService {
       { $set: { expiryDate, token } },
       { upsert: true }
     )
+  }
+
+  async sendPasswordRecoveryEmail(email: string, resetToken: string) {
+    const message = `<p>There was an attempt to reset a password for this account. Click the link below to reset your password:</p>
+          <p><a href="${process.env.RESET_PASSWORD_URL + resetToken}">Reset Password</a></p>
+          <p>If that wasn't your request, ignore this message!</p>`
+
+    await this.mailService.sendMail({
+      from: 'NutriSync <nutrisync@gmail.com>',
+      to: email,
+      subject: 'Auth - password reset request',
+      html: message
+    })
   }
 }
