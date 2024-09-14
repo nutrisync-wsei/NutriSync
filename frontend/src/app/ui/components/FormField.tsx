@@ -1,4 +1,3 @@
-import React from 'react'
 import FormLabel from './FormLabel'
 import TextField from './controls/TextField'
 import Helper from './Helper'
@@ -12,6 +11,7 @@ type FormFieldProps = {
 }
 
 // TODO: Add all accessibility attributes like name etc.
+// TODO: Fix placement so that it doesn't render under other components
 const FormField = ({ label, placeholder, helper }: FormFieldProps) => {
     return (
         <StyledWrapper>
@@ -23,7 +23,6 @@ const FormField = ({ label, placeholder, helper }: FormFieldProps) => {
 }
 
 const StyledWrapper = styled.div<{ width?: string; height?: string }>`
-    position: relative;
     width: ${({ width }) => width || '320px'};
     height: ${({ height }) => height || '48px'};
     display: flex;
