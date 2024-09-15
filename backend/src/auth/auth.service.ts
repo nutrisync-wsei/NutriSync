@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { nanoid } from 'nanoid'
 import { ResetToken } from './schemas/reset-token.schema'
 import { MailerService } from '@nestjs-modules/mailer'
+import { Messages } from 'src/messages'
 
 type UserId = string | mongoose.Types.ObjectId
 
@@ -36,7 +37,7 @@ export class AuthService {
 
     const emailInUse = await this.UserModel.findOne({ email })
 
-    if (emailInUse) throw new BadRequestException('Email already in use')
+    if (emailInUse) throw new BadRequestException(Messages.EMAIL_ALREADY_IN_USE)
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -52,11 +53,13 @@ export class AuthService {
 
     const user = await this.UserModel.findOne({ email })
 
-    if (!user) throw new UnauthorizedException('Wrong credentials')
+    if (!user) throw new UnauthorizedException(Messages.WRONG_CREDENTIALS)
 
     const isPasswordValid = await bcrypt.compare(password, user.password)
 
-    if (!isPasswordValid) throw new UnauthorizedException('Wrong credentials')
+    if (!isPasswordValid) {
+      throw new UnauthorizedException(Messages.WRONG_CREDENTIALS)
+    }
 
     const tokens = await this.generateUserTokens(user._id as string)
 
@@ -73,11 +76,15 @@ export class AuthService {
   ) {
     const user = await this.UserModel.findById(userId)
 
-    if (!user) throw new NotFoundException('User not found')
+    if (!user) {
+      throw new NotFoundException(Messages.USER_NOT_FOUND)
+    }
 
     const isPasswordValid = await bcrypt.compare(oldPassword, user.password)
 
-    if (!isPasswordValid) throw new UnauthorizedException('Wrong credentials')
+    if (!isPasswordValid) {
+      throw new UnauthorizedException(Messages.WRONG_CREDENTIALS)
+    }
 
     const newHashedPassword = await bcrypt.hash(newPassword, 10)
 
@@ -105,8 +112,7 @@ export class AuthService {
     }
 
     return {
-      message:
-        'If this user exists, an email will be sent to the provided email address.'
+      message: Messages.PASSWORD_RECOVERY_EMAIL_SENT
     }
   }
 
@@ -118,11 +124,11 @@ export class AuthService {
       }
     })
 
-    if (!token) throw new UnauthorizedException('Invalid link')
+    if (!token) throw new UnauthorizedException(Messages.INVALID_LINK)
 
     const user = await this.UserModel.findById(token.userId)
 
-    if (!user) throw new NotFoundException('User not found')
+    if (!user) throw new NotFoundException(Messages.USER_NOT_FOUND)
 
     user.password = await bcrypt.hash(newPassword, 10)
 
@@ -137,7 +143,7 @@ export class AuthService {
       }
     })
 
-    if (!refreshToken) throw new UnauthorizedException('Invalid refresh token')
+    if (!refreshToken) throw new UnauthorizedException(Messages.INVALID_TOKEN)
 
     return this.generateUserTokens(refreshToken.userId)
   }
