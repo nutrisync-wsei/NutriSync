@@ -27,7 +27,7 @@ const Checkbox = ({
                 checked={checked}
                 onChange={toggleCheckbox}
             />
-            <SuccessIconStyled checked={checked} />
+            <SuccessIconStyled checked={checked} color='#FFFFFF' />
         </CheckboxContainer>
     );
 };
@@ -55,9 +55,7 @@ const StyledCheckbox = styled.input`
   cursor: pointer;
 `;
 
-// TODO: Fix svg so that it uses #121212 instead of currentColor property
 const SuccessIconStyled = styled(Icon.Success) <{ checked: boolean }>`
-  color: #FFFFFF;
   width: 20px;
   height: 20px;
   visibility: ${(props) => props.checked ? 'visible' : 'hidden'};

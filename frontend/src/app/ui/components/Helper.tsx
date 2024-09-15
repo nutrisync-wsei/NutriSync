@@ -12,10 +12,10 @@ const Helper = ({ label }: HelperProps) => {
 }
 
 const Label = styled(Text.Small)`
+    width: 100%;
     line-height: 19.6px;
     color: ${({ theme }) => theme.palette.lightSlate};
-    width: 100%;
-    padding: 10px 0;
+    padding: 5px 0;
 `;
 
 export default Helper;

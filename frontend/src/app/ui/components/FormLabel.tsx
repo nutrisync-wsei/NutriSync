@@ -1,22 +1,21 @@
-import Text from './Text'
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-type FormLabelProps = {
-    label: string
+interface FormLabelProps {
+    label: string;
+    htmlFor: string;
 }
 
-// TODO: change to label for={} when implementing form
-const FormLabel = ({ label }: FormLabelProps) => {
+const FormLabel = ({ label, htmlFor }: FormLabelProps) => {
     return (
-        <Label>{label}</Label>
-    )
-}
+        <Label htmlFor={htmlFor}>{label}</Label>
+    );
+};
 
-const Label = styled(Text.Body)`
+const Label = styled.label`
+    width: 100%;
     line-height: 22.4px;
     color: ${({ theme }) => theme.palette.onyx};
-    width: 100%;
     padding: 10px 0;
 `;
 
-export default FormLabel
+export default FormLabel;
