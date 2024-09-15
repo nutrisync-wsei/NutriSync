@@ -61,11 +61,14 @@ export class AuthService {
       throw new UnauthorizedException(Messages.WRONG_CREDENTIALS)
     }
 
-    const tokens = await this.generateUserTokens(user._id as string)
+    const { accessToken } = await this.generateUserTokens(user._id as string)
 
     return {
-      ...tokens,
-      user: user.name
+      accessToken,
+      user: {
+        username: user.name,
+        email: user.email
+      }
     }
   }
 
