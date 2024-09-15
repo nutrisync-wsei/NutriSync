@@ -10,7 +10,3 @@ export default function Home() {
     </div>
   )
 }
-
-const StyledHeader = styled(Text.H2)`
-  color: ${({ theme }) => theme.palette.darkSpring};
-`
