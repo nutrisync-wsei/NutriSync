@@ -9,7 +9,8 @@ import {
   HttpStatus,
   BadRequestException,
   UnauthorizedException,
-  NotFoundException
+  NotFoundException,
+  Get
 } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { SignUpDto } from './dto/signUp.dto'
@@ -21,6 +22,9 @@ import { ForgotPasswordDto } from './dto/forgot-password.dto'
 import { ResetPasswordDto } from './dto/reset-password.dto'
 import { Response } from 'express'
 import { Messages } from 'src/messages'
+import { Profile } from 'passport-spotify'
+import { SpotifyOauthGuard } from 'src/guards/spotify.oauth.guard'
+import { GithubOauthGuard } from 'src/guards/github.oauth.guard'
 
 type AuthServiceError =
   | BadRequestException
@@ -142,5 +146,69 @@ export class AuthController {
       return res.status(HttpStatus.NOT_FOUND).send({ message: error.message })
     }
     throw error
+  }
+
+  @UseGuards(SpotifyOauthGuard)
+  @Get('spotify')
+  spotifyLogin() {
+    // This route redirects to Spotify login page
+  }
+
+  @UseGuards(SpotifyOauthGuard)
+  @Get('spotify/callback')
+  async spotifyCallback(@Req() req: any, @Res() res: Response) {
+    const { user }: { user: Profile } = req
+
+    if (!user) {
+      res.redirect('/')
+      return
+    }
+
+    const { accessToken } = await this.authService.validateOAuthUser(
+      user.emails[0].value,
+      user.displayName
+    )
+
+    res.set('authorization', `Bearer ${accessToken}`)
+
+    return res.status(200).json({
+      accessToken,
+      user: {
+        username: user.displayName,
+        email: user.emails[0].value
+      }
+    })
+  }
+
+  @UseGuards(GithubOauthGuard)
+  @Get('github')
+  githubLogin() {
+    // This route redirects to Github login page
+  }
+
+  @UseGuards(GithubOauthGuard)
+  @Get('github/callback')
+  async githubCallback(@Req() req: any, @Res() res: Response) {
+    const { user }: { user: Profile } = req
+
+    if (!user) {
+      res.redirect('/')
+      return
+    }
+
+    const { accessToken } = await this.authService.validateOAuthUser(
+      user.emails[0].value,
+      user.username
+    )
+
+    res.set('authorization', `Bearer ${accessToken}`)
+
+    return res.status(200).json({
+      accessToken,
+      user: {
+        username: user.username,
+        email: user.emails[0].value
+      }
+    })
   }
 }

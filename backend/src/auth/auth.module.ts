@@ -8,9 +8,13 @@ import {
   RefreshTokenSchema
 } from './schemas/refresh-token.schema'
 import { ResetToken, ResetTokenSchema } from './schemas/reset-token.schema'
+import { GithubStrategy } from './strategies/github.strategy'
+import { SpotifyStrategy } from './strategies/spotify.strategy'
+import { PassportModule } from '@nestjs/passport'
 
 @Module({
   imports: [
+    PassportModule,
     MongooseModule.forFeature([
       {
         name: User.name,
@@ -27,6 +31,6 @@ import { ResetToken, ResetTokenSchema } from './schemas/reset-token.schema'
     ])
   ],
   controllers: [AuthController],
-  providers: [AuthService]
+  providers: [GithubStrategy, SpotifyStrategy, AuthService]
 })
 export class AuthModule {}

@@ -147,7 +147,6 @@ export class AuthService {
     const refreshToken = uuidv4()
 
     await this.storeRefreshToken(refreshToken, userId as string)
-
     return {
       accessToken,
       refreshToken
@@ -176,5 +175,19 @@ export class AuthService {
       subject: 'Auth - password reset request',
       html: message
     })
+  }
+
+  async validateOAuthUser(email: string, username: string) {
+    let user = await this.UserModel.findOne({ email })
+
+    if (!user) {
+      user = await this.UserModel.create({
+        email,
+        name: username
+      })
+    }
+
+    const tokens = await this.generateUserTokens(user._id as string)
+    return { user, ...tokens }
   }
 }
