@@ -1,17 +1,12 @@
-"use client";
-import Text from "@/app/ui/components/Text";
-import styled from 'styled-components';
+'use client'
+
+import styles from './page.module.css'
 
 export default function Home() {
   return (
-    <div>
-      <main>
-        <StyledHeader>HOME</StyledHeader>
-      </main>
+    <div className={styles.page}>
+      <a href='http://localhost:3001/auth/spotify'>sign in with spotify</a>
+      <a href='http://localhost:3001/auth/github'>sign in with github</a>
     </div>
-  );
+  )
 }
-
-const StyledHeader = styled(Text.H2)`
-  color: ${({ theme }) => theme.palette.darkSpring};
-`
