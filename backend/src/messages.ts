@@ -8,6 +8,7 @@ export const Messages = {
   BAD_REQUEST: 'Bad request',
   UNAUTHORIZED: 'Unauthorized',
   NOT_FOUND: 'Not found',
+  USER_NOT_FOUND: 'User not found',
   INTERNAL_SERVER_ERROR: 'Internal server error',
   INVALID_LINK: 'Invalid link',
   EMAIL_ALREADY_IN_USE: 'Email already in use',
