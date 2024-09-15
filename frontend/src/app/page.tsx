@@ -8,6 +8,7 @@ import TextField from "./ui/components/controls/TextField";
 import Toggle from "./ui/components/controls/Toggle";
 import FormField from "./ui/components/FormField";
 import InputSlider from "./ui/components/InputSlider";
+import TextArea from "./ui/components/TextArea";
 
 export default function Home() {
   const [value, setValue] = useState(50);
@@ -39,6 +40,7 @@ export default function Home() {
       <Section>
         <Toggle />
         <Checkbox />
+        <TextArea placeholder="Text area" />
       </Section>
     </MainContainer>
   );
