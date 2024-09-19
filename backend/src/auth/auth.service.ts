@@ -57,9 +57,8 @@ export class AuthService {
 
     const isPasswordValid = await bcrypt.compare(password, user.password)
 
-    if (!isPasswordValid) {
+    if (!isPasswordValid)
       throw new UnauthorizedException(Messages.WRONG_CREDENTIALS)
-    }
 
     const { accessToken } = await this.generateUserTokens(user._id as string)
 
@@ -79,15 +78,12 @@ export class AuthService {
   ) {
     const user = await this.UserModel.findById(userId)
 
-    if (!user) {
-      throw new NotFoundException(Messages.USER_NOT_FOUND)
-    }
+    if (!user) throw new NotFoundException(Messages.USER_NOT_FOUND)
 
     const isPasswordValid = await bcrypt.compare(oldPassword, user.password)
 
-    if (!isPasswordValid) {
+    if (!isPasswordValid)
       throw new UnauthorizedException(Messages.WRONG_CREDENTIALS)
-    }
 
     const newHashedPassword = await bcrypt.hash(newPassword, 10)
 

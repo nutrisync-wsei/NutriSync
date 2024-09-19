@@ -8,14 +8,13 @@ import {
   Param,
   Post,
   Put,
-  Req,
   Res,
   UseGuards
 } from '@nestjs/common'
 import { UserProfileService } from './user-profile.service'
 import { UserProfileDto } from './dto/user-profile.dto'
 import { AuthGuard } from 'src/guards/auth.guard'
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { Messages } from 'src/messages'
 
 @Controller('user-profile')
@@ -26,7 +25,6 @@ export class UserProfileController {
   @UseGuards(AuthGuard)
   async createUserProfile(
     @Body() userProfileDto: UserProfileDto,
-    @Req() _: Request,
     @Res() res: Response
   ) {
     try {
@@ -41,9 +39,7 @@ export class UserProfileController {
   async getUserProfile(@Param('userId') userId: string, @Res() res: Response) {
     try {
       const userProfile = await this.userProfileService.findByUserId(userId)
-      if (!userProfile) {
-        throw new NotFoundException(Messages.PROFILE_NOT_FOUND)
-      }
+      if (!userProfile) throw new NotFoundException(Messages.PROFILE_NOT_FOUND)
 
       return res.status(HttpStatus.OK).json(userProfile)
     } catch (error) {
@@ -63,9 +59,9 @@ export class UserProfileController {
         userId,
         userProfileDto
       )
-      if (!updatedProfile) {
+      if (!updatedProfile)
         throw new NotFoundException(Messages.PROFILE_NOT_FOUND)
-      }
+
       return res.status(HttpStatus.OK).json(updatedProfile)
     } catch (error) {
       this.handleException(error, res)

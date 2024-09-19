@@ -10,7 +10,8 @@ import {
   BadRequestException,
   UnauthorizedException,
   NotFoundException,
-  Get
+  Get,
+  Param
 } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { SignUpDto } from './dto/signUp.dto'
@@ -25,13 +26,14 @@ import { Messages } from 'src/messages'
 import { Profile } from 'passport-spotify'
 import { SpotifyOauthGuard } from 'src/guards/spotify.oauth.guard'
 import { GithubOauthGuard } from 'src/guards/github.oauth.guard'
-import { ApiExcludeEndpoint } from '@nestjs/swagger'
+import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger'
 
 type AuthServiceError =
   | BadRequestException
   | UnauthorizedException
   | NotFoundException
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -71,7 +73,7 @@ export class AuthController {
     }
   }
 
-  @Post('refresh')
+  @Post('refresh-token')
   async refreshToken(
     @Body() refreshTokenDto: RefreshTokenDto,
     @Res() res: Response<{ accessToken: string; refreshToken: string }>
@@ -86,17 +88,16 @@ export class AuthController {
     }
   }
 
-  @ApiExcludeEndpoint()
-  @Put('change-password')
+  @Put('change-password/:userId')
   @UseGuards(AuthGuard)
   async changePassword(
+    @Param('userId') userId: string,
     @Body() changePasswordDto: ChangePasswordDto,
-    @Req() request: Request & { userId: string },
     @Res() res: Response<{ message: string }>
   ) {
     try {
       await this.authService.changePassword(
-        request.userId,
+        userId,
         changePasswordDto.oldPassword,
         changePasswordDto.newPassword
       )
@@ -108,7 +109,6 @@ export class AuthController {
     }
   }
 
-  @ApiExcludeEndpoint()
   @Post('forgot-password')
   async forgotPassword(
     @Body() forgotPasswordDto: ForgotPasswordDto,
@@ -126,7 +126,6 @@ export class AuthController {
     }
   }
 
-  @ApiExcludeEndpoint()
   @Put('reset-password')
   async resetPassword(
     @Body() resetPasswordDto: ResetPasswordDto,
