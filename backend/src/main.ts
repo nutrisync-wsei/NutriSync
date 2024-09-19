@@ -12,8 +12,7 @@ async function bootstrap() {
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Auth API')
     .setDescription('Swagger created to display backend auth endpoints')
-    .setVersion('1.0')
-    .addTag('auth')
+    .setVersion('1.1')
     .build()
 
   const document = SwaggerModule.createDocument(app, swaggerConfig)

@@ -7,7 +7,7 @@ import {
 import { SignUpDto } from './dto/signUp.dto'
 import { InjectModel } from '@nestjs/mongoose'
 import { User } from './schemas/user.schema'
-import mongoose, { Model } from 'mongoose'
+import { Model } from 'mongoose'
 import * as bcrypt from 'bcrypt'
 import { LoginDto } from './dto/login.dto'
 import { JwtService } from '@nestjs/jwt'
@@ -17,8 +17,7 @@ import { nanoid } from 'nanoid'
 import { ResetToken } from './schemas/reset-token.schema'
 import { MailerService } from '@nestjs-modules/mailer'
 import { Messages } from 'src/messages'
-
-type UserId = string | mongoose.Types.ObjectId
+import { UserId } from './types'
 
 @Injectable()
 export class AuthService {
@@ -57,9 +56,8 @@ export class AuthService {
 
     const isPasswordValid = await bcrypt.compare(password, user.password)
 
-    if (!isPasswordValid) {
+    if (!isPasswordValid)
       throw new UnauthorizedException(Messages.WRONG_CREDENTIALS)
-    }
 
     const { accessToken } = await this.generateUserTokens(user._id as string)
 
@@ -79,15 +77,12 @@ export class AuthService {
   ) {
     const user = await this.UserModel.findById(userId)
 
-    if (!user) {
-      throw new NotFoundException(Messages.USER_NOT_FOUND)
-    }
+    if (!user) throw new NotFoundException(Messages.USER_NOT_FOUND)
 
     const isPasswordValid = await bcrypt.compare(oldPassword, user.password)
 
-    if (!isPasswordValid) {
+    if (!isPasswordValid)
       throw new UnauthorizedException(Messages.WRONG_CREDENTIALS)
-    }
 
     const newHashedPassword = await bcrypt.hash(newPassword, 10)
 

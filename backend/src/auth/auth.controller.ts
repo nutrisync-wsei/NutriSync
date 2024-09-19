@@ -10,7 +10,8 @@ import {
   BadRequestException,
   UnauthorizedException,
   NotFoundException,
-  Get
+  Get,
+  Param
 } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { SignUpDto } from './dto/signUp.dto'
@@ -25,18 +26,19 @@ import { Messages } from 'src/messages'
 import { Profile } from 'passport-spotify'
 import { SpotifyOauthGuard } from 'src/guards/spotify.oauth.guard'
 import { GithubOauthGuard } from 'src/guards/github.oauth.guard'
-import { ApiExcludeEndpoint } from '@nestjs/swagger'
+import { ApiExcludeEndpoint, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { LoginResponseDto } from './dto/login-response.dto'
+import { TokensDto } from './dto/tokens.dto'
+import { AuthServiceError } from './types'
 
-type AuthServiceError =
-  | BadRequestException
-  | UnauthorizedException
-  | NotFoundException
-
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
+  @ApiResponse({ status: 201, description: 'Account created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
   async signUp(
     @Body() signUpData: SignUpDto,
     @Res() res: Response<{ message: string }>
@@ -54,13 +56,16 @@ export class AuthController {
   }
 
   @Post('login')
+  @ApiResponse({
+    status: 200,
+    description: 'Login successful',
+    type: LoginResponseDto
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   async login(
     @Body() credentials: LoginDto,
     @Res()
-    res: Response<{
-      accessToken: string
-      user: { username: string; email: string }
-    }>
+    res: Response<LoginResponseDto>
   ) {
     try {
       const result = await this.authService.login(credentials)
@@ -71,10 +76,15 @@ export class AuthController {
     }
   }
 
-  @Post('refresh')
+  @Post('refresh-token')
+  @ApiResponse({
+    status: 200,
+    type: TokensDto
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   async refreshToken(
     @Body() refreshTokenDto: RefreshTokenDto,
-    @Res() res: Response<{ accessToken: string; refreshToken: string }>
+    @Res() res: Response<TokensDto>
   ) {
     try {
       const result = await this.authService.refreshToken(
@@ -86,17 +96,19 @@ export class AuthController {
     }
   }
 
-  @ApiExcludeEndpoint()
-  @Put('change-password')
+  @Put('change-password/:userId')
+  @ApiResponse({ status: 200, description: 'Password changed' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(AuthGuard)
   async changePassword(
+    @Param('userId') userId: string,
     @Body() changePasswordDto: ChangePasswordDto,
-    @Req() request: Request & { userId: string },
     @Res() res: Response<{ message: string }>
   ) {
     try {
       await this.authService.changePassword(
-        request.userId,
+        userId,
         changePasswordDto.oldPassword,
         changePasswordDto.newPassword
       )
@@ -108,8 +120,12 @@ export class AuthController {
     }
   }
 
-  @ApiExcludeEndpoint()
   @Post('forgot-password')
+  @ApiResponse({ status: 200, description: 'Password recovery email sent' })
+  @ApiResponse({
+    status: 500,
+    description: 'Failed to send password recovery email'
+  })
   async forgotPassword(
     @Body() forgotPasswordDto: ForgotPasswordDto,
     @Res() res: Response<{ message: string }>
@@ -126,8 +142,10 @@ export class AuthController {
     }
   }
 
-  @ApiExcludeEndpoint()
   @Put('reset-password')
+  @ApiResponse({ status: 200, description: 'Password reset' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 404, description: 'User not found' })
   async resetPassword(
     @Body() resetPasswordDto: ResetPasswordDto,
     @Res() res: Response<{ message: string }>
