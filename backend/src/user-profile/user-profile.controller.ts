@@ -16,13 +16,17 @@ import { UserProfileDto } from './dto/user-profile.dto'
 import { AuthGuard } from 'src/guards/auth.guard'
 import { Response } from 'express'
 import { Messages } from 'src/messages'
+import { ApiResponse, ApiTags } from '@nestjs/swagger'
 
+@ApiTags('user-profile')
 @Controller('user-profile')
 export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}
 
   @Post()
   @UseGuards(AuthGuard)
+  @ApiResponse({ status: 201, description: 'User profile created' })
+  @ApiResponse({ status: 400, description: 'Failure creating profile' })
   async createUserProfile(
     @Body() userProfileDto: UserProfileDto,
     @Res() res: Response
@@ -36,6 +40,12 @@ export class UserProfileController {
   }
 
   @Get(':userId')
+  @ApiResponse({
+    status: 200,
+    description: 'User profile found',
+    type: UserProfileDto
+  })
+  @ApiResponse({ status: 404, description: 'Profile not found' })
   async getUserProfile(@Param('userId') userId: string, @Res() res: Response) {
     try {
       const userProfile = await this.userProfileService.findByUserId(userId)
@@ -49,6 +59,13 @@ export class UserProfileController {
 
   @Put(':userId')
   @UseGuards(AuthGuard)
+  @ApiResponse({
+    status: 200,
+    description: 'User profile updated',
+    type: UserProfileDto
+  })
+  @ApiResponse({ status: 400, description: 'Failure updating profile' })
+  @ApiResponse({ status: 404, description: 'Profile not found' })
   async updateUserProfile(
     @Param('userId') userId: string,
     @Body() userProfileDto: UserProfileDto,

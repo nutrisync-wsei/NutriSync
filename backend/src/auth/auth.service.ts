@@ -7,7 +7,7 @@ import {
 import { SignUpDto } from './dto/signUp.dto'
 import { InjectModel } from '@nestjs/mongoose'
 import { User } from './schemas/user.schema'
-import mongoose, { Model } from 'mongoose'
+import { Model } from 'mongoose'
 import * as bcrypt from 'bcrypt'
 import { LoginDto } from './dto/login.dto'
 import { JwtService } from '@nestjs/jwt'
@@ -17,8 +17,7 @@ import { nanoid } from 'nanoid'
 import { ResetToken } from './schemas/reset-token.schema'
 import { MailerService } from '@nestjs-modules/mailer'
 import { Messages } from 'src/messages'
-
-type UserId = string | mongoose.Types.ObjectId
+import { UserId } from './types'
 
 @Injectable()
 export class AuthService {
