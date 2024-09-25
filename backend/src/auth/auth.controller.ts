@@ -26,7 +26,15 @@ import { Messages } from 'src/messages'
 import { Profile } from 'passport-spotify'
 import { SpotifyOauthGuard } from 'src/guards/spotify.oauth.guard'
 import { GithubOauthGuard } from 'src/guards/github.oauth.guard'
-import { ApiExcludeEndpoint, ApiResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiExcludeEndpoint,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags
+} from '@nestjs/swagger'
 import { LoginResponseDto } from './dto/login-response.dto'
 import { TokensDto } from './dto/tokens.dto'
 import { AuthServiceError } from './types'
@@ -37,6 +45,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
+  @ApiOperation({ summary: 'Register a new user' })
+  @ApiBody({ type: SignUpDto })
   @ApiResponse({ status: 201, description: 'Account created' })
   @ApiResponse({ status: 400, description: 'Bad request' })
   async signUp(
@@ -56,6 +66,8 @@ export class AuthController {
   }
 
   @Post('login')
+  @ApiOperation({ summary: 'Authenticate a user and provide tokens' })
+  @ApiBody({ type: LoginDto })
   @ApiResponse({
     status: 200,
     description: 'Login successful',
@@ -77,6 +89,9 @@ export class AuthController {
   }
 
   @Post('refresh-token')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Refresh authentication tokens' })
+  @ApiBody({ type: RefreshTokenDto })
   @ApiResponse({
     status: 200,
     type: TokensDto
@@ -97,6 +112,10 @@ export class AuthController {
   }
 
   @Put('change-password/:userId')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Change user password' })
+  @ApiParam({ name: 'userId', type: String, description: 'The ID of the user' })
+  @ApiBody({ type: ChangePasswordDto })
   @ApiResponse({ status: 200, description: 'Password changed' })
   @ApiResponse({ status: 404, description: 'User not found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -121,6 +140,8 @@ export class AuthController {
   }
 
   @Post('forgot-password')
+  @ApiOperation({ summary: 'Initiate process for password recovery' })
+  @ApiBody({ type: ForgotPasswordDto })
   @ApiResponse({ status: 200, description: 'Password recovery email sent' })
   @ApiResponse({
     status: 500,
@@ -143,6 +164,9 @@ export class AuthController {
   }
 
   @Put('reset-password')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Reset user password using token sent via email' })
+  @ApiBody({ type: ResetPasswordDto })
   @ApiResponse({ status: 200, description: 'Password reset' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 404, description: 'User not found' })

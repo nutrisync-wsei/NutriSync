@@ -8,7 +8,7 @@ import {
   Max,
   Min
 } from 'class-validator'
-import { ActivityLevel, Goal } from '../types/types'
+import { ActivityLevel, Gender, Goal } from '../types/types'
 
 export class UserProfileDto {
   @ApiProperty({ type: String, description: 'User MongoDB ID' })
@@ -20,6 +20,13 @@ export class UserProfileDto {
   @Min(0)
   @Max(120)
   age: number
+
+  @ApiProperty({
+    enum: Gender,
+    description: 'Gender'
+  })
+  @IsEnum(Gender)
+  gender: Gender
 
   @ApiProperty({ type: Number })
   @IsInt()
