@@ -24,6 +24,7 @@ import {
   ApiResponse,
   ApiTags
 } from '@nestjs/swagger'
+import { BodyDimensionsDto } from './dto/body-dimensions.dto'
 
 @ApiTags('user-profile')
 @ApiBearerAuth()
@@ -94,6 +95,43 @@ export class UserProfileController {
       const updatedProfile = await this.userProfileService.update(
         userId,
         userProfileDto
+      )
+      if (!updatedProfile)
+        throw new NotFoundException(Messages.PROFILE_NOT_FOUND)
+
+      return res.status(HttpStatus.OK).json(updatedProfile)
+    } catch (error) {
+      this.handleException(error, res)
+    }
+  }
+
+  @Put(':userId/extended')
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Update extended user profile details' })
+  @ApiParam({
+    name: 'userId',
+    type: String,
+    description: 'The ID of the user to update'
+  })
+  @ApiBody({
+    type: BodyDimensionsDto,
+    description: 'Extended profile data to update'
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Extended user profile details updated'
+  })
+  @ApiResponse({ status: 400, description: 'Invalid data provided' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  async updateExtendedUserProfile(
+    @Param('userId') userId: string,
+    @Body() extendedDto: BodyDimensionsDto,
+    @Res() res: Response
+  ) {
+    try {
+      const updatedProfile = await this.userProfileService.updateBodyDimensions(
+        userId,
+        extendedDto
       )
       if (!updatedProfile)
         throw new NotFoundException(Messages.PROFILE_NOT_FOUND)

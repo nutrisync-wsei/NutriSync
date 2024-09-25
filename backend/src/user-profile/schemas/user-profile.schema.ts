@@ -27,6 +27,30 @@ export class UserProfile extends Document {
 
   @Prop({ type: [String] })
   medicalConditions: string[]
+
+  @Prop()
+  targetWeight?: number
+
+  @Prop()
+  neckCircumference?: number
+
+  @Prop()
+  armCircumference?: number
+
+  @Prop()
+  chestCircumference?: number
+
+  @Prop()
+  waistCircumference?: number
+
+  @Prop()
+  hipsCircumference?: number
+
+  @Prop()
+  thighCircumference?: number
+
+  @Prop()
+  calfCircumference?: number
 }
 
 export const UserProfileSchema = SchemaFactory.createForClass(UserProfile)
