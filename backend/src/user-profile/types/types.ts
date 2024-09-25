@@ -11,3 +11,16 @@ export enum Goal {
   MAINTAIN_WEIGHT = 'maintain_weight',
   GAIN_WEIGHT = 'gain_weight'
 }
+
+export enum Gender {
+  MALE = 'male',
+  FEMALE = 'female'
+}
+
+export const ACTIVITY_MULTIPLIERS = {
+  [ActivityLevel.SEDENTARY]: 1.2,
+  [ActivityLevel.LIGHTLY_ACTIVE]: 1.55,
+  [ActivityLevel.MODERATELY_ACTIVE]: 1.725,
+  [ActivityLevel.VERY_ACTIVE]: 1.9,
+  [ActivityLevel.EXTRA_ACTIVE]: 2.2
+}

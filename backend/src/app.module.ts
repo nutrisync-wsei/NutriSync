@@ -6,7 +6,8 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { JwtModule } from '@nestjs/jwt'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MailerModule } from '@nestjs-modules/mailer'
-import { UserProfileModule } from './user-profile/user-profile.module';
+import { UserProfileModule } from './user-profile/user-profile.module'
+import { HealthIndicatorsModule } from './health-indicators/health-indicators.module'
 
 @Module({
   imports: [
@@ -43,7 +44,8 @@ import { UserProfileModule } from './user-profile/user-profile.module';
       inject: [ConfigService]
     }),
     AuthModule,
-    UserProfileModule
+    UserProfileModule,
+    HealthIndicatorsModule
   ],
   controllers: [AppController],
   providers: [AppService]

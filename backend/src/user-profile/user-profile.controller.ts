@@ -16,14 +16,24 @@ import { UserProfileDto } from './dto/user-profile.dto'
 import { AuthGuard } from 'src/guards/auth.guard'
 import { Response } from 'express'
 import { Messages } from 'src/messages'
-import { ApiResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags
+} from '@nestjs/swagger'
 
 @ApiTags('user-profile')
+@ApiBearerAuth()
 @Controller('user-profile')
 export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new user profile' })
+  @ApiBody({ type: UserProfileDto, description: 'Profile data to create' })
   @UseGuards(AuthGuard)
   @ApiResponse({ status: 201, description: 'User profile created' })
   @ApiResponse({ status: 400, description: 'Failure creating profile' })
@@ -40,6 +50,8 @@ export class UserProfileController {
   }
 
   @Get(':userId')
+  @ApiOperation({ summary: 'Retrieve a user profile by user ID' })
+  @ApiParam({ name: 'userId', type: String, description: 'The ID of the user' })
   @ApiResponse({
     status: 200,
     description: 'User profile found',
@@ -59,6 +71,13 @@ export class UserProfileController {
 
   @Put(':userId')
   @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Update an existing user profile' })
+  @ApiParam({
+    name: 'userId',
+    type: String,
+    description: 'The ID of the user to update'
+  })
+  @ApiBody({ type: UserProfileDto, description: 'Updated profile data' })
   @ApiResponse({
     status: 200,
     description: 'User profile updated',
