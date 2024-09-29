@@ -1,6 +1,6 @@
-'use client';
-import styled from 'styled-components';
-import fonts from '@/app/ui/typography';
+"use client";
+import styled from "styled-components";
+import fonts from "@/ui/typography";
 
 const H1 = styled.h1`
   font-family: ${fonts.RubikBlack};
@@ -45,21 +45,21 @@ const PreTitle = styled.span`
 `;
 
 const ButtonText = styled.span`
-    font-family: ${fonts.RubikBold};
-    font-size: 10px;
-    letter-spacing: 3%;
+  font-family: ${fonts.RubikBold};
+  font-size: 10px;
+  letter-spacing: 3%;
 `;
 
 const LinkText = styled.a`
-    font-family: ${fonts.RubikBold};
-    font-size: 16px;
-    text-decoration: underline;
+  font-family: ${fonts.RubikBold};
+  font-size: 16px;
+  text-decoration: underline;
 `;
 
 const Footer = styled.footer`
-    font-family: ${fonts.RubikMedium};
-    font-size: 12px;
-    line-height: 140%;
+  font-family: ${fonts.RubikMedium};
+  font-size: 12px;
+  line-height: 140%;
 `;
 
 const Text = {
@@ -72,7 +72,7 @@ const Text = {
   PreTitle,
   ButtonText,
   LinkText,
-  Footer
+  Footer,
 };
 
 export default Text;
