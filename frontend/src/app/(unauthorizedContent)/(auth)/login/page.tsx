@@ -1,5 +1,5 @@
 "use client";
-import { useLogin } from "@/app/api/auth/hooks";
+import { useLogin } from "@/api/auth/hooks";
 import { LoginFormValues } from "@/types/auth";
 import Button from "@/ui/components/controls/Button";
 import FormField from "@/ui/components/FormField";

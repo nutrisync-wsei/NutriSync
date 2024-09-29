@@ -1,12 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import styles from "./page.module.css";
+import styled from "styled-components";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
+    <Container>
       <Link href="/welcome">Go to auth</Link>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: ${({ theme }) => theme.palette.light};
+  color: ${({ theme }) => theme.palette.dark};
+`;

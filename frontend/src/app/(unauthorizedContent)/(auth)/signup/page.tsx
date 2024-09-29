@@ -1,5 +1,5 @@
 "use client";
-import { useSignup } from "@/app/api/auth/hooks";
+import { useSignup } from "@/api/auth/hooks";
 import { SignupFormValues } from "@/types/auth";
 import Button from "@/ui/components/controls/Button";
 import FormField from "@/ui/components/FormField";
