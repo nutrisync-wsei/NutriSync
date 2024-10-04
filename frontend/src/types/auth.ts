@@ -5,7 +5,6 @@ export type Credentials = {
 
 export type User = Pick<Credentials, "email"> & {
   id: string;
-  email: string;
   name: string;
   role: string;
 };

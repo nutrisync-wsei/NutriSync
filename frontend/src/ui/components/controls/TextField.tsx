@@ -40,8 +40,7 @@ const StyledTextFieldContainer = styled.div<{
   width?: string;
   height?: string;
 }>`
-  /* width: ${({ width }) => width || "320px"}; */
-  width: 100%;
+  width: ${({ width }) => width || "100%"};
   height: ${({ height }) => height || "48px"};
   display: flex;
   align-items: center;

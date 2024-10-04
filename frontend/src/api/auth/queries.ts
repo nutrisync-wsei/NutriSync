@@ -16,8 +16,8 @@ const login = async ({ email, password }: LoginFormValues) => {
 };
 
 const signup = async ({ email, password, name }: SignupFormValues) => {
-  if (!email || !password) {
-    throw new Error("Email and password are required");
+  if (!email || !password || !name) {
+    throw new Error("Email, password and name are required");
   }
 
   const { data } = await axios.post(`${API_URL}/auth/signup`, {

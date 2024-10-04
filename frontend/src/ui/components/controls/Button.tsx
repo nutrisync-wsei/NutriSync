@@ -49,7 +49,7 @@ const StyledButton = styled.button<ButtonProps>`
 
           &:active {
             background-color: #025930;
-            transform: trantextY(2px);
+            transform: translateY(2px);
           }
         `;
       case "secondary":
