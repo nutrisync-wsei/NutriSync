@@ -4,10 +4,10 @@ import styled, { css } from "styled-components";
 type ButtonVariant = "primary" | "secondary" | "tertiary" | "link" | "disabled";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: ButtonVariant;
+  variant?: ButtonVariant;
 }
 
-const Button = ({ children, variant, ...rest }: ButtonProps) => {
+const Button = ({ children, variant = "primary", ...rest }: ButtonProps) => {
   return (
     <StyledButton variant={variant} {...rest}>
       {children}

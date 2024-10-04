@@ -2,12 +2,12 @@ import Text from "./Text";
 import styled from "styled-components";
 
 type HelperProps = {
-  label: string;
+  label?: string;
   type?: "info" | "error";
 };
 
-const Helper = ({ label, type = "info" }: HelperProps) => {
-  return <Label type={type}>{label || ""}</Label>;
+const Helper = ({ label = "", type = "info" }: HelperProps) => {
+  return <Label type={type}>{label}</Label>;
 };
 
 const Label = styled(Text.Small)<{
