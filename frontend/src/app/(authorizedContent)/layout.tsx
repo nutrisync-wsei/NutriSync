@@ -1,9 +1,3 @@
-type AuthWallProps = {
-  children: React.ReactNode;
-};
+import AuthWallLayout from "@/ui/layouts/AuthWallLayout";
 
-const AuthWall = ({ children }: AuthWallProps) => {
-  return children;
-};
-
-export default AuthWall;
+export default AuthWallLayout;
