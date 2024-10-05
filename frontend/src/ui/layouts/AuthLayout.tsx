@@ -2,11 +2,11 @@
 import styled from "styled-components";
 
 import { usePathname } from "next/navigation";
-import OtherAuthMethods from "@/ui/auth/OtherAuthMethods";
-import DontHaveAccount from "@/ui/auth/DontHaveAccount";
+import OtherAuthMethods from "@/ui/screens/auth/components/OtherAuthMethods";
+import DontHaveAccount from "@/ui/screens/auth/components/DontHaveAccount";
 import Divider from "@/ui/components/Divider";
-import Header from "@/ui/auth/Header";
-import { AuthScreenType } from "@/ui/auth/types";
+import Header from "@/ui/screens/auth/components/Header";
+import { AuthScreenType } from "@/ui/screens/auth/types";
 
 type AuthLayoutProps = {
   children: React.ReactNode;
