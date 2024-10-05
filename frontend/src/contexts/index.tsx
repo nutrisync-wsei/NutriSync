@@ -5,7 +5,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
-export function Provider({ children }: { children: React.ReactNode }) {
+type ContextProviderProps = {
+  children: React.ReactNode;
+};
+
+export function ContextProvider({ children }: ContextProviderProps) {
   return (
     <BreakpointProvider>
       <ThemeProvider>
