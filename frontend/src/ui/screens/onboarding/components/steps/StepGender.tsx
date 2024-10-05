@@ -1,4 +1,3 @@
-import SliderPicker from "../../../../components/SliderPicker";
 import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
 
 import { UserData } from "@/api/user/types";
@@ -17,12 +16,12 @@ const GenderButton = ({ gender }: GenderButtonProps) => {
   };
 
   return (
-    <StyledButton
+    <Button
       onClick={handleClick}
       variant={data?.gender === gender ? "secondary" : "tertiary"}
     >
       {gender}
-    </StyledButton>
+    </Button>
   );
 };
 
@@ -40,10 +39,6 @@ const Container = styled.div`
   flex-direction: column;
   gap: 16px;
   width: 200px;
-`;
-
-const StyledButton = styled(Button)`
-  margin: 8px;
 `;
 
 export default StepGender;

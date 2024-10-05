@@ -38,7 +38,7 @@ const PickerItem = ({
       <Circle>
         <InnerCircle isActive={isActive} />
       </Circle>
-      <ItemLabel>{value}</ItemLabel>
+      <ItemLabel isActive={isActive}>{value}</ItemLabel>
     </LevelItem>
   );
 };
@@ -125,10 +125,13 @@ const InnerCircle = styled.div<{
     isActive ? theme.palette.secondary : theme.palette.light};
 `;
 
-const ItemLabel = styled(Text.Body)`
+const ItemLabel = styled(Text.Body)<{
+  isActive?: boolean;
+}>`
   text-transform: uppercase;
   font-weight: 700;
-  color: ${({ theme }) => theme.palette.text};
+  color: ${({ theme, isActive }) =>
+    isActive ? theme.palette.text : theme.palette.subtleText};
 `;
 
 const Subtitle = styled(Text.Body)`
