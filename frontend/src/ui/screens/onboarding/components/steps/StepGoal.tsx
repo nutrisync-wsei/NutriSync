@@ -1,8 +1,8 @@
-import SliderPicker from "../../SliderPicker";
+import SliderPicker from "../../../../components/SliderPicker";
 import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
 
 import { UserData } from "@/api/user/types";
-import Button from "../../controls/Button";
+import Button from "../../../../components/controls/Button";
 import styled from "styled-components";
 
 type GoalButtonProps = {

@@ -1,7 +1,7 @@
 import { UserData } from "@/api/user/types";
 import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
 import styled from "styled-components";
-import Text from "../../Text";
+import Text from "../../../../components/Text";
 
 type ActivityLevelItem = {
   level: UserData["activityLevel"];

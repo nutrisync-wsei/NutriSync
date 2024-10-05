@@ -1,11 +1,7 @@
-"use client";
+import OnboardingScreen from "@/ui/screens/onboarding/OnboardingScreen";
 
-const OnboardingScreen = () => {
-  return (
-    <div>
-      <h1>Welcome to onboarding</h1>
-    </div>
-  );
+const Onboarding = () => {
+  return <OnboardingScreen />;
 };
 
-export default OnboardingScreen;
+export default Onboarding;
