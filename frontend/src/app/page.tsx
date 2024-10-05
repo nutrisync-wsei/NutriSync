@@ -1,14 +1,21 @@
-'use client'
+"use client";
 
-import styles from './page.module.css'
+import Link from "next/link";
+import styled from "styled-components";
 
 export default function Home() {
- 
-
   return (
-    <div className={styles.page}>
-      <a href='http://localhost:3001/auth/spotify'>sign in with spotify</a>
-      <a href='http://localhost:3001/auth/github'>sign in with github</a>
-    </div>
-  )
+    <Container>
+      <Link href="/welcome">Go to auth</Link>
+    </Container>
+  );
 }
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: ${({ theme }) => theme.palette.light};
+  color: ${({ theme }) => theme.palette.dark};
+`;
