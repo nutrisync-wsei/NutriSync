@@ -8,17 +8,15 @@ const StepWeight = () => {
   const { data, setData } = useOnboardingSteps();
 
   return (
-    <div>
-      <SliderPicker
-        initialValue={data?.weight}
-        min={MIN_WEIGHT}
-        max={MAX_WEIGHT}
-        unit="kg"
-        onChangeValue={(value) => {
-          setData({ ...data, weight: value });
-        }}
-      />
-    </div>
+    <SliderPicker
+      initialValue={data?.weight}
+      min={MIN_WEIGHT}
+      max={MAX_WEIGHT}
+      unit="kg"
+      onChangeValue={(value) => {
+        setData({ ...data, weight: value });
+      }}
+    />
   );
 };
 

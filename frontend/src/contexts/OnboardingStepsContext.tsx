@@ -1,7 +1,7 @@
 "use client";
 import { useUpdateUserProfile } from "@/api/user/hooks";
 import { UserData } from "@/api/user/types";
-import React, {
+import {
   createContext,
   Dispatch,
   ReactNode,
