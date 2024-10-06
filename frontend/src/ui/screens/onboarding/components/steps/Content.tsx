@@ -1,12 +1,12 @@
 import { Step, useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
-import StepAge from "./steps/StepAge";
+import StepAge from "./StepAge";
 import React from "react";
 import styled from "styled-components";
-import StepWeight from "./steps/StepWeight";
-import StepHeight from "./steps/StepHeight";
-import StepGender from "./steps/StepGender";
-import StepActivityLevel from "./steps/StepActivityLevel";
-import StepGoal from "./steps/StepGoal";
+import StepWeight from "./StepWeight";
+import StepHeight from "./StepHeight";
+import StepGender from "./StepGender";
+import StepActivityLevel from "./StepActivityLevel";
+import StepGoal from "./StepGoal";
 
 const getOnboardingStepComponent = (step: Step) => {
   switch (step) {
