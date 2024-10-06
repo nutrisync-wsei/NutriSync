@@ -7,9 +7,10 @@ import DontHaveAccount from "@/ui/screens/auth/components/DontHaveAccount";
 import Divider from "@/ui/components/Divider";
 import Header from "@/ui/screens/auth/components/Header";
 import { AuthScreenType } from "@/ui/screens/auth/types";
+import { ReactNode } from "react";
 
 type AuthLayoutProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const getScreenType = (pathname: string): AuthScreenType => {
@@ -29,17 +30,15 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   const screenType = getScreenType(pathname);
 
   return (
-    <>
-      <Container>
-        <Header screenType={screenType} />
-        <Content>
-          <ScreenContainer>{children}</ScreenContainer>
-          <Divider text={"or"} />
-          <OtherAuthMethods />
-          {screenType !== "signup" && <DontHaveAccount />}
-        </Content>
-      </Container>
-    </>
+    <Container>
+      <Header screenType={screenType} />
+      <Content>
+        <ScreenContainer>{children}</ScreenContainer>
+        <Divider text={"or"} />
+        <OtherAuthMethods />
+        {screenType !== "signup" && <DontHaveAccount />}
+      </Content>
+    </Container>
   );
 };
 

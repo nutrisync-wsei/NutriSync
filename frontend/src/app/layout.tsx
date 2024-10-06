@@ -3,7 +3,7 @@ import "./globals.css";
 import RootLayout from "@/ui/layouts/RootLayout";
 
 export const metadata: Metadata = {
-  title: "Nutri sync",
+  title: "NutriSync",
   description: "Nutri sync health and wellness app",
 };
 

@@ -1,7 +1,8 @@
 import { OnboardingStepsProvider } from "@/contexts/OnboardingStepsContext";
+import { ReactNode } from "react";
 
 type OnboardingStepsLayoutProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const OnboardingStepsLayout = ({ children }: OnboardingStepsLayoutProps) => {
