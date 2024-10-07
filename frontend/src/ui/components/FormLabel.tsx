@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Text from "@/components/Text";
+import fonts from "../typography";
 
 interface FormLabelProps {
   label: string;
@@ -6,14 +8,21 @@ interface FormLabelProps {
 }
 
 const FormLabel = ({ label, htmlFor }: FormLabelProps) => {
-  return <Label htmlFor={htmlFor}>{label}</Label>;
+  return (
+    <Label htmlFor={htmlFor}>
+      <LabelText>{label}</LabelText>
+    </Label>
+  );
 };
 
 const Label = styled.label`
   width: 100%;
-  line-height: 22.4px;
-  color: ${({ theme }) => theme.palette.dark};
+  margin-left: 2px;
   margin-bottom: 4px;
+`;
+
+const LabelText = styled(Text.SmallMonaco)`
+  color: ${({ theme }) => theme.palette.subtleText};
 `;
 
 export default FormLabel;

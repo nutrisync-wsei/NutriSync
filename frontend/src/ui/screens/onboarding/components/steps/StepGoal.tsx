@@ -1,8 +1,8 @@
-import SliderPicker from "../../SliderPicker";
+import SliderPicker from "../../../../components/SliderPicker";
 import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
 
 import { UserData } from "@/api/user/types";
-import Button from "../../controls/Button";
+import Button from "../../../../components/controls/Button";
 import styled from "styled-components";
 
 type GoalButtonProps = {
@@ -35,12 +35,12 @@ const GoalButton = ({ goal }: GoalButtonProps) => {
   };
 
   return (
-    <StyledButton
+    <Button
       onClick={handleClick}
       variant={data?.goal === goal ? "secondary" : "tertiary"}
     >
       {GOALS.find((item) => item.type === goal)?.name}
-    </StyledButton>
+    </Button>
   );
 };
 
@@ -57,12 +57,8 @@ const StepGoal = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 13px;
   width: 200px;
-`;
-
-const StyledButton = styled(Button)`
-  margin: 8px;
 `;
 
 export default StepGoal;

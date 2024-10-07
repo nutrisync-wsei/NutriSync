@@ -6,7 +6,7 @@ import CircleGreyImage from "@/assets/images/CircleGrey.png";
 import LogoImage from "@/assets/images/Logo.png";
 import LogoTextImage from "@/assets/images/LogoText.png";
 import Image from "next/image";
-import { AuthScreenType } from "./types";
+import { AuthScreenType } from "../types";
 
 type HeaderProps = {
   screenType: AuthScreenType;

@@ -1,11 +1,3 @@
-import { OnboardingStepsProvider } from "@/contexts/OnboardingStepsContext";
+import OnboardingStepsLayout from "@/ui/layouts/OnboardingStepsLayout";
 
-type OnboardingStepsScreenProps = {
-  children: React.ReactNode;
-};
-
-const OnboardingStepsScreen = ({ children }: OnboardingStepsScreenProps) => {
-  return <OnboardingStepsProvider>{children}</OnboardingStepsProvider>;
-};
-
-export default OnboardingStepsScreen;
+export default OnboardingStepsLayout;
