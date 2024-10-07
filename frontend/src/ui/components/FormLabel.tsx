@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import Text from "@/components/Text";
-import fonts from "../typography";
+import styled from 'styled-components';
+
+import Text from '@/components/Text';
 
 interface FormLabelProps {
   label: string;

@@ -1,25 +1,26 @@
-"use client";
-import styled, { css, keyframes } from "styled-components";
-import WaveTopImage from "@/assets/images/WaveTop.png";
-import WaveBottomImage from "@/assets/images/WaveBottom.png";
-import Image from "next/image";
-import Text from "@/ui/components/Text";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+'use client';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import styled, { css, keyframes } from 'styled-components';
+
+import WaveBottomImage from '@/assets/images/WaveBottom.png';
+import WaveTopImage from '@/assets/images/WaveTop.png';
+import Text from '@/ui/components/Text';
 
 const OnboardingCompletedScreen = () => {
   const router = useRouter();
 
   useEffect(() => {
     //TODO: Base on request loading state in the future
-    let timeout = setTimeout(() => {
-      router.push("/home");
+    const timeout = setTimeout(() => {
+      router.push('/home');
     }, 5000);
 
     return () => {
       clearTimeout(timeout);
     };
-  }, []);
+  }, [router]);
 
   return (
     <Container>

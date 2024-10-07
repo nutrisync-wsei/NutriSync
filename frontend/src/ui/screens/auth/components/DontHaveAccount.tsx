@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import Text from "@/ui/components/Text";
+import { useRouter } from 'next/navigation';
+import styled from 'styled-components';
 
-import { useRouter } from "next/navigation";
+import Text from '@/ui/components/Text';
 
 const DontHaveAccount = () => {
   const router = useRouter();
@@ -9,7 +9,7 @@ const DontHaveAccount = () => {
   return (
     <Container>
       <DontHaveAccountText>Don't have an account?</DontHaveAccountText>
-      <SignupText onClick={() => router.push("/signup")}>Signup</SignupText>
+      <SignupText onClick={() => router.push('/signup')}>Signup</SignupText>
     </Container>
   );
 };

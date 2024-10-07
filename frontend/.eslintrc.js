@@ -37,13 +37,15 @@ module.exports = {
       version: 'detect',
     },
   },
-  plugins: ['react', 'prettier', 'simple-import-sort'],
+  plugins: ['react', 'prettier', 'simple-import-sort', '@stylistic/js'],
   rules: {
+    '@stylistic/js/quotes': ['error', "single"],
+    '@stylistic/js/jsx-quotes': ['error', "prefer-double"],
+    '@stylistic/js/quote-props': ['error', "as-needed"],
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-shadow': ['error'],
-    '@typescript-eslint/quotes': ['error', 'single', { avoidEscape: true }],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {

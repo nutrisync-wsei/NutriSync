@@ -1,6 +1,7 @@
-import styled from "styled-components";
-import Text from "@/components/Text";
-import { Step, useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
+import styled from 'styled-components';
+
+import Text from '@/components/Text';
+import { Step, useOnboardingSteps } from '@/contexts/OnboardingStepsContext';
 
 type HeaderItem = {
   title: string;
@@ -9,28 +10,28 @@ type HeaderItem = {
 
 const headerTexts: Record<Step, HeaderItem> = {
   gender: {
-    title: "Gender",
-    subtitle: "Choose your",
+    title: 'Gender',
+    subtitle: 'Choose your',
   },
   age: {
-    title: "Age",
-    subtitle: "Enter your",
+    title: 'Age',
+    subtitle: 'Enter your',
   },
   weight: {
-    title: "Weight",
-    subtitle: "Enter your",
+    title: 'Weight',
+    subtitle: 'Enter your',
   },
   height: {
-    title: "Height",
-    subtitle: "Enter your",
+    title: 'Height',
+    subtitle: 'Enter your',
   },
   activityLevel: {
-    title: "Activity Level",
-    subtitle: "Access your",
+    title: 'Activity Level',
+    subtitle: 'Access your',
   },
   goal: {
-    title: "Goal",
-    subtitle: "Define your",
+    title: 'Goal',
+    subtitle: 'Define your',
   },
 };
 

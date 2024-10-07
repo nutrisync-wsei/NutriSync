@@ -5,14 +5,14 @@ import React, {
   useEffect,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
 export type Breakpoint =
-  | "wideDesktop"
-  | "desktop"
-  | "smallDesktop"
-  | "tablet"
-  | "mobile";
+  | 'wideDesktop'
+  | 'desktop'
+  | 'smallDesktop'
+  | 'tablet'
+  | 'mobile';
 
 type BreakpointContextType = {
   currentBreakpoint: Breakpoint;
@@ -21,7 +21,7 @@ type BreakpointContextType = {
 
 const BreakpointContext = createContext<BreakpointContextType | null>(null);
 
-export const breakpointValues: Record<Exclude<Breakpoint, "mobile">, number> = {
+export const breakpointValues: Record<Exclude<Breakpoint, 'mobile'>, number> = {
   wideDesktop: 1441,
   desktop: 1221,
   smallDesktop: 1025,
@@ -30,24 +30,24 @@ export const breakpointValues: Record<Exclude<Breakpoint, "mobile">, number> = {
 
 const widthToBreakpoint = (width: number): Breakpoint => {
   if (width < breakpointValues.tablet) {
-    return "mobile";
+    return 'mobile';
   }
   if (width < breakpointValues.smallDesktop) {
-    return "tablet";
+    return 'tablet';
   }
   if (width < breakpointValues.desktop) {
-    return "smallDesktop";
+    return 'smallDesktop';
   }
   if (width < breakpointValues.wideDesktop) {
-    return "desktop";
+    return 'desktop';
   }
-  return "wideDesktop";
+  return 'wideDesktop';
 };
 
 export const BreakpointProvider = ({ children }: { children: ReactNode }) => {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   const [currentBreakpoint, setCurrentBreakpoint] = useState<Breakpoint>(
-    widthToBreakpoint(windowSize)
+    widthToBreakpoint(windowSize),
   );
 
   useEffect(() => {
@@ -56,9 +56,9 @@ export const BreakpointProvider = ({ children }: { children: ReactNode }) => {
       setCurrentBreakpoint(widthToBreakpoint(window.innerWidth));
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -66,8 +66,8 @@ export const BreakpointProvider = ({ children }: { children: ReactNode }) => {
     () => ({
       currentBreakpoint,
       isBreakpointActive: (breakpoint: Breakpoint): boolean => {
-        if (breakpoint === "mobile") {
-          return currentBreakpoint === "mobile";
+        if (breakpoint === 'mobile') {
+          return currentBreakpoint === 'mobile';
         }
 
         const breakpointMinWidth =
@@ -75,14 +75,14 @@ export const BreakpointProvider = ({ children }: { children: ReactNode }) => {
         const currentBreakpointMinWidth =
           breakpointValues[currentBreakpoint as keyof typeof breakpointValues];
 
-        if (currentBreakpoint === "mobile") {
+        if (currentBreakpoint === 'mobile') {
           return false;
         }
 
         return breakpointMinWidth <= currentBreakpointMinWidth;
       },
     }),
-    [currentBreakpoint]
+    [currentBreakpoint],
   );
 
   return (
@@ -95,7 +95,7 @@ export const BreakpointProvider = ({ children }: { children: ReactNode }) => {
 export const useBreakpoint = () => {
   const context = useContext(BreakpointContext);
   if (!context) {
-    throw new Error("useBreakpoint must be used within an BreakpointProvider");
+    throw new Error('useBreakpoint must be used within an BreakpointProvider');
   }
   return context;
 };

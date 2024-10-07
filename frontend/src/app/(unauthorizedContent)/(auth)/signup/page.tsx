@@ -1,4 +1,4 @@
-import SignupScreen from "@/ui/screens/auth/SignupScreen";
+import SignupScreen from '@/ui/screens/auth/SignupScreen';
 
 const Signup = () => {
   return <SignupScreen />;

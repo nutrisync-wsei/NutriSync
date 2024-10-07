@@ -1,26 +1,28 @@
-import { Step, useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
-import StepAge from "./StepAge";
-import React from "react";
-import styled from "styled-components";
-import StepWeight from "./StepWeight";
-import StepHeight from "./StepHeight";
-import StepGender from "./StepGender";
-import StepActivityLevel from "./StepActivityLevel";
-import StepGoal from "./StepGoal";
+import React from 'react';
+import styled from 'styled-components';
+
+import { Step, useOnboardingSteps } from '@/contexts/OnboardingStepsContext';
+
+import StepActivityLevel from './StepActivityLevel';
+import StepAge from './StepAge';
+import StepGender from './StepGender';
+import StepGoal from './StepGoal';
+import StepHeight from './StepHeight';
+import StepWeight from './StepWeight';
 
 const getOnboardingStepComponent = (step: Step) => {
   switch (step) {
-    case "gender":
+    case 'gender':
       return StepGender;
-    case "age":
+    case 'age':
       return StepAge;
-    case "height":
+    case 'height':
       return StepHeight;
-    case "weight":
+    case 'weight':
       return StepWeight;
-    case "activityLevel":
+    case 'activityLevel':
       return StepActivityLevel;
-    case "goal":
+    case 'goal':
       return StepGoal;
     default:
       return () => null;

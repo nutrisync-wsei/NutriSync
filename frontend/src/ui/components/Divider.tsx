@@ -1,5 +1,6 @@
-import styled from "styled-components";
-import Text from "@/ui/components/Text";
+import styled from 'styled-components';
+
+import Text from '@/ui/components/Text';
 
 type DividerProps = {
   text?: string;

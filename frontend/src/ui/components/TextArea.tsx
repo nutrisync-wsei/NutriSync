@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 interface TextAreaProps {
-    placeholder?: string;
+  placeholder?: string;
 }
 
 const TextArea = ({ placeholder }: TextAreaProps) => {
-    return <StyledTextArea placeholder={placeholder} />;
+  return <StyledTextArea placeholder={placeholder} />;
 };
 
 const StyledTextArea = styled.textarea`
@@ -15,25 +15,25 @@ const StyledTextArea = styled.textarea`
   resize: vertical;
   border-radius: 8px;
   padding: 12px 16px;
-  background-color: #ECF1F4;
-  color: #8C8CA1;
+  background-color: #ecf1f4;
+  color: #8c8ca1;
   border: none;
-  
+
   &:focus {
     outline: none;
   }
-  
+
   &::-webkit-scrollbar {
     width: 10px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #8C8CA1;
+    background-color: #8c8ca1;
     border-radius: 10px;
   }
 
   &::-webkit-scrollbar-track {
-    background: #ECF1F4;
+    background: #ecf1f4;
   }
 `;
 

@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import USER_QUERIES from "./queries";
-import USER_KEYS from "./keys";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+import USER_KEYS from './keys';
+// import USER_QUERIES from './queries';
 
 export const useUserProfile = () => {
   // const { data: user } = useAuthUser();

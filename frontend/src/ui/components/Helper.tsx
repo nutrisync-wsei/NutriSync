@@ -1,23 +1,24 @@
-import Text from "./Text";
-import styled from "styled-components";
+import styled from 'styled-components';
+
+import Text from './Text';
 
 type HelperProps = {
   label?: string;
-  type?: "info" | "error";
+  type?: 'info' | 'error';
 };
 
-const Helper = ({ label = "", type = "info" }: HelperProps) => {
+const Helper = ({ label = '', type = 'info' }: HelperProps) => {
   return <Label type={type}>{label}</Label>;
 };
 
 const Label = styled(Text.Small)<{
-  type?: HelperProps["type"];
+  type?: HelperProps['type'];
 }>`
   width: 100%;
   height: 30px;
   line-height: 19.6px;
   color: ${({ theme, type }) =>
-    type === "error" ? theme.palette.error : theme.palette.subtleText};
+    type === 'error' ? theme.palette.error : theme.palette.subtleText};
   padding: 5px 0;
 `;
 

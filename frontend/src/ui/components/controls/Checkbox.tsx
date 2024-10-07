@@ -1,6 +1,7 @@
-import { useState } from "react";
-import styled from "styled-components";
-import Icon from "@/assets/Icon";
+import { useState } from 'react';
+import styled from 'styled-components';
+
+import Icon from '@/assets/Icon';
 
 interface CheckboxProps {
   initialState?: boolean;
@@ -35,7 +36,7 @@ const CheckboxContainer = styled.div<{ checked: boolean }>`
   width: 32px;
   height: 32px;
   background-color: ${(props: { checked: boolean }) =>
-    props.checked ? "#D0FFC3" : "#ECF1F4"};
+    props.checked ? '#D0FFC3' : '#ECF1F4'};
   border-radius: 8px;
   box-shadow: 0px 2px 2px -1px #4a4a681a inset;
   display: flex;
@@ -55,5 +56,5 @@ const StyledCheckbox = styled.input`
 const SuccessIconStyled = styled(Icon.Success)<{ checked: boolean }>`
   width: 20px;
   height: 20px;
-  visibility: ${(props) => (props.checked ? "visible" : "hidden")};
+  visibility: ${(props) => (props.checked ? 'visible' : 'hidden')};
 `;

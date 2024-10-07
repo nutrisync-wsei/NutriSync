@@ -1,26 +1,27 @@
-import { UserData } from "@/api/user/types";
-import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
-import styled from "styled-components";
-import Text from "../../../../components/Text";
+import styled from 'styled-components';
+
+import { UserData } from '@/api/user/types';
+import { useOnboardingSteps } from '@/contexts/OnboardingStepsContext';
+import Text from '@/ui/components/Text';
 
 type ActivityLevelItem = {
-  level: UserData["activityLevel"];
+  level: UserData['activityLevel'];
   description: string;
 };
 
 const ACTIVITY_LEVELS: ActivityLevelItem[] = [
   {
-    level: "low",
-    description: "Sedentary lifestyle, maximum 1 training per week",
+    level: 'low',
+    description: 'Sedentary lifestyle, maximum 1 training per week',
   },
   {
-    level: "middle",
-    description: "Moderately active lifestyle, 2-3 training sessions per week",
+    level: 'middle',
+    description: 'Moderately active lifestyle, 2-3 training sessions per week',
   },
   {
-    level: "high",
+    level: 'high',
     description:
-      "Active lifestyle, engaging in 4 or more training sessions per week",
+      'Active lifestyle, engaging in 4 or more training sessions per week',
   },
 ];
 
@@ -29,7 +30,7 @@ const PickerItem = ({
   isActive,
   onClick,
 }: {
-  value: UserData["activityLevel"];
+  value: UserData['activityLevel'];
   isActive: boolean;
   onClick: () => void;
 }) => {

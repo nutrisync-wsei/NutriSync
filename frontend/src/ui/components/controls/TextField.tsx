@@ -1,6 +1,7 @@
-import styled from "styled-components";
-import Icon from "@/assets/Icon";
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes } from 'react';
+import styled, { DefaultTheme } from 'styled-components';
+
+import Icon from '@/assets/Icon';
 
 type TextFieldProps = {
   width?: string;
@@ -40,12 +41,48 @@ const StyledTextFieldContainer = styled.div<{
   width?: string;
   height?: string;
 }>`
-  width: ${({ width }) => width || "100%"};
-  height: ${({ height }) => height || "48px"};
+  width: ${({ width }) => width || '100%'};
+  height: ${({ height }) => height || '48px'};
   display: flex;
   align-items: center;
   position: relative;
 `;
+
+const getBackgroundColor = (hasError: boolean, isValid: boolean) => {
+  if (hasError) return '#FFFBFC';
+  if (isValid) return 'white';
+  return '#ECF1F4';
+};
+
+const getBorder = (
+  hasError: boolean,
+  isValid: boolean,
+  theme: DefaultTheme,
+) => {
+  if (isValid) return '1px solid #A3C3B1';
+  if (hasError) return `1px solid ${theme.palette.error}`;
+  return 'none';
+};
+
+const getFocusBorder = (
+  hasError: boolean,
+  isValid: boolean,
+  theme: DefaultTheme,
+) => {
+  if (hasError) return `1px solid ${theme.palette.error}`;
+  if (isValid) return '1px solid #A3C3B1';
+  return '1px solid #D0FFC3';
+};
+
+const getBoxShadow = (
+  theme: DefaultTheme,
+  hasError: boolean,
+  isValid: boolean,
+) => {
+  if (hasError) return '0px 0px 0px 4px #ED514033';
+  if (isValid) return `0px 0px 0px 4px ${theme.palette.primaryDark}33`;
+  return 'none';
+};
 
 const StyledInput = styled.input<TextFieldProps>`
   width: 100%;
@@ -54,29 +91,19 @@ const StyledInput = styled.input<TextFieldProps>`
   font-size: 16px;
   padding: 16px;
   padding-right: 48px;
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition:
+    background-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
   color: ${({ theme }) => theme.palette.dark};
   background-color: ${({ hasError, isValid }) =>
-    hasError ? "#FFFBFC" : isValid ? "white" : "#ECF1F4"};
+    getBackgroundColor(!!hasError, !!isValid)};
   border: ${({ hasError, isValid, theme }) =>
-    isValid
-      ? `1px solid #A3C3B1`
-      : hasError
-      ? `1px solid ${theme.palette.error}`
-      : "none"};
+    getBorder(!!hasError, !!isValid, theme)};
   &:focus {
     border: ${({ hasError, isValid, theme }) =>
-      hasError
-        ? `1px solid ${theme.palette.error}`
-        : isValid
-        ? `1px solid #A3C3B1`
-        : "1px solid #D0FFC3"};
+      getFocusBorder(!!hasError, !!isValid, theme)};
     box-shadow: ${({ theme, hasError, isValid }) =>
-      hasError
-        ? `0px 0px 0px 4px #ED514033`
-        : isValid
-        ? `0px 0px 0px 4px ${theme.palette.primaryDark}33`
-        : "none"};
+      getBoxShadow(theme, !!hasError, !!isValid)};
     outline: none;
   }
 
@@ -84,7 +111,7 @@ const StyledInput = styled.input<TextFieldProps>`
     cursor: not-allowed;
     border: 0;
     opacity: 0.5;
-    background-color: "#FAFCFE";
+    background-color: '#FAFCFE';
     box-shadow: none;
   }
 `;

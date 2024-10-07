@@ -1,6 +1,7 @@
-"use client";
-import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
-import styled from "styled-components";
+'use client';
+import styled from 'styled-components';
+
+import { useOnboardingSteps } from '@/contexts/OnboardingStepsContext';
 
 const ProgressBar = () => {
   const { currentStepIndex, numberOfSteps } = useOnboardingSteps();

@@ -1,13 +1,13 @@
-import { ButtonHTMLAttributes } from "react";
-import styled, { css } from "styled-components";
+import { ButtonHTMLAttributes } from 'react';
+import styled, { css } from 'styled-components';
 
-type ButtonVariant = "primary" | "secondary" | "tertiary" | "link" | "disabled";
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'link' | 'disabled';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
 }
 
-const Button = ({ children, variant = "primary", ...rest }: ButtonProps) => {
+const Button = ({ children, variant = 'primary', ...rest }: ButtonProps) => {
   return (
     <StyledButton variant={variant} {...rest}>
       {children}
@@ -17,7 +17,7 @@ const Button = ({ children, variant = "primary", ...rest }: ButtonProps) => {
 
 // TODO: Fonts don't work
 const StyledButton = styled.button<ButtonProps>`
-  font-family: "RubikBold", sans-serif;
+  font-family: 'RubikBold', sans-serif;
   font-weight: 700;
   padding: 12px 24px;
   font-size: 16px;
@@ -36,11 +36,12 @@ const StyledButton = styled.button<ButtonProps>`
 
   ${(props) => {
     switch (props.variant) {
-      case "primary":
+      case 'primary':
         return css`
           color: #ffffff;
           background-color: ${({ theme }) => theme.palette.primaryDark};
-          box-shadow: 0px 6px 2px -4px #0e0e2c1a,
+          box-shadow:
+            0px 6px 2px -4px #0e0e2c1a,
             0px -1px 0px 0px #0e0e2c66 inset;
 
           &:hover {
@@ -52,7 +53,7 @@ const StyledButton = styled.button<ButtonProps>`
             transform: translateY(2px);
           }
         `;
-      case "secondary":
+      case 'secondary':
         return css`
           color: #0e0e0e;
           background-color: #a3df22;
@@ -67,7 +68,7 @@ const StyledButton = styled.button<ButtonProps>`
             transform: trantextY(2px);
           }
         `;
-      case "tertiary":
+      case 'tertiary':
         return css`
           color: #8c8ca1;
           background-color: #fffbfc;
@@ -82,7 +83,7 @@ const StyledButton = styled.button<ButtonProps>`
             transform: trantextY(2px);
           }
         `;
-      case "link":
+      case 'link':
         return css`
           color: ${({ theme }) => theme.palette.primaryDark};
           background-color: #ffffff;
@@ -95,7 +96,7 @@ const StyledButton = styled.button<ButtonProps>`
             color: #025930;
           }
         `;
-      case "disabled":
+      case 'disabled':
         return css`
           color: #8c8ca1;
           background-color: #ffffff;

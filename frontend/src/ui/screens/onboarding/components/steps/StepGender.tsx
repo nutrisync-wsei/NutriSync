@@ -1,11 +1,11 @@
-import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
+import styled from 'styled-components';
 
-import { UserData } from "@/api/user/types";
-import Button from "../../../../components/controls/Button";
-import styled from "styled-components";
+import { UserData } from '@/api/user/types';
+import Button from '@/components/controls/Button';
+import { useOnboardingSteps } from '@/contexts/OnboardingStepsContext';
 
 type GenderButtonProps = {
-  gender: UserData["gender"];
+  gender: UserData['gender'];
 };
 
 const GenderButton = ({ gender }: GenderButtonProps) => {
@@ -18,7 +18,7 @@ const GenderButton = ({ gender }: GenderButtonProps) => {
   return (
     <Button
       onClick={handleClick}
-      variant={data?.gender === gender ? "secondary" : "tertiary"}
+      variant={data?.gender === gender ? 'secondary' : 'tertiary'}
     >
       {gender}
     </Button>

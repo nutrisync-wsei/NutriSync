@@ -1,7 +1,8 @@
-import styled from "styled-components";
-import LogoImage from "@/assets/images/Logo.png";
-import LogoTextImage from "@/assets/images/LogoText.png";
-import Image from "next/image";
+import Image from 'next/image';
+import styled from 'styled-components';
+
+import LogoImage from '@/assets/images/Logo.png';
+import LogoTextImage from '@/assets/images/LogoText.png';
 
 type LogoWithText = {
   width?: number;
