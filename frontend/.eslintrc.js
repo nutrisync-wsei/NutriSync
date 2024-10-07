@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  parser: '@typescript-eslint/parser',
   env: {
     browser: true,
     es2021: true,
@@ -13,11 +14,14 @@ module.exports = {
   ],
   ignorePatterns: [
     '.eslintrc.js',
+    'jest.config.js',
     'next.config.js',
     'next-i18next.config.js',
+    'metro.config.js',
     '.eslintrc.cjs',
     'babel.config.js',
     'node_modules/',
+    '**/svgr.js',
     'dist/',
     'out/',
   ],
@@ -29,9 +33,6 @@ module.exports = {
     sourceType: 'module',
   },
   settings: {
-    next: {
-      rootDir: 'apps/next/',
-    },
     react: {
       version: 'detect',
     },
