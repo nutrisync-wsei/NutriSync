@@ -1,6 +1,7 @@
 "use client";
 import { useUpdateUserProfile } from "@/api/user/hooks";
 import { UserData } from "@/api/user/types";
+import { useRouter } from "next/navigation";
 import {
   createContext,
   Dispatch,
@@ -53,6 +54,7 @@ export const OnboardingStepsProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const router = useRouter();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [data, setData] = useState<OnboardingData>();
 
@@ -70,6 +72,9 @@ export const OnboardingStepsProvider = ({
 
   const submitData = () => {
     data && updateUserProfile(data);
+
+    // TODO: redirect on query success, for now query gets an error
+    router.push("/onboarding/completed");
   };
 
   const value = useMemo(

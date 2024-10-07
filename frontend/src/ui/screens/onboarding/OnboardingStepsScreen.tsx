@@ -2,12 +2,14 @@
 import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
 import Button from "@/ui/components/controls/Button";
 import LogoWithText from "@/ui/components/LogoWithText";
-import Content from "@/ui/screens/onboarding/components/Content";
-import Header from "@/ui/screens/onboarding/components/Header";
+import Content from "@/ui/screens/onboarding/components/steps/Content";
+import Header from "@/ui/screens/onboarding/components/steps/Header";
 import ProgressBar from "@/ui/screens/onboarding/components/ProgressBar";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
 const OnboardingStepsScreen = () => {
+  const router = useRouter();
   const {
     data,
     currentStep,
@@ -33,8 +35,7 @@ const OnboardingStepsScreen = () => {
       <ButtonsContainer>
         <Button
           variant="tertiary"
-          onClick={prevStep}
-          disabled={isFirstStepIndex}
+          onClick={isFirstStepIndex ? router.back : prevStep}
         >
           Back
         </Button>

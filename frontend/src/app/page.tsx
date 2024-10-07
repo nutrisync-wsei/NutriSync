@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <Container>
       <Link href="/welcome">Go to auth</Link>
-      <Link href="/onboarding/steps">Go to onboarding steps</Link>
+      <Link href="/onboarding">Go to onboarding</Link>
     </Container>
   );
 }
