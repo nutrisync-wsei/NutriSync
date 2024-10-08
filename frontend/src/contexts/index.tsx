@@ -1,8 +1,9 @@
-"use client";
-import { BreakpointProvider } from "@/contexts/BreakpointContext";
-import { ThemeProvider } from "@/contexts/ThemeProvider";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactNode } from "react";
+'use client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactNode } from 'react';
+
+import { BreakpointProvider } from '@/contexts/BreakpointContext';
+import { ThemeProvider } from '@/contexts/ThemeProvider';
 
 const queryClient = new QueryClient();
 

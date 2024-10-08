@@ -1,20 +1,26 @@
-import FormLabel from "./FormLabel";
-import TextField from "./controls/TextField";
-import Helper from "./Helper";
-import styled from "styled-components";
-import { useController } from "react-hook-form";
-import { Control, FieldValues, Path, RegisterOptions } from "react-hook-form";
+import {
+  Control,
+  FieldValues,
+  Path,
+  RegisterOptions,
+  useController,
+} from 'react-hook-form';
+import styled from 'styled-components';
+
+import TextField from './controls/TextField';
+import FormLabel from './FormLabel';
+import Helper from './Helper';
 
 type FormFieldProps<T extends FieldValues> = {
   label: string;
   placeholder: string;
   helper?: string;
-  fieldVariant?: "text" | "password" | "email";
+  fieldVariant?: 'text' | 'password' | 'email';
   control: Control<T>;
   name: Path<T>;
   rules?: Pick<
     RegisterOptions<T>,
-    "maxLength" | "minLength" | "pattern" | "validate" | "required"
+    'maxLength' | 'minLength' | 'pattern' | 'validate' | 'required'
   >;
 };
 
@@ -54,7 +60,7 @@ const FormField = <T extends FieldValues>({
 
       <Helper
         label={errorMessage || helper}
-        type={errorMessage ? "error" : "info"}
+        type={errorMessage ? 'error' : 'info'}
       />
     </StyledWrapper>
   );

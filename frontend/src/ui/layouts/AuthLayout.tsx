@@ -1,13 +1,13 @@
-"use client";
-import styled from "styled-components";
+'use client';
+import { usePathname } from 'next/navigation';
+import { ReactNode } from 'react';
+import styled from 'styled-components';
 
-import { usePathname } from "next/navigation";
-import OtherAuthMethods from "@/ui/screens/auth/components/OtherAuthMethods";
-import DontHaveAccount from "@/ui/screens/auth/components/DontHaveAccount";
-import Divider from "@/ui/components/Divider";
-import Header from "@/ui/screens/auth/components/Header";
-import { AuthScreenType } from "@/ui/screens/auth/types";
-import { ReactNode } from "react";
+import Divider from '@/ui/components/Divider';
+import DontHaveAccount from '@/ui/screens/auth/components/DontHaveAccount';
+import Header from '@/ui/screens/auth/components/Header';
+import OtherAuthMethods from '@/ui/screens/auth/components/OtherAuthMethods';
+import { AuthScreenType } from '@/ui/screens/auth/types';
 
 type AuthLayoutProps = {
   children: ReactNode;
@@ -15,12 +15,12 @@ type AuthLayoutProps = {
 
 const getScreenType = (pathname: string): AuthScreenType => {
   switch (pathname) {
-    case "/login":
-      return "login";
-    case "/signup":
-      return "signup";
+    case '/login':
+      return 'login';
+    case '/signup':
+      return 'signup';
     default:
-      return "welcome";
+      return 'welcome';
   }
 };
 
@@ -30,15 +30,17 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   const screenType = getScreenType(pathname);
 
   return (
-    <Container>
-      <Header screenType={screenType} />
-      <Content>
-        <ScreenContainer>{children}</ScreenContainer>
-        <Divider text={"or"} />
-        <OtherAuthMethods />
-        {screenType !== "signup" && <DontHaveAccount />}
-      </Content>
-    </Container>
+    <>
+      <Container>
+        <Header screenType={screenType} />
+        <Content>
+          <ScreenContainer>{children}</ScreenContainer>
+          <Divider text={'or'} />
+          <OtherAuthMethods />
+          {screenType !== 'signup' && <DontHaveAccount />}
+        </Content>
+      </Container>
+    </>
   );
 };
 

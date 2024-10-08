@@ -1,3 +1,3 @@
-import OnboardingStepsLayout from "@/ui/layouts/OnboardingStepsLayout";
+import OnboardingStepsLayout from '@/ui/layouts/OnboardingStepsLayout';
 
 export default OnboardingStepsLayout;

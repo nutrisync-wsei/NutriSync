@@ -1,19 +1,20 @@
-"use client";
-import { useLogin } from "@/api/auth/hooks";
-import { LoginFormValues } from "@/types/auth";
-import Button from "@/ui/components/controls/Button";
-import FormField from "@/ui/components/FormField";
-import { VALIDATION } from "@/utils/validation";
-import { useForm } from "react-hook-form";
-import styled from "styled-components";
+'use client';
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+
+import { useLogin } from '@/api/auth/hooks';
+import { LoginFormValues } from '@/types/auth';
+import Button from '@/ui/components/controls/Button';
+import FormField from '@/ui/components/FormField';
+import { VALIDATION } from '@/utils/validation';
 
 const LoginScreen = () => {
   const { mutate } = useLogin();
 
   const { control, handleSubmit } = useForm<LoginFormValues>({
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
@@ -22,9 +23,9 @@ const LoginScreen = () => {
       { email, password },
       {
         onSuccess: () => {
-          alert("Login successful");
+          alert('Login successful');
         },
-      }
+      },
     );
   };
 
@@ -37,10 +38,10 @@ const LoginScreen = () => {
         name="email"
         control={control}
         rules={{
-          required: "Email is required",
+          required: 'Email is required',
           pattern: {
             value: VALIDATION.REGEXP.EMAIL,
-            message: "Invalid email format",
+            message: 'Invalid email format',
           },
         }}
       />
@@ -51,10 +52,10 @@ const LoginScreen = () => {
         name="password"
         control={control}
         rules={{
-          required: "Password is required",
+          required: 'Password is required',
           pattern: {
             value: VALIDATION.REGEXP.PASSWORD,
-            message: "Invalid password format",
+            message: 'Invalid password format',
           },
         }}
       />

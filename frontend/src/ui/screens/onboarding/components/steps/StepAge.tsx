@@ -1,5 +1,5 @@
-import SliderPicker from "../../../../components/SliderPicker";
-import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
+import SliderPicker from '@/components/SliderPicker';
+import { useOnboardingSteps } from '@/contexts/OnboardingStepsContext';
 
 const MIN_AGE = 10;
 const MAX_AGE = 100;

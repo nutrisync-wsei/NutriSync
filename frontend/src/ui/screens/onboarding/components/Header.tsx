@@ -1,63 +1,52 @@
-import styled from "styled-components";
-import Text from "@/components/Text";
-import { Step, useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
+import styled from 'styled-components';
 
-type HeaderItem = {
-  title: string;
-  subtitle: string;
-};
-
-const headerTexts: Record<Step, HeaderItem> = {
-  gender: {
-    title: "Gender",
-    subtitle: "Choose your",
-  },
-  age: {
-    title: "Age",
-    subtitle: "Enter your",
-  },
-  weight: {
-    title: "Weight",
-    subtitle: "Enter your",
-  },
-  height: {
-    title: "Height",
-    subtitle: "Enter your",
-  },
-  activityLevel: {
-    title: "Activity Level",
-    subtitle: "Access your",
-  },
-  goal: {
-    title: "Goal",
-    subtitle: "Define your",
-  },
-};
+import LogoWithText from '@/ui/components/LogoWithText';
 
 const Header = () => {
-  const { currentStep } = useOnboardingSteps();
-
   return (
     <Container>
-      <Subtitle>{headerTexts[currentStep].subtitle}</Subtitle>
-      <Title>{headerTexts[currentStep].title}</Title>
+      <LimeCircle />
+      <WhiteCircle />
+      <LogoContainer>
+        <LogoWithText width={170} />
+      </LogoContainer>
     </Container>
   );
 };
 
 const Container = styled.div`
-  margin-top: 80px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100vw;
+  height: 40vh;
+  background-color: ${({ theme }) => theme.palette.primaryDark};
+  padding: 0 20px;
 `;
 
-const Title = styled(Text.H2)`
-  text-align: center;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.palette.text};
+const LogoContainer = styled.div`
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
-const Subtitle = styled(Text.Subtitle)`
-  text-align: center;
-  color: ${({ theme }) => theme.palette.dark};
+const WhiteCircle = styled.div`
+  position: absolute;
+  width: 120%;
+  height: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -35%;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.palette.light};
+`;
+
+const LimeCircle = styled(WhiteCircle)`
+  width: 120%;
+  top: -8%;
+  background-color: ${({ theme }) => theme.palette.secondary};
 `;
 
 export default Header;

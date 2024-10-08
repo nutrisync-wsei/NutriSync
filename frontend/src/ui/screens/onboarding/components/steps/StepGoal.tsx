@@ -1,29 +1,28 @@
-import SliderPicker from "../../../../components/SliderPicker";
-import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
+import styled from 'styled-components';
 
-import { UserData } from "@/api/user/types";
-import Button from "../../../../components/controls/Button";
-import styled from "styled-components";
+import { UserData } from '@/api/user/types';
+import Button from '@/components/controls/Button';
+import { useOnboardingSteps } from '@/contexts/OnboardingStepsContext';
 
 type GoalButtonProps = {
-  goal: UserData["goal"];
+  goal: UserData['goal'];
 };
 
 const GOALS: {
-  type: UserData["goal"];
+  type: UserData['goal'];
   name: string;
 }[] = [
   {
-    type: "lose_weight",
-    name: "Lose weight",
+    type: 'lose_weight',
+    name: 'Lose weight',
   },
   {
-    type: "maintain_weight",
-    name: "Maintain weight",
+    type: 'maintain_weight',
+    name: 'Maintain weight',
   },
   {
-    type: "gain_weight",
-    name: "Gain weight",
+    type: 'gain_weight',
+    name: 'Gain weight',
   },
 ];
 
@@ -37,7 +36,7 @@ const GoalButton = ({ goal }: GoalButtonProps) => {
   return (
     <Button
       onClick={handleClick}
-      variant={data?.goal === goal ? "secondary" : "tertiary"}
+      variant={data?.goal === goal ? 'secondary' : 'tertiary'}
     >
       {GOALS.find((item) => item.type === goal)?.name}
     </Button>

@@ -1,5 +1,5 @@
-import { ChangeEvent } from "react";
-import styled from "styled-components";
+import { ChangeEvent } from 'react';
+import styled from 'styled-components';
 interface SliderProps {
   value: number;
   min: number;
@@ -47,7 +47,9 @@ const StyledSlider = styled.input<{ value: number; max: number }>`
     border-radius: 50%;
     background: white;
     cursor: pointer;
-    box-shadow: 0px 5.5px 5px -3px #0e0e2c33, 0px -1px 0px 0px #0e0e2c66 inset;
+    box-shadow:
+      0px 5.5px 5px -3px #0e0e2c33,
+      0px -1px 0px 0px #0e0e2c66 inset;
   }
 
   &::-moz-range-thumb {
@@ -56,7 +58,9 @@ const StyledSlider = styled.input<{ value: number; max: number }>`
     border-radius: 50%;
     background: white;
     cursor: pointer;
-    box-shadow: 0px 5.5px 5px -3px #0e0e2c33, 0px -1px 0px 0px #0e0e2c66 inset;
+    box-shadow:
+      0px 5.5px 5px -3px #0e0e2c33,
+      0px -1px 0px 0px #0e0e2c66 inset;
   }
 `;
 

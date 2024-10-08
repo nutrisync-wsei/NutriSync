@@ -1,13 +1,14 @@
-import { ReactNode, useEffect, useState } from "react";
-import { Breakpoint, useBreakpoint } from "@/contexts/BreakpointContext";
-import theme, { Theme } from "@/ui/theme";
-import { ThemeProvider as WebThemeProvider } from "styled-components";
+import { ReactNode, useEffect, useState } from 'react';
+import { ThemeProvider as WebThemeProvider } from 'styled-components';
 
-const sortedBreakpoints: Exclude<Breakpoint, "mobile">[] = [
-  "wideDesktop",
-  "desktop",
-  "smallDesktop",
-  "tablet",
+import { Breakpoint, useBreakpoint } from '@/contexts/BreakpointContext';
+import theme, { Theme } from '@/ui/theme';
+
+const sortedBreakpoints: Exclude<Breakpoint, 'mobile'>[] = [
+  'wideDesktop',
+  'desktop',
+  'smallDesktop',
+  'tablet',
 ];
 
 const ThemeProvider = ({
@@ -23,18 +24,18 @@ const ThemeProvider = ({
   const matchDarkMediaQuery = () => {
     return (
       window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
+      window.matchMedia('(prefers-color-scheme: dark)').matches
     );
   };
 
   useEffect(() => {
     setDarkMode(matchDarkMediaQuery());
 
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = () => setDarkMode(mediaQuery.matches);
 
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
   const globalTheme: Theme = {
@@ -44,17 +45,17 @@ const ThemeProvider = ({
     },
     select: ({ dark, light }) => (darkMode ? dark : light),
     media: {
-      tablet: (styles) => (isBreakpointActive("tablet") ? styles : ""),
+      tablet: (styles) => (isBreakpointActive('tablet') ? styles : ''),
       smallDesktop: (styles) =>
-        isBreakpointActive("smallDesktop") ? styles : "",
-      desktop: (styles) => (isBreakpointActive("desktop") ? styles : ""),
+        isBreakpointActive('smallDesktop') ? styles : '',
+      desktop: (styles) => (isBreakpointActive('desktop') ? styles : ''),
       wideDesktop: (styles) =>
-        isBreakpointActive("wideDesktop") ? styles : "",
+        isBreakpointActive('wideDesktop') ? styles : '',
     },
     breakpoint: (breakpointStyles) => {
       const validBreakpoint = sortedBreakpoints.find(
         (breakpoint) =>
-          breakpoint in breakpointStyles && isBreakpointActive(breakpoint)
+          breakpoint in breakpointStyles && isBreakpointActive(breakpoint),
       );
       if (validBreakpoint) {
         const value = breakpointStyles[validBreakpoint];

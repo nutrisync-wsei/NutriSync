@@ -1,18 +1,19 @@
-import LogoImage from "@/assets/images/Logo.png";
-import LogoTextImage from "@/assets/images/LogoText.png";
-import WaveTopImage from "@/assets/images/WaveTop.png";
-import WaveBottomImage from "@/assets/images/WaveBottom.png";
-import styled from "styled-components";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
+import LogoImage from '@/assets/images/Logo.png';
+import LogoTextImage from '@/assets/images/LogoText.png';
+import WaveBottomImage from '@/assets/images/WaveBottom.png';
+import WaveTopImage from '@/assets/images/WaveTop.png';
 
 const LoadingWaves = () => {
-  const [waveHeight, setWaveHeight] = useState("30vh");
+  const [waveHeight, setWaveHeight] = useState('30vh');
   const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
     setTimeout(() => {
-      setWaveHeight("60vh");
+      setWaveHeight('60vh');
     }, 500);
 
     setTimeout(() => {

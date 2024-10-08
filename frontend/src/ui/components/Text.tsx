@@ -1,6 +1,7 @@
-"use client";
-import styled, { css } from "styled-components";
-import fonts from "@/ui/typography";
+'use client';
+import styled, { css } from 'styled-components';
+
+import fonts from '@/ui/typography';
 
 const RubikBlack = css`
   font-family: ${fonts.RubikBlack.style.fontFamily};

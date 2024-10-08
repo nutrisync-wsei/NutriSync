@@ -1,5 +1,5 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { useState } from 'react';
+import styled from 'styled-components';
 
 interface ToggleProps {
   initialState?: boolean;
@@ -29,7 +29,7 @@ const ToggleContainer = styled.div<{ toggled: boolean }>`
   width: 72px;
   height: 40px;
   background-color: ${(props: { toggled: boolean }) =>
-    props.toggled ? "#F5C19E" : "#ECF1F4"};
+    props.toggled ? '#F5C19E' : '#ECF1F4'};
   border-radius: 24px;
   display: flex;
   align-items: center;
@@ -46,5 +46,5 @@ const ToggleKnob = styled.div<{ toggled: boolean }>`
   box-shadow: 0px 5.5px 5px -3px #0e0e2c33;
   transition: transform 0.3s ease;
   transform: ${(props: { toggled: boolean }) =>
-    props.toggled ? "trantextX(32px)" : "trantextX(0px)"};
+    props.toggled ? 'trantextX(32px)' : 'trantextX(0px)'};
 `;
