@@ -1,5 +1,7 @@
+import { ReactNode } from "react";
+
 type AuthWallProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const AuthWallLayout = ({ children }: AuthWallProps) => {
