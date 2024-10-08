@@ -1,5 +1,10 @@
-import { useController } from 'react-hook-form';
-import { Control, FieldValues, Path, RegisterOptions } from 'react-hook-form';
+import {
+  Control,
+  FieldValues,
+  Path,
+  RegisterOptions,
+  useController,
+} from 'react-hook-form';
 import styled from 'styled-components';
 
 import TextField from './controls/TextField';

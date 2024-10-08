@@ -1,13 +1,13 @@
 'use client';
 import { usePathname } from 'next/navigation';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 
-import OtherAuthMethods from "@/ui/screens/auth/components/OtherAuthMethods";
-import DontHaveAccount from "@/ui/screens/auth/components/DontHaveAccount";
-import Divider from "@/ui/components/Divider";
-import Header from "@/ui/screens/auth/components/Header";
-import { AuthScreenType } from "@/ui/screens/auth/types";
-import { ReactNode } from "react";
+import Divider from '@/ui/components/Divider';
+import DontHaveAccount from '@/ui/screens/auth/components/DontHaveAccount';
+import Header from '@/ui/screens/auth/components/Header';
+import OtherAuthMethods from '@/ui/screens/auth/components/OtherAuthMethods';
+import { AuthScreenType } from '@/ui/screens/auth/types';
 
 type AuthLayoutProps = {
   children: ReactNode;
