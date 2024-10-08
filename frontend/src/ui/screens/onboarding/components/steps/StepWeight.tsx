@@ -1,5 +1,5 @@
-import SliderPicker from "../../../../components/SliderPicker";
-import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
+import SliderPicker from '@/components/SliderPicker';
+import { useOnboardingSteps } from '@/contexts/OnboardingStepsContext';
 
 const MIN_WEIGHT = 20;
 const MAX_WEIGHT = 200;

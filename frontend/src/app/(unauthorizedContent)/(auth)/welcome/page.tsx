@@ -1,4 +1,4 @@
-import WelcomeScreen from "@/ui/screens/auth/WelcomeScreen";
+import WelcomeScreen from '@/ui/screens/auth/WelcomeScreen';
 
 const Welcome = () => {
   return <WelcomeScreen />;

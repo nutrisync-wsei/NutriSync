@@ -1,9 +1,11 @@
-"use client";
-import styled from "styled-components";
-import Header from "./components/Header";
-import Text from "@/components/Text";
-import Button from "@/ui/components/controls/Button";
-import { useRouter } from "next/navigation";
+'use client';
+import { useRouter } from 'next/navigation';
+import styled from 'styled-components';
+
+import Text from '@/components/Text';
+import Button from '@/ui/components/controls/Button';
+
+import Header from './components/Header';
 
 const OnboardingScreen = () => {
   const router = useRouter();
@@ -20,7 +22,7 @@ const OnboardingScreen = () => {
         <ButtonsContainer>
           <Button
             onClick={() => {
-              router.push("/onboarding/steps");
+              router.push('/onboarding/steps');
             }}
           >
             Let's go!
@@ -28,7 +30,7 @@ const OnboardingScreen = () => {
           <Button
             variant="tertiary"
             onClick={() => {
-              router.push("/home");
+              router.push('/home');
             }}
           >
             Nah, I want to skip

@@ -11,6 +11,8 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'next',
     'prettier',
+    'plugin:import/errors',
+    'plugin:import/warnings'
   ],
   ignorePatterns: [
     '.eslintrc.js',
@@ -36,14 +38,27 @@ module.exports = {
     react: {
       version: 'detect',
     },
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@", "./src"],
+          ["@/components", "./src/ui/components"]
+        ],
+        "extensions": [".ts", ".tsx", ".js", ".jsx", ".json"]
+      }
+    },
   },
-  plugins: ['react', 'prettier', 'simple-import-sort'],
+  plugins: ['react', 'prettier', 'simple-import-sort', '@stylistic/js', "simple-import-sort"],
   rules: {
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+    '@stylistic/js/quotes': ['error', "single"],
+    '@stylistic/js/jsx-quotes': ['error', "prefer-double"],
+    '@stylistic/js/quote-props': ['error', "as-needed"],
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-shadow': ['error'],
-    '@typescript-eslint/quotes': ['error', 'single', { avoidEscape: true }],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
@@ -141,7 +156,7 @@ module.exports = {
             arrowParens: 'always',
             bracketSameLine: false,
             bracketSpacing: true,
-            endOfLine: 'lf',
+            endOfLine: 'auto',
             printWidth: 80,
             quoteProps: 'as-needed',
             requirePragma: false,

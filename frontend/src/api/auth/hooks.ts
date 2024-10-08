@@ -1,6 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
-import AUTH_QUERIES from "./queries";
-import AUTH_KEYS from "./keys";
+import { useMutation } from '@tanstack/react-query';
+
+import AUTH_KEYS from './keys';
+import AUTH_QUERIES from './queries';
 
 export const useLogin = () => {
   return useMutation({

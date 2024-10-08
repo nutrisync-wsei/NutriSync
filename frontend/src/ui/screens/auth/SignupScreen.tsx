@@ -1,16 +1,16 @@
-"use client";
-import { useSignup } from "@/api/auth/hooks";
-import { SignupFormValues } from "@/types/auth";
-import Button from "@/ui/components/controls/Button";
-import FormField from "@/ui/components/FormField";
-import { VALIDATION } from "@/utils/validation";
-import { Sign } from "crypto";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import styled from "styled-components";
+'use client';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+
+import { useSignup } from '@/api/auth/hooks';
+import { SignupFormValues } from '@/types/auth';
+import Button from '@/ui/components/controls/Button';
+import FormField from '@/ui/components/FormField';
+import { VALIDATION } from '@/utils/validation';
 
 type SignupForm = SignupFormValues & {
-  "confirm-password": string;
+  'confirm-password': string;
 };
 
 const SignupScreen = () => {
@@ -20,9 +20,9 @@ const SignupScreen = () => {
 
   const { control, watch, handleSubmit } = useForm<SignupForm>({
     defaultValues: {
-      email: "",
-      password: "",
-      name: "",
+      email: '',
+      password: '',
+      name: '',
     },
   });
 
@@ -31,10 +31,10 @@ const SignupScreen = () => {
       { email, password, name },
       {
         onSuccess: () => {
-          alert("Signup successful");
-          router.push("/login");
+          alert('Signup successful');
+          router.push('/login');
         },
-      }
+      },
     );
   };
 
@@ -46,7 +46,7 @@ const SignupScreen = () => {
         name="name"
         control={control}
         rules={{
-          required: "Name is required",
+          required: 'Name is required',
         }}
       />
       <FormField
@@ -56,10 +56,10 @@ const SignupScreen = () => {
         name="email"
         control={control}
         rules={{
-          required: "Email is required",
+          required: 'Email is required',
           pattern: {
             value: VALIDATION.REGEXP.EMAIL,
-            message: "Invalid email format",
+            message: 'Invalid email format',
           },
         }}
       />
@@ -70,10 +70,10 @@ const SignupScreen = () => {
         name="password"
         control={control}
         rules={{
-          required: "Password is required",
+          required: 'Password is required',
           pattern: {
             value: VALIDATION.REGEXP.PASSWORD,
-            message: "Invalid password format",
+            message: 'Invalid password format',
           },
         }}
       />
@@ -85,8 +85,8 @@ const SignupScreen = () => {
         name="confirm-password"
         rules={{
           validate: (val: string) => {
-            if (watch("password") != val) {
-              return "Your passwords do no match";
+            if (watch('password') != val) {
+              return 'Your passwords do no match';
             }
           },
         }}

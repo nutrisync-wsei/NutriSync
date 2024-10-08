@@ -1,24 +1,24 @@
-import { Rubik } from "next/font/google";
-import localFont from "next/font/local";
+import { Rubik } from 'next/font/google';
+import localFont from 'next/font/local';
 
-const Monaco = localFont({ src: "../assets/fonts/Monaco.ttf" });
+const Monaco = localFont({ src: '../assets/fonts/Monaco.ttf' });
 
 const RubikBlack = Rubik({
-  weight: "900",
-  subsets: ["latin"],
-  display: "swap",
+  weight: '900',
+  subsets: ['latin'],
+  display: 'swap',
 });
-const RubikBold = Rubik({ weight: "700", subsets: ["latin"], display: "swap" });
+const RubikBold = Rubik({ weight: '700', subsets: ['latin'], display: 'swap' });
 const RubikMedium = Rubik({
-  weight: "500",
-  subsets: ["latin"],
-  display: "swap",
+  weight: '500',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 const RubikLight = Rubik({
-  weight: "400",
-  subsets: ["latin"],
-  display: "swap",
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 const fonts = {

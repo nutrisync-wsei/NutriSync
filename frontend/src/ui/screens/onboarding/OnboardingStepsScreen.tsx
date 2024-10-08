@@ -1,12 +1,13 @@
-"use client";
-import { useOnboardingSteps } from "@/contexts/OnboardingStepsContext";
-import Button from "@/ui/components/controls/Button";
-import LogoWithText from "@/ui/components/LogoWithText";
-import Content from "@/ui/screens/onboarding/components/steps/Content";
-import Header from "@/ui/screens/onboarding/components/steps/Header";
-import ProgressBar from "@/ui/screens/onboarding/components/ProgressBar";
-import styled from "styled-components";
-import { useRouter } from "next/navigation";
+'use client';
+import { useRouter } from 'next/navigation';
+import styled from 'styled-components';
+
+import { useOnboardingSteps } from '@/contexts/OnboardingStepsContext';
+import Button from '@/ui/components/controls/Button';
+import LogoWithText from '@/ui/components/LogoWithText';
+import ProgressBar from '@/ui/screens/onboarding/components/ProgressBar';
+import Content from '@/ui/screens/onboarding/components/steps/Content';
+import Header from '@/ui/screens/onboarding/components/steps/Header';
 
 const OnboardingStepsScreen = () => {
   const router = useRouter();
@@ -43,7 +44,7 @@ const OnboardingStepsScreen = () => {
           onClick={isLastStepIndex ? submitData : nextStep}
           disabled={!data?.[currentStep]}
         >
-          {isLastStepIndex ? "Submit" : "Next"}
+          {isLastStepIndex ? 'Submit' : 'Next'}
         </Button>
       </ButtonsContainer>
     </Container>

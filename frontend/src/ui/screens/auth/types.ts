@@ -1,1 +1,1 @@
-export type AuthScreenType = "login" | "signup" | "welcome";
+export type AuthScreenType = 'login' | 'signup' | 'welcome';

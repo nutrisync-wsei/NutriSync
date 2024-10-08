@@ -1,4 +1,4 @@
-import OnboardingCompletedScreen from "@/ui/screens/onboarding/OnboardingCompletedScreen";
+import OnboardingCompletedScreen from '@/ui/screens/onboarding/OnboardingCompletedScreen';
 
 const OnboardingCompleted = () => {
   return <OnboardingCompletedScreen />;

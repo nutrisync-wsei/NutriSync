@@ -1,7 +1,8 @@
-import Icon from "@/assets/Icon";
-import { use, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import Text from "@/ui/components/Text";
+import { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
+
+import Icon from '@/assets/Icon';
+import Text from '@/ui/components/Text';
 
 const ITEM_WIDTH = 2;
 const ITEM_GAP = 16;
@@ -30,15 +31,16 @@ const SliderPicker = ({
 
   useEffect(() => {
     onChangeValue(value);
-  }, [value]);
+  }, [value, onChangeValue]);
 
   useEffect(() => {
-    typeof initialValue !== "undefined" &&
+    if (typeof initialValue !== 'undefined') {
       ref?.current?.scrollTo({
         left: (initialValue - min) * ITEM_SIZE,
-        behavior: "instant",
+        behavior: 'instant',
       });
-  }, [initialValue]);
+    }
+  }, [initialValue, min]);
 
   return (
     <Container>

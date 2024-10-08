@@ -1,5 +1,6 @@
-import LogoWithText from "@/ui/components/LogoWithText";
-import styled from "styled-components";
+import styled from 'styled-components';
+
+import LogoWithText from '@/ui/components/LogoWithText';
 
 const Header = () => {
   return (

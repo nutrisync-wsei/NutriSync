@@ -1,4 +1,4 @@
-import { ContextProvider } from "@/contexts";
+import { ContextProvider } from '@/contexts';
 
 type RootLayoutProps = Readonly<{
   children: React.ReactNode;

@@ -1,14 +1,15 @@
-"use client";
-import Button from "@/ui/components/controls/Button";
-import { useRouter } from "next/navigation";
-import styled from "styled-components";
+'use client';
+import { useRouter } from 'next/navigation';
+import styled from 'styled-components';
+
+import Button from '@/ui/components/controls/Button';
 
 const WelcomeScreen = () => {
   const router = useRouter();
 
   return (
     <Container>
-      <Button variant="primary" onClick={() => router.push("login")}>
+      <Button variant="primary" onClick={() => router.push('login')}>
         Sign in with email
       </Button>
     </Container>

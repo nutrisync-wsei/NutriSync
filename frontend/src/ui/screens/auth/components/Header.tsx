@@ -1,12 +1,13 @@
-import { useState } from "react";
-import styled from "styled-components";
-import Text from "@/ui/components/Text";
-import CircleLimeImage from "@/assets/images/CircleLime.png";
-import CircleGreyImage from "@/assets/images/CircleGrey.png";
-import LogoImage from "@/assets/images/Logo.png";
-import LogoTextImage from "@/assets/images/LogoText.png";
-import Image from "next/image";
-import { AuthScreenType } from "../types";
+import Image from 'next/image';
+import { useState } from 'react';
+import styled from 'styled-components';
+
+import CircleGreyImage from '@/assets/images/CircleGrey.png';
+import CircleLimeImage from '@/assets/images/CircleLime.png';
+import LogoImage from '@/assets/images/Logo.png';
+import LogoTextImage from '@/assets/images/LogoText.png';
+import Text from '@/ui/components/Text';
+import { AuthScreenType } from '@/ui/screens/auth/types';
 
 type HeaderProps = {
   screenType: AuthScreenType;
@@ -14,12 +15,12 @@ type HeaderProps = {
 
 const getHeaderTitle = (screenType: AuthScreenType): string => {
   switch (screenType) {
-    case "login":
-      return "Sign in";
-    case "signup":
-      return "Sign up";
+    case 'login':
+      return 'Sign in';
+    case 'signup':
+      return 'Sign up';
     default:
-      return "Welcome";
+      return 'Welcome';
   }
 };
 
@@ -45,7 +46,7 @@ const Header = ({ screenType }: HeaderProps) => {
         </LogoContainer>
         <TextContainer>
           <Title>{headerTitle}</Title>
-          {screenType === "welcome" && (
+          {screenType === 'welcome' && (
             <Subtitle>
               Some text here that you should sign in or sign up to be healthy
             </Subtitle>
