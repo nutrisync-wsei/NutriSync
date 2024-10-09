@@ -224,18 +224,21 @@ export class AuthController {
     res.cookie('accessToken', tokens.accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 3600000 // 1 hour
+      maxAge: 3600000, // 1 hour
+      sameSite: 'none'
     })
     res.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 86400000 // 24 hours
+      maxAge: 86400000, // 24 hours
+      sameSite: 'none'
     })
     if (userInfo) {
       res.cookie('userInfo', JSON.stringify(userInfo), {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 86400000 // 24 hours
+        maxAge: 86400000, // 24 hours
+        sameSite: 'none'
       })
     }
   }

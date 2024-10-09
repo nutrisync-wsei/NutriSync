@@ -8,10 +8,16 @@ const login = async ({ email, password }: LoginFormValues) => {
     throw new Error('Email and password are required');
   }
 
-  const { data } = await axios.post(`${API_URL}/auth/login`, {
-    email,
-    password,
-  });
+  const { data } = await axios.post(
+    `${API_URL}/auth/login`,
+    {
+      email,
+      password,
+    },
+    {
+      withCredentials: true,
+    },
+  );
 
   return data;
 };

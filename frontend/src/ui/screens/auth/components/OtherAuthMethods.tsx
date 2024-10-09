@@ -5,9 +5,6 @@ import Icon from '@/assets/Icon';
 const OtherAuthMethods = () => {
   return (
     <Container>
-      <IconContainer>
-        <FacebookIcon />
-      </IconContainer>
       <IconContainer href="http://localhost:3001/auth/spotify">
         <SpotifyIcon />
       </IconContainer>
