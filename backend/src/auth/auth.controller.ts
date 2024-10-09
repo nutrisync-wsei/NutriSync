@@ -219,24 +219,21 @@ export class AuthController {
   private setResponseCookies(
     res: Response,
     tokens: { accessToken: string; refreshToken: string },
-    userInfo?: { username: string; email: string }
+    userInfo?: { username: string; email: string; id: string }
   ) {
     res.cookie('accessToken', tokens.accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       maxAge: 3600000, // 1 hour
       sameSite: 'none'
     })
     res.cookie('refreshToken', tokens.refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       maxAge: 86400000, // 24 hours
       sameSite: 'none'
     })
     if (userInfo) {
       res.cookie('userInfo', JSON.stringify(userInfo), {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,
         maxAge: 86400000, // 24 hours
         sameSite: 'none'
       })
@@ -275,18 +272,13 @@ export class AuthController {
       },
       {
         username: user.displayName,
-        email: user.emails[0].value
+        email: user.emails[0].value,
+        id: user.id
       }
     )
 
-    return res.status(200).json({
-      accessToken,
-      refreshToken,
-      user: {
-        username: user.displayName,
-        email: user.emails[0].value
-      }
-    })
+    // TODO: Change it, at least to env variable
+    res.redirect('http://localhost:3000')
   }
 
   @ApiExcludeEndpoint()
@@ -321,17 +313,12 @@ export class AuthController {
       },
       {
         username: user.username,
-        email: user.emails[0].value
+        email: user.emails[0].value,
+        id: user.id
       }
     )
 
-    return res.status(200).json({
-      accessToken,
-      refreshToken,
-      user: {
-        username: user.username,
-        email: user.emails[0].value
-      }
-    })
+    // TODO: Change it, at least to env variable
+    res.redirect('http://localhost:3000')
   }
 }

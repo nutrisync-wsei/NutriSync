@@ -2,6 +2,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactNode } from 'react';
 
+import { AuthProvider } from '@/contexts/AuthContext';
 import { BreakpointProvider } from '@/contexts/BreakpointContext';
 import { ThemeProvider } from '@/contexts/ThemeProvider';
 
@@ -16,7 +17,7 @@ export function ContextProvider({ children }: ContextProviderProps) {
     <BreakpointProvider>
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <AuthProvider>{children}</AuthProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </BreakpointProvider>

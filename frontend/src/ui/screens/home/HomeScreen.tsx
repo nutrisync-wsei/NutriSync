@@ -1,5 +1,10 @@
+'use client';
+import { useAuth } from '@/contexts/AuthContext';
+
 const HomeScreen = () => {
-  return <div>Home</div>;
+  const authUser = useAuth();
+
+  return <div>{authUser ? `Welcome, ${authUser.username}!` : 'Welcome!'}</div>;
 };
 
 export default HomeScreen;
