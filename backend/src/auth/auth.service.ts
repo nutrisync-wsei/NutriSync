@@ -59,10 +59,13 @@ export class AuthService {
     if (!isPasswordValid)
       throw new UnauthorizedException(Messages.WRONG_CREDENTIALS)
 
-    const { accessToken } = await this.generateUserTokens(user._id as string)
+    const { accessToken, refreshToken } = await this.generateUserTokens(
+      user._id as string
+    )
 
     return {
       accessToken,
+      refreshToken,
       user: {
         username: user.name,
         email: user.email
