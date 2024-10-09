@@ -13,9 +13,9 @@ export class UserProfileService {
   ) {}
 
   async create(profileData: UserProfileDto) {
-    const { userId } = profileData
+    const { user } = profileData
 
-    const infoInUse = await this.findByUserId(userId)
+    const infoInUse = await this.findByUserId(user)
 
     if (infoInUse) throw new BadRequestException(Messages.USER_PROFILE_EXISTS)
 
