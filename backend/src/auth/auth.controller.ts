@@ -56,7 +56,6 @@ export class AuthController {
     try {
       this.authService.signUp(signUpData)
 
-      // TODO: Should we login user here?
       return res
         .status(HttpStatus.CREATED)
         .send({ message: Messages.ACCOUNT_CREATED })
@@ -82,6 +81,15 @@ export class AuthController {
     try {
       const result = await this.authService.login(credentials)
 
+      this.setResponseCookies(
+        res,
+        {
+          accessToken: result.accessToken,
+          refreshToken: result.refreshToken
+        },
+        result.user
+      )
+
       return res.status(HttpStatus.OK).send(result)
     } catch (error) {
       this.handleException(error, res)
@@ -105,6 +113,12 @@ export class AuthController {
       const result = await this.authService.refreshToken(
         refreshTokenDto.refreshToken
       )
+
+      this.setResponseCookies(res, {
+        accessToken: result.accessToken,
+        refreshToken: result.refreshToken
+      })
+
       return res.status(HttpStatus.OK).send(result)
     } catch (error) {
       this.handleException(error, res)
@@ -191,6 +205,8 @@ export class AuthController {
     if (error instanceof BadRequestException) {
       return res.status(HttpStatus.BAD_REQUEST).send({ message: error.message })
     } else if (error instanceof UnauthorizedException) {
+      res.clearCookie('accessToken')
+      res.clearCookie('refreshToken')
       return res
         .status(HttpStatus.UNAUTHORIZED)
         .send({ message: error.message })
@@ -198,6 +214,30 @@ export class AuthController {
       return res.status(HttpStatus.NOT_FOUND).send({ message: error.message })
     }
     throw error
+  }
+
+  private setResponseCookies(
+    res: Response,
+    tokens: { accessToken: string; refreshToken: string },
+    userInfo?: { username: string; email: string; id: string }
+  ) {
+    res.cookie('accessToken', tokens.accessToken, {
+      secure: true,
+      maxAge: 3600000, // 1 hour
+      sameSite: 'none'
+    })
+    res.cookie('refreshToken', tokens.refreshToken, {
+      secure: true,
+      maxAge: 86400000, // 24 hours
+      sameSite: 'none'
+    })
+    if (userInfo) {
+      res.cookie('userInfo', JSON.stringify(userInfo), {
+        secure: true,
+        maxAge: 86400000, // 24 hours
+        sameSite: 'none'
+      })
+    }
   }
 
   @ApiExcludeEndpoint()
@@ -218,20 +258,27 @@ export class AuthController {
       return
     }
 
-    const { accessToken } = await this.authService.validateOAuthUser(
-      user.emails[0].value,
-      user.displayName
+    const { accessToken, refreshToken } =
+      await this.authService.validateOAuthUser(
+        user.emails[0].value,
+        user.displayName
+      )
+
+    this.setResponseCookies(
+      res,
+      {
+        accessToken,
+        refreshToken
+      },
+      {
+        username: user.displayName,
+        email: user.emails[0].value,
+        id: user.id
+      }
     )
 
-    res.set('authorization', `Bearer ${accessToken}`)
-
-    return res.status(200).json({
-      accessToken,
-      user: {
-        username: user.displayName,
-        email: user.emails[0].value
-      }
-    })
+    // TODO: Change it, at least to env variable
+    res.redirect('http://localhost:3000')
   }
 
   @ApiExcludeEndpoint()
@@ -252,19 +299,26 @@ export class AuthController {
       return
     }
 
-    const { accessToken } = await this.authService.validateOAuthUser(
-      user.emails[0].value,
-      user.username
+    const { accessToken, refreshToken } =
+      await this.authService.validateOAuthUser(
+        user.emails[0].value,
+        user.username
+      )
+
+    this.setResponseCookies(
+      res,
+      {
+        accessToken,
+        refreshToken
+      },
+      {
+        username: user.username,
+        email: user.emails[0].value,
+        id: user.id
+      }
     )
 
-    res.set('authorization', `Bearer ${accessToken}`)
-
-    return res.status(200).json({
-      accessToken,
-      user: {
-        username: user.username,
-        email: user.emails[0].value
-      }
-    })
+    // TODO: Change it, at least to env variable
+    res.redirect('http://localhost:3000')
   }
 }

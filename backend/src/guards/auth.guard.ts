@@ -21,8 +21,7 @@ export class AuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request: CtxRequest = ctx.switchToHttp().getRequest()
 
-    const token = this.extractTokenFromHeader(request)
-
+    const token = this.extractTokenFromRequest(request)
     if (!token) throw new UnauthorizedException(Messages.INVALID_TOKEN)
 
     try {
@@ -36,7 +35,13 @@ export class AuthGuard implements CanActivate {
     return true
   }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    return request.headers['authorization']?.split(' ')[1]
+  private extractTokenFromRequest(request: Request): string | undefined {
+    if (!request.headers.authorization) return undefined
+
+    const [bearer, token] = request.headers.authorization.split(' ')
+
+    if (bearer !== 'Bearer' || !token) return undefined
+
+    return token
   }
 }

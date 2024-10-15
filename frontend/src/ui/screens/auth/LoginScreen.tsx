@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -10,6 +11,7 @@ import { VALIDATION } from '@/utils/validation';
 
 const LoginScreen = () => {
   const { mutate } = useLogin();
+  const router = useRouter();
 
   const { control, handleSubmit } = useForm<LoginFormValues>({
     defaultValues: {
@@ -22,9 +24,7 @@ const LoginScreen = () => {
     mutate(
       { email, password },
       {
-        onSuccess: () => {
-          alert('Login successful');
-        },
+        onSuccess: () => router.push('/onboarding'),
       },
     );
   };

@@ -13,7 +13,7 @@ import { ActivityLevel, Gender, Goal } from '../types/types'
 export class UserProfileDto {
   @ApiProperty({ type: String, description: 'User MongoDB ID' })
   @IsString()
-  userId: string
+  user: string
 
   @ApiProperty({ type: Number })
   @IsInt()

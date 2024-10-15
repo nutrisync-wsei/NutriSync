@@ -1,9 +1,7 @@
 export enum ActivityLevel {
-  SEDENTARY = 'sedentary',
-  LIGHTLY_ACTIVE = 'lightly_active',
-  MODERATELY_ACTIVE = 'moderately_active',
-  VERY_ACTIVE = 'very_active',
-  EXTRA_ACTIVE = 'extra_active'
+  LOW = 'low',
+  MIDDLE = 'middle',
+  HIGH = 'high'
 }
 
 export enum Goal {
@@ -18,9 +16,7 @@ export enum Gender {
 }
 
 export const ACTIVITY_MULTIPLIERS = {
-  [ActivityLevel.SEDENTARY]: 1.2,
-  [ActivityLevel.LIGHTLY_ACTIVE]: 1.55,
-  [ActivityLevel.MODERATELY_ACTIVE]: 1.725,
-  [ActivityLevel.VERY_ACTIVE]: 1.9,
-  [ActivityLevel.EXTRA_ACTIVE]: 2.2
+  [ActivityLevel.LOW]: 1.2,
+  [ActivityLevel.MIDDLE]: 1.55,
+  [ActivityLevel.HIGH]: 1.9
 }

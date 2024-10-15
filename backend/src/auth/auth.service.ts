@@ -59,13 +59,17 @@ export class AuthService {
     if (!isPasswordValid)
       throw new UnauthorizedException(Messages.WRONG_CREDENTIALS)
 
-    const { accessToken } = await this.generateUserTokens(user._id as string)
+    const { accessToken, refreshToken } = await this.generateUserTokens(
+      user._id as string
+    )
 
     return {
       accessToken,
+      refreshToken,
       user: {
         username: user.name,
-        email: user.email
+        email: user.email,
+        id: user.id
       }
     }
   }
@@ -148,7 +152,7 @@ export class AuthService {
 
   async generateUserTokens(userId: UserId) {
     const accessToken = this.jwtService.sign({ userId }, { expiresIn: '1h' })
-    const refreshToken = uuidv4()
+    const refreshToken = `${uuidv4()}-${uuidv4()}`
 
     await this.storeRefreshToken(refreshToken, userId as string)
     return {

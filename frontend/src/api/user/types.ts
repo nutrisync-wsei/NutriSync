@@ -12,4 +12,4 @@ export type UserData = {
   weight: UserWeight;
   activityLevel: UserActivityLevel;
   goal: UserGoal;
-};
+} & { user: string };

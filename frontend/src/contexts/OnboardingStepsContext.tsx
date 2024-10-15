@@ -14,6 +14,8 @@ import {
 import { useUpdateUserProfile } from '@/api/user/hooks';
 import { UserData } from '@/api/user/types';
 
+import { useAuth } from './AuthContext';
+
 export type Step =
   | 'gender'
   | 'age'
@@ -58,6 +60,7 @@ export const OnboardingStepsProvider = ({
   const router = useRouter();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [data, setData] = useState<OnboardingData>();
+  const authUser = useAuth();
 
   const { mutate: updateUserProfile } = useUpdateUserProfile();
 
@@ -72,11 +75,12 @@ export const OnboardingStepsProvider = ({
   }, []);
 
   const submitData = useCallback(() => {
-    if (data) updateUserProfile(data);
+    if (data && authUser?.id)
+      updateUserProfile({ ...data, user: authUser?.id });
 
     // TODO: redirect on query success, for now query gets an error
     router.push('/onboarding/completed');
-  }, [data, router, updateUserProfile]);
+  }, [data, router, updateUserProfile, authUser]);
 
   const value = useMemo(
     () => ({
