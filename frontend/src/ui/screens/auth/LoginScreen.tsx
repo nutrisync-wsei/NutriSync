@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import styled from 'styled-components';
 
 import { useLogin } from '@/api/auth/hooks';
@@ -24,7 +25,13 @@ const LoginScreen = () => {
     mutate(
       { email, password },
       {
-        onSuccess: () => router.push('/onboarding'),
+        onSuccess: () => {
+          toast('You are successfully logged!');
+          router.push('/onboarding');
+        },
+        onError: () => {
+          toast.error('Check your credentials!');
+        },
       },
     );
   };

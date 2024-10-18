@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import styled from 'styled-components';
 
 import { useSignup } from '@/api/auth/hooks';
@@ -31,8 +32,11 @@ const SignupScreen = () => {
       { email, password, name },
       {
         onSuccess: () => {
-          alert('Signup successful');
+          toast('You are successfully signed up!');
           router.push('/login');
+        },
+        onError: () => {
+          toast('Could not sign up. Please try again.');
         },
       },
     );

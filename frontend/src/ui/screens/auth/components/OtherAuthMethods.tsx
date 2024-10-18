@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 
+import { API_URL } from '@/api/config';
 import Icon from '@/assets/Icon';
 
 const OtherAuthMethods = () => {
   return (
     <Container>
-      <IconContainer href="http://localhost:3001/auth/spotify">
+      <IconContainer href={`${API_URL}/auth/spotify`}>
         <SpotifyIcon />
       </IconContainer>
-      <IconContainer href="http://localhost:3001/auth/github">
+      <IconContainer href={`${API_URL}/auth/github`}>
         <GithubIcon />
       </IconContainer>
     </Container>
