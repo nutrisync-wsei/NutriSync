@@ -1,10 +1,16 @@
-'use client';
-import { useAuth } from '@/contexts/AuthContext';
+"use client";
+import { useAuth } from "@/contexts/AuthContext";
+import Button from "@/ui/components/controls/Button";
 
 const HomeScreen = () => {
-  const authUser = useAuth();
+  const { authUser, logout } = useAuth();
 
-  return <div>{authUser ? `Welcome, ${authUser.username}!` : 'Welcome!'}</div>;
+  return (
+    <div>
+      {authUser ? `Welcome, ${authUser.username}!` : "Welcome!"}
+      <Button onClick={logout}>Logout</Button>
+    </div>
+  );
 };
 
 export default HomeScreen;
