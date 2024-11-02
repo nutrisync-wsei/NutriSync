@@ -13,6 +13,7 @@ export default function Home() {
       <Link href="/welcome">Go to auth</Link>
       <Link href="/onboarding">Go to onboarding</Link>
       <Link href="/home">Go to home</Link>
+      <Link href="/allergies">Go to allergies</Link>
       <Button onClick={logout}>Logout</Button>
     </Container>
   );

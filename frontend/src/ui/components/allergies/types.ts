@@ -1,0 +1,17 @@
+export type Allergy =
+  | 'celery-free'
+  | 'crustacean-free'
+  | 'dairy-free'
+  | 'egg-free'
+  | 'fish-free'
+  | 'gluten-free'
+  | 'lupine-free'
+  | 'mustard-free'
+  | 'peanut-free'
+  | 'sesame-free'
+  | 'shellfish-free'
+  | 'soy-free'
+  | 'tree-nut-free'
+  | 'wheat-free'
+  | 'fodmap-free'
+  | 'immuno-supportive';
