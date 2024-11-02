@@ -1,13 +1,13 @@
-"use client";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+'use client';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 import {
   createContext,
   ReactNode,
   useContext,
   useEffect,
   useState,
-} from "react";
+} from 'react';
 
 type AuthUser = {
   id: string;
@@ -26,7 +26,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within a AuthProvider");
+  if (!context) throw new Error('useAuth must be used within a AuthProvider');
   return context;
 };
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -35,10 +35,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const getAuthDataFromCookies = () => {
-      const accessToken = Cookies.get("accessToken");
-      const refreshToken = Cookies.get("refreshToken");
+      const accessToken = Cookies.get('accessToken');
+      const refreshToken = Cookies.get('refreshToken');
 
-      const userInfo = Cookies.get("userInfo");
+      const userInfo = Cookies.get('userInfo');
 
       if (accessToken && refreshToken && userInfo) {
         setAuthUser({
@@ -57,12 +57,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const logout = () => {
-    Cookies.remove("accessToken", { path: "/" });
-    Cookies.remove("refreshToken", { path: "/" });
-    Cookies.remove("userInfo", { path: "/" });
+    Cookies.remove('accessToken', { path: '/' });
+    Cookies.remove('refreshToken', { path: '/' });
+    Cookies.remove('userInfo', { path: '/' });
     setAuthUser(null);
 
-    router.push("/login");
+    router.push('/login');
   };
 
   return (

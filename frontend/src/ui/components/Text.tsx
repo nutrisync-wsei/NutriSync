@@ -66,6 +66,18 @@ const SmallMonaco = styled.small`
   font-weight: 400;
 `;
 
+const SmallestLight = styled.small`
+  ${RubikLight}
+  font-size: 12px;
+  line-height: 140%;
+`;
+
+const TinyLight = styled.small`
+  ${RubikLight}
+  font-size: 8px;
+  line-height: 140%;
+`;
+
 const PreTitle = styled.span`
   ${RubikBold}
   font-size: 10px;
@@ -97,6 +109,8 @@ const Text = {
   Subtitle,
   Body,
   Small,
+  SmallestLight,
+  TinyLight,
   SmallMonaco,
   PreTitle,
   ButtonText,

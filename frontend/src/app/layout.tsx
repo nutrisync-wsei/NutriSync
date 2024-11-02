@@ -1,4 +1,5 @@
 import './globals.css';
+import 'react-circular-progressbar/dist/styles.css';
 
 import type { Metadata } from 'next';
 

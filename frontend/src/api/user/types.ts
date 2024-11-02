@@ -13,3 +13,9 @@ export type UserData = {
   activityLevel: UserActivityLevel;
   goal: UserGoal;
 } & { user: string };
+
+export type UserHealthIndicators = {
+  BMI: number;
+  BMR: number;
+  TDEE: number;
+};

@@ -24,7 +24,7 @@ const TextField = ({
       <StyledInput
         type="text"
         isValid={isValid}
-        hasError={hasError}
+        $hasError={hasError}
         disabled={disabled}
         {...rest}
       />
@@ -84,7 +84,11 @@ const getBoxShadow = (
   return 'none';
 };
 
-const StyledInput = styled.input<TextFieldProps>`
+const StyledInput = styled.input<
+  TextFieldProps & {
+    $hasError?: boolean;
+  }
+>`
   width: 100%;
   height: 100%;
   border-radius: 8px;

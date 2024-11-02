@@ -12,7 +12,7 @@ const GenderButton = ({ gender }: GenderButtonProps) => {
   const { data, setData } = useOnboardingSteps();
 
   const handleClick = () => {
-    setData({ ...data, gender });
+    setData({ ...data, gender: gender });
   };
 
   return (

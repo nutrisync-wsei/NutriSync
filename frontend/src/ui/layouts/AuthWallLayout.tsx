@@ -9,14 +9,14 @@ type AuthWallProps = {
 };
 
 const AuthWallLayout = ({ children }: AuthWallProps) => {
-  const auth = useAuth();
+  const { authUser } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!auth) {
+    if (!authUser) {
       router.push('/login');
     }
-  }, [auth, router]);
+  }, [authUser, router]);
 
   return children;
 };

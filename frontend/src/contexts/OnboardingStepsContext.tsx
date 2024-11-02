@@ -1,5 +1,5 @@
-"use client";
-import { useRouter } from "next/navigation";
+'use client';
+import { useRouter } from 'next/navigation';
 import {
   createContext,
   Dispatch,
@@ -9,30 +9,30 @@ import {
   useContext,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
-import { useUpdateUserProfile } from "@/api/user/hooks";
-import { UserData } from "@/api/user/types";
+import { useCreateUserProfile } from '@/api/user/hooks';
+import { UserData } from '@/api/user/types';
 
-import { useAuth } from "./AuthContext";
+import { useAuth } from './AuthContext';
 
 export type Step =
-  | "gender"
-  | "age"
-  | "height"
-  | "weight"
-  | "activityLevel"
-  | "goal";
+  | 'gender'
+  | 'age'
+  | 'height'
+  | 'weight'
+  | 'activityLevel'
+  | 'goal';
 
 type OnboardingData = Partial<UserData>;
 
 const onboardingSteps: Step[] = [
-  "gender",
-  "age",
-  "height",
-  "weight",
-  "activityLevel",
-  "goal",
+  'gender',
+  'age',
+  'height',
+  'weight',
+  'activityLevel',
+  'goal',
 ] as const;
 
 const numberOfSteps = onboardingSteps.length;
@@ -49,7 +49,7 @@ type OnboardingStepsContextType = {
 };
 
 const OnboardingStepsContext = createContext<OnboardingStepsContextType | null>(
-  null
+  null,
 );
 
 export const OnboardingStepsProvider = ({
@@ -62,11 +62,11 @@ export const OnboardingStepsProvider = ({
   const [data, setData] = useState<OnboardingData>();
   const { authUser } = useAuth();
 
-  const { mutate: updateUserProfile } = useUpdateUserProfile();
+  const { mutate: createUserProfile } = useCreateUserProfile();
 
-  const handleStepChange = useCallback((direction: "next" | "prev") => {
+  const handleStepChange = useCallback((direction: 'next' | 'prev') => {
     setCurrentStepIndex((prev) => {
-      if (direction === "next") {
+      if (direction === 'next') {
         return Math.min(prev + 1, numberOfSteps - 1);
       } else {
         return Math.max(prev - 1, 0);
@@ -75,12 +75,13 @@ export const OnboardingStepsProvider = ({
   }, []);
 
   const submitData = useCallback(() => {
-    if (data && authUser?.id)
-      updateUserProfile({ ...data, user: authUser?.id });
+    if (data && authUser?.id) {
+      createUserProfile({ ...data, user: authUser?.id });
+    }
 
     // TODO: redirect on query success, for now query gets an error
-    router.push("/onboarding/completed");
-  }, [data, router, updateUserProfile, authUser]);
+    router.push('/onboarding/completed');
+  }, [data, router, createUserProfile, authUser]);
 
   const value = useMemo(
     () => ({
@@ -90,10 +91,10 @@ export const OnboardingStepsProvider = ({
       data,
       setData,
       submitData,
-      nextStep: () => handleStepChange("next"),
-      prevStep: () => handleStepChange("prev"),
+      nextStep: () => handleStepChange('next'),
+      prevStep: () => handleStepChange('prev'),
     }),
-    [currentStepIndex, data, submitData, handleStepChange]
+    [currentStepIndex, data, submitData, handleStepChange],
   );
 
   return (
@@ -107,7 +108,7 @@ export const useOnboardingSteps = () => {
   const context = useContext(OnboardingStepsContext);
   if (!context) {
     throw new Error(
-      "useOnboardingSteps must be used within an OnboardingStepsProvider"
+      'useOnboardingSteps must be used within an OnboardingStepsProvider',
     );
   }
   return context;
