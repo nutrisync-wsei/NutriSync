@@ -1,10 +1,9 @@
 import axiosInstance from '@/api/axiosSetup';
-import { API_URL } from '@/api/config';
 
 import { UserData, UserHealthIndicators } from './types';
 
 const getUserProfile = async ({ userId }: { userId: string }) => {
-  const { data } = await axiosInstance.get(`${API_URL}/user-profile/${userId}`);
+  const { data } = await axiosInstance.get(`/user-profile/${userId}`);
 
   return data;
 };
@@ -12,19 +11,16 @@ const getUserProfile = async ({ userId }: { userId: string }) => {
 const getHealthIndicators = async (
   userData: UserData,
 ): Promise<UserHealthIndicators> => {
-  const { data } = await axiosInstance.post(
-    `${API_URL}/health-indicators/metrics`,
-    {
-      ...userData,
-      gender: 'male',
-    },
-  );
+  const { data } = await axiosInstance.post('/health-indicators/metrics', {
+    ...userData,
+    gender: 'male',
+  });
 
   return data;
 };
 
 const createUserProfile = async (user: string, userData: Partial<UserData>) => {
-  const { data } = await axiosInstance.post(`${API_URL}/user-profile`, {
+  const { data } = await axiosInstance.post('/user-profile', {
     user,
     ...userData,
   });
@@ -36,12 +32,9 @@ const updateExtendedUserProfile = async (
   user: string,
   userData: Partial<UserData>,
 ) => {
-  const { data } = await axiosInstance.put(
-    `${API_URL}/user-profile/${user}/extended`,
-    {
-      ...userData,
-    },
-  );
+  const { data } = await axiosInstance.put(`/user-profile/${user}/extended`, {
+    ...userData,
+  });
 
   return data;
 };

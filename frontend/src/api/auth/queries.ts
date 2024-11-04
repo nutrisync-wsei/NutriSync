@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-// import { API_URL } from '@/api/config';
+import axiosInstance from '@/api/axiosSetup';
 import { LoginFormValues, SignupFormValues } from '@/types/auth';
 
 const login = async ({ email, password }: LoginFormValues) => {
@@ -8,8 +6,8 @@ const login = async ({ email, password }: LoginFormValues) => {
     throw new Error('Email and password are required');
   }
 
-  const { data } = await axios.post(
-    'http://localhost:3001/auth/login',
+  const { data } = await axiosInstance.post(
+    '/auth/login',
     {
       email,
       password,
@@ -27,7 +25,7 @@ const signup = async ({ email, password, name }: SignupFormValues) => {
     throw new Error('Email, password and name are required');
   }
 
-  const { data } = await axios.post('http://localhost:3001/auth/signup', {
+  const { data } = await axiosInstance.post('/auth/signup', {
     name,
     email,
     password,

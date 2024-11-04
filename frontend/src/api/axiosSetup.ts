@@ -1,10 +1,8 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-import { API_URL } from './config';
-
 const axiosInstance = axios.create({
-  baseURL: API_URL,
+  baseURL: process.env.API_URL,
 });
 
 axiosInstance.interceptors.request.use((config) => {
