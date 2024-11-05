@@ -50,6 +50,7 @@ module.exports = {
   },
   plugins: ['react', 'prettier', 'simple-import-sort', '@stylistic/js', "simple-import-sort"],
   rules: {
+    "import/no-unresolved": "off",
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
     '@stylistic/js/quotes': ['error', "single"],
