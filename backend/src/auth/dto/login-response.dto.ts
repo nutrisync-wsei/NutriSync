@@ -7,6 +7,10 @@ export class LoginResponseDto {
   @IsString()
   accessToken: string
 
+  @ApiProperty()
+  @IsString()
+  refreshToken: string
+
   @ApiProperty({ type: UserDto })
   user: UserDto
 }

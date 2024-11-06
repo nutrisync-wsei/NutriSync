@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -11,9 +11,18 @@ type ReverseAuthWallLayoutProps = {
 const ReverseAuthWallLayout = ({ children }: ReverseAuthWallLayoutProps) => {
   const { authUser } = useAuth();
   const router = useRouter();
+  const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 
-  if (authUser) {
-    router.push('/home');
+  useEffect(() => {
+    setIsAuthCheckComplete(true);
+
+    if (authUser) {
+      router.push('/home');
+    }
+  }, [authUser, router]);
+
+  if (!isAuthCheckComplete) {
+    return <div>Loading...</div>;
   }
 
   return children;

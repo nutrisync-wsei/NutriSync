@@ -1,5 +1,4 @@
 'use client';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import {
   createContext,
@@ -34,34 +33,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const getAuthDataFromCookies = () => {
-      const accessToken = Cookies.get('accessToken');
-      const refreshToken = Cookies.get('refreshToken');
+    const getAuthDataFromLocalStorage = () => {
+      const user = localStorage.getItem('user');
+      const accessToken = localStorage.getItem('accessToken');
+      const refreshToken = localStorage.getItem('refreshToken');
 
-      const userInfo = Cookies.get('userInfo');
-
-      if (accessToken && refreshToken && userInfo) {
+      if (user && accessToken && refreshToken) {
         setAuthUser({
+          ...JSON.parse(user),
           accessToken,
           refreshToken,
-          ...JSON.parse(userInfo),
         });
       } else {
         setAuthUser(null);
       }
     };
 
-    getAuthDataFromCookies();
+    window.addEventListener('storage', getAuthDataFromLocalStorage);
 
-    return () => setAuthUser(null);
+    getAuthDataFromLocalStorage();
+
+    return () => {
+      window.removeEventListener('storage', getAuthDataFromLocalStorage);
+    };
   }, []);
 
   const logout = () => {
-    Cookies.remove('accessToken', { path: '/' });
-    Cookies.remove('refreshToken', { path: '/' });
-    Cookies.remove('userInfo', { path: '/' });
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
     setAuthUser(null);
 
+    window.dispatchEvent(new Event('storage'));
     router.push('/login');
   };
 

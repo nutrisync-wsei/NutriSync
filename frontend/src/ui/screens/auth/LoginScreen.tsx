@@ -25,7 +25,12 @@ const LoginScreen = () => {
     mutate(
       { email, password },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          localStorage.setItem('accessToken', data.accessToken);
+          localStorage.setItem('refreshToken', data.refreshToken);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          window.dispatchEvent(new Event('storage'));
+
           toast('You are successfully logged!');
           router.push('/onboarding');
         },
