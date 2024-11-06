@@ -79,18 +79,14 @@ export class AuthController {
     res: Response<LoginResponseDto>
   ) {
     try {
-      const result = await this.authService.login(credentials)
+      const { accessToken, refreshToken, user } =
+        await this.authService.login(credentials)
 
-      this.setResponseCookies(
-        res,
-        {
-          accessToken: result.accessToken,
-          refreshToken: result.refreshToken
-        },
-        result.user
-      )
-
-      return res.status(HttpStatus.OK).send(result)
+      return res.status(HttpStatus.OK).json({
+        accessToken,
+        refreshToken,
+        user
+      })
     } catch (error) {
       this.handleException(error, res)
     }
@@ -110,16 +106,14 @@ export class AuthController {
     @Res() res: Response<TokensDto>
   ) {
     try {
-      const result = await this.authService.refreshToken(
+      const { accessToken, refreshToken } = await this.authService.refreshToken(
         refreshTokenDto.refreshToken
       )
 
-      this.setResponseCookies(res, {
-        accessToken: result.accessToken,
-        refreshToken: result.refreshToken
+      return res.status(HttpStatus.OK).json({
+        accessToken,
+        refreshToken
       })
-
-      return res.status(HttpStatus.OK).send(result)
     } catch (error) {
       this.handleException(error, res)
     }
@@ -216,30 +210,6 @@ export class AuthController {
     throw error
   }
 
-  private setResponseCookies(
-    res: Response,
-    tokens: { accessToken: string; refreshToken: string },
-    userInfo?: { username: string; email: string; id: string }
-  ) {
-    res.cookie('accessToken', tokens.accessToken, {
-      secure: true,
-      maxAge: 3600000, // 1 hour
-      sameSite: 'none'
-    })
-    res.cookie('refreshToken', tokens.refreshToken, {
-      secure: true,
-      maxAge: 86400000, // 24 hours
-      sameSite: 'none'
-    })
-    if (userInfo) {
-      res.cookie('userInfo', JSON.stringify(userInfo), {
-        secure: true,
-        maxAge: 86400000, // 24 hours
-        sameSite: 'none'
-      })
-    }
-  }
-
   @ApiExcludeEndpoint()
   @UseGuards(SpotifyOauthGuard)
   @Get('spotify')
@@ -264,21 +234,15 @@ export class AuthController {
         user.displayName
       )
 
-    this.setResponseCookies(
-      res,
-      {
-        accessToken,
-        refreshToken
-      },
-      {
+    return res.status(HttpStatus.OK).json({
+      accessToken,
+      refreshToken,
+      user: {
         username: user.displayName,
         email: user.emails[0].value,
         id: user.id
       }
-    )
-
-    // TODO: Change it, at least to env variable
-    res.redirect('http://localhost:3000')
+    })
   }
 
   @ApiExcludeEndpoint()
@@ -305,20 +269,14 @@ export class AuthController {
         user.username
       )
 
-    this.setResponseCookies(
-      res,
-      {
-        accessToken,
-        refreshToken
-      },
-      {
+    return res.status(HttpStatus.OK).json({
+      accessToken,
+      refreshToken,
+      user: {
         username: user.username,
         email: user.emails[0].value,
         id: user.id
       }
-    )
-
-    // TODO: Change it, at least to env variable
-    res.redirect('http://localhost:3000')
+    })
   }
 }
