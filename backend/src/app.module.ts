@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MailerModule } from '@nestjs-modules/mailer'
 import { UserProfileModule } from './user-profile/user-profile.module'
 import { HealthIndicatorsModule } from './health-indicators/health-indicators.module'
+import { DietPlansModule } from './diet-plans/diet-plans.module'
 
 @Module({
   imports: [
@@ -45,7 +46,8 @@ import { HealthIndicatorsModule } from './health-indicators/health-indicators.mo
     }),
     AuthModule,
     UserProfileModule,
-    HealthIndicatorsModule
+    HealthIndicatorsModule,
+    DietPlansModule
   ],
   controllers: [AppController],
   providers: [AppService]

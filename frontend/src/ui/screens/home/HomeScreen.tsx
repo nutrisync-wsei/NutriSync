@@ -1,5 +1,5 @@
-'use client';
-import { styled } from 'styled-components';
+"use client";
+import { styled } from "styled-components";
 
 import axiosInstance from '@/api/axiosSetup';
 import { useAuth } from '@/contexts/AuthContext';
@@ -28,7 +28,7 @@ const HomeScreen = () => {
 
   return (
     <Container>
-      {authUser ? `Welcome, ${authUser.username}!` : 'Welcome!'}
+      {authUser ? `Welcome, ${authUser.username}!` : "Welcome!"}
 
       <BodyMetrics />
       <HealthIndicators />
