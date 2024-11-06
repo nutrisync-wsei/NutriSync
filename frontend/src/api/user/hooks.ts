@@ -21,32 +21,32 @@ export const useUserProfile = () => {
 
 export const useCreateUserProfile = () => {
   const { authUser } = useAuth();
-  const { refetchQueries } = useQueryClient();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationKey: [...USER_KEYS.CREATE_USER_PROFILE, authUser?.id],
     mutationFn: (userData: Partial<UserData>) =>
       USER_QUERIES.CREATE_USER_PROFILE(authUser?.id ?? '', userData),
     onSuccess: () =>
-      refetchQueries({
+      queryClient.invalidateQueries({
         queryKey: [...USER_KEYS.GET_USER_PROFILE, authUser?.id],
       }),
   });
 };
 
-export const useUpdateExtendedUserProfile = () => {
+export const useUpdateUserProfile = () => {
   const { authUser } = useAuth();
-  // const { refetchQueries } = useQueryClient();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationKey: [...USER_KEYS.UPDATE_USER_PROFILE, authUser?.id],
     mutationFn: (userData: Partial<UserData>) =>
-      USER_QUERIES.UPDATE_EXTENDED_USER_PROFILE(authUser?.id ?? '', userData),
-    // onSuccess: () => {
-    //   refetchQueries({
-    //     queryKey: [...USER_KEYS.GET_USER_PROFILE, authUser?.id],
-    //   });
-    // },
+      USER_QUERIES.UPDATE_USER_PROFILE(authUser?.id ?? '', userData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [...USER_KEYS.GET_USER_PROFILE, authUser?.id],
+      });
+    },
   });
 };
 

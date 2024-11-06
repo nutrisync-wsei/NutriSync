@@ -4,7 +4,6 @@ import { UserProfile } from './schemas/user-profile.schema'
 import { Model } from 'mongoose'
 import { UserProfileDto } from './dto/user-profile.dto'
 import { Messages } from 'src/messages'
-import { BodyDimensionsDto } from './dto/body-dimensions.dto'
 
 @Injectable()
 export class UserProfileService {
@@ -26,7 +25,7 @@ export class UserProfileService {
     return await this.UserProfileModel.findOne({ user: userId })
   }
 
-  async update(userId: string, profileData: UserProfileDto) {
+  async update(userId: string, profileData: Partial<UserProfileDto>) {
     const userExists = await this.findByUserId(userId)
 
     if (!userExists)
@@ -34,26 +33,12 @@ export class UserProfileService {
 
     return await this.UserProfileModel.findOneAndUpdate(
       { user: userId },
-      profileData,
+      { $set: profileData },
       { new: true }
     )
   }
 
   async delete(userId: string) {
     return await this.UserProfileModel.findOneAndDelete({ user: userId })
-  }
-
-  async updateBodyDimensions(
-    userId: string,
-    bodyDimensions: BodyDimensionsDto
-  ) {
-    const userProfile = await this.findByUserId(userId)
-
-    if (!userProfile)
-      throw new BadRequestException(Messages.USER_PROFILE_NOT_FOUND)
-
-    Object.assign(userProfile, bodyDimensions)
-
-    return await userProfile.save()
   }
 }

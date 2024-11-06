@@ -12,3 +12,17 @@ export type User = Pick<Credentials, 'email'> & {
 export type LoginFormValues = Pick<Credentials, 'email' | 'password'>;
 export type SignupFormValues = Pick<Credentials, 'email' | 'password'> &
   Pick<User, 'name'>;
+
+export type AuthUser = {
+  id: string;
+  email: string;
+  username: string;
+  accessToken: string;
+  refreshToken: string;
+};
+
+export type AuthContextType = {
+  authUser: AuthUser | null;
+  setAuthUser: (user: AuthUser | null) => void;
+  logout: () => void;
+};

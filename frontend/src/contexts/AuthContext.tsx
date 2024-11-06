@@ -8,18 +8,8 @@ import {
   useState,
 } from 'react';
 
-type AuthUser = {
-  id: string;
-  email: string;
-  username: string;
-  accessToken: string;
-  refreshToken: string;
-};
-
-type AuthContextType = {
-  authUser: AuthUser | null;
-  logout: () => void;
-};
+import { AuthContextType, AuthUser } from '@/types/auth';
+import { getAuthDataFromLocalStorage } from '@/utils/authUtils';
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -33,28 +23,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const getAuthDataFromLocalStorage = () => {
-      const user = localStorage.getItem('user');
-      const accessToken = localStorage.getItem('accessToken');
-      const refreshToken = localStorage.getItem('refreshToken');
+    const handleStorage = () => getAuthDataFromLocalStorage(setAuthUser);
 
-      if (user && accessToken && refreshToken) {
-        setAuthUser({
-          ...JSON.parse(user),
-          accessToken,
-          refreshToken,
-        });
-      } else {
-        setAuthUser(null);
-      }
-    };
+    window.addEventListener('storage', handleStorage);
 
-    window.addEventListener('storage', getAuthDataFromLocalStorage);
-
-    getAuthDataFromLocalStorage();
+    handleStorage();
 
     return () => {
-      window.removeEventListener('storage', getAuthDataFromLocalStorage);
+      window.removeEventListener('storage', handleStorage);
     };
   }, []);
 
@@ -69,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ authUser, logout }}>
+    <AuthContext.Provider value={{ authUser, setAuthUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

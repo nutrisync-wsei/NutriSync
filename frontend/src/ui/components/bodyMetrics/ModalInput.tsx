@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 
-import { useUpdateExtendedUserProfile } from '@/api/user/hooks';
+import { useUpdateUserProfile } from '@/api/user/hooks';
 import Button from '@/components/controls/Button';
 import FormField from '@/components/FormField';
 import Text from '@/components/Text';
@@ -41,14 +41,14 @@ const ModalInput = ({
     },
   });
 
-  const { mutate: updateExtendedUserProfile } = useUpdateExtendedUserProfile();
+  const { mutate: updateUserProfile } = useUpdateUserProfile();
 
   const onSubmit = (data: { value: number | null }) => {
     const { value } = data;
 
     if (value === null) return;
 
-    updateExtendedUserProfile(
+    updateUserProfile(
       {
         [typeValue]: +value,
       },

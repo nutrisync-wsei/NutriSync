@@ -14,7 +14,13 @@ async function bootstrap() {
       'Origin, X-Requested-With, Content-Type, Accept, Authorization',
     methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS'
   })
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      skipMissingProperties: true
+    })
+  )
   app.use(cookieParser())
 
   const swaggerConfig = new DocumentBuilder()

@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Types, Document } from 'mongoose'
 import { User } from 'src/auth/schemas/user.schema'
+import { Gender } from '../types/types'
 
 @Schema()
 export class UserProfile extends Document {
@@ -22,11 +23,14 @@ export class UserProfile extends Document {
   @Prop({ required: true })
   goal: string
 
-  @Prop({ type: [String] })
-  dietaryRestrictions: string[]
+  @Prop({ required: true })
+  gender: Gender
 
   @Prop({ type: [String] })
-  medicalConditions: string[]
+  dietaryRestrictions?: string[]
+
+  @Prop({ type: [String] })
+  medicalConditions?: string[]
 
   @Prop()
   targetWeight?: number

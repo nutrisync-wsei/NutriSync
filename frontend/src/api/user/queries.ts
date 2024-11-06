@@ -28,11 +28,8 @@ const createUserProfile = async (user: string, userData: Partial<UserData>) => {
   return data;
 };
 
-const updateExtendedUserProfile = async (
-  user: string,
-  userData: Partial<UserData>,
-) => {
-  const { data } = await axiosInstance.put(`/user-profile/${user}/extended`, {
+const updateUserProfile = async (user: string, userData: Partial<UserData>) => {
+  const { data } = await axiosInstance.put(`/user-profile/${user}`, {
     ...userData,
   });
 
@@ -43,7 +40,7 @@ const USER_QUERIES = {
   GET_USER_PROFILE: getUserProfile,
   GET_HEALTH_INDICATORS: getHealthIndicators,
   CREATE_USER_PROFILE: createUserProfile,
-  UPDATE_EXTENDED_USER_PROFILE: updateExtendedUserProfile,
+  UPDATE_USER_PROFILE: updateUserProfile,
 };
 
 export default USER_QUERIES;

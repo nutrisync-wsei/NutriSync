@@ -82,7 +82,7 @@ const BodyMetrics = () => {
 
       {modalActiveType && (
         <ModalInput
-          initialValue={userData[modalActiveType] || 0}
+          initialValue={userData?.[modalActiveType] || 0}
           isModalOpen={isModalOpen}
           closeModal={closeModal}
           type={
