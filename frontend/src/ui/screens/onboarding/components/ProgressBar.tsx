@@ -9,7 +9,7 @@ const ProgressBar = () => {
   return (
     <Container>
       {Array.from({ length: numberOfSteps }, (_, i) => i).map((_, i) => (
-        <Step key={i} active={i <= currentStepIndex} />
+        <Step key={i} $active={i <= currentStepIndex} />
       ))}
     </Container>
   );
@@ -22,11 +22,11 @@ const Container = styled.div`
   gap: 14px;
 `;
 
-const Step = styled.div<{ active: boolean }>`
+const Step = styled.div<{ $active: boolean }>`
   flex: 1;
   height: 12px;
-  background-color: ${({ theme, active }) =>
-    active ? theme.palette.primary : theme.palette.tertiary};
+  background-color: ${({ theme, $active }) =>
+    $active ? theme.palette.primary : theme.palette.tertiary};
   margin-bottom: 10px;
   border-radius: 10px;
   transition: 0.2s;

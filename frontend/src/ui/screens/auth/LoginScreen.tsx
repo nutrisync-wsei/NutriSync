@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import styled from 'styled-components';
 
 import { useLogin } from '@/api/auth/hooks';
+import { useUserProfile } from '@/api/user/hooks';
 import { LoginFormValues } from '@/types/auth';
 import Button from '@/ui/components/controls/Button';
 import FormField from '@/ui/components/FormField';
@@ -13,6 +14,7 @@ import { VALIDATION } from '@/utils/validation';
 const LoginScreen = () => {
   const { mutate } = useLogin();
   const router = useRouter();
+  const { data: userProfile } = useUserProfile();
 
   const {
     control,
@@ -36,7 +38,9 @@ const LoginScreen = () => {
           window.dispatchEvent(new Event('storage'));
 
           toast('You are successfully logged!');
-          router.push('/onboarding');
+
+          if (!userProfile) router.push('/onboarding');
+          else router.push('/home');
         },
         onError: () => {
           toast.error('Check your credentials!');

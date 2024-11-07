@@ -8,9 +8,10 @@ import { RecipeDetailsDto } from './dtos/recipe-details.dto'
 import { ImageInfoDto } from './dtos/image-info.dto'
 import { IngredientDto } from './dtos/ingredient.dto'
 import { InjectModel } from '@nestjs/mongoose'
-import { RecipeDetails } from './schemas/diet-plan.schema'
+import { DayOfEating, Meal, RecipeDetails } from './schemas/diet-plan.schema'
 import { Model } from 'mongoose'
 import { NutrientInfoDto } from './dtos/nutrient-info.dto'
+import { mapIndexToWeekDay } from './utilts'
 
 @Injectable()
 export class DietPlansService {
@@ -18,7 +19,11 @@ export class DietPlansService {
     private httpService: HttpService,
     private configService: ConfigService,
     @InjectModel(RecipeDetails.name)
-    private recipeDetailsModel: Model<RecipeDetails>
+    private recipeDetailsModel: Model<RecipeDetails>,
+    @InjectModel(DayOfEating.name)
+    private dayOfEatingModel: Model<DayOfEating>,
+    @InjectModel(Meal.name)
+    private mealModel: Model<Meal>
   ) {}
 
   generateDietPlan(userId: string) {
@@ -141,20 +146,26 @@ export class DietPlansService {
         map(response => response.data),
         switchMap(data => {
           return from(data.selection).pipe(
-            mergeMap(selection => {
+            mergeMap((selection, index) => {
+              const dayOfWeek = mapIndexToWeekDay(index)
               return from(Object.entries(selection.sections)).pipe(
-                mergeMap(([mealType, details]) =>
-                  this.lookupRecipe(details.assigned).pipe(
+                mergeMap(([mealType, details]) => {
+                  return this.lookupRecipe(details.assigned).pipe(
                     tap(recipeDetails => {
-                      this.storeRecipeForUser(userId, mealType, recipeDetails)
+                      this.storeRecipeForUser(
+                        userId,
+                        mealType,
+                        recipeDetails,
+                        dayOfWeek
+                      )
                     })
                   )
-                )
+                })
               )
             })
           )
         }),
-        map(() => `Diet Plan processing completed for user.`)
+        map(() => `Diet Plan processing completed for user ${userId}.`) // Informacja końcowa
       )
   }
 
@@ -170,9 +181,9 @@ export class DietPlansService {
       'label',
       'dietLabels',
       'healthLabels',
-      'calories',
       'totalNutrients',
       'uri',
+      'image',
       'calories',
       'glycemixIndex'
     ]
@@ -236,7 +247,6 @@ export class DietPlansService {
             const imageInfo = recipe.image
               ? new ImageInfoDto(recipe.image)
               : undefined
-
             return new RecipeDetailsDto(
               recipe.label,
               imageInfo,
@@ -258,38 +268,40 @@ export class DietPlansService {
   private async storeRecipeForUser(
     userId: string,
     mealType: string,
-    recipeDetailsDto: RecipeDetailsDto
+    recipeDetailsDto: RecipeDetailsDto,
+    day: string
   ) {
-    const recipeDetails = new this.recipeDetailsModel({
+    let dayOfEating = await this.dayOfEatingModel.findOne({
       user: userId,
-      label: `[${mealType}] ${recipeDetailsDto[0].label}`,
-      image: recipeDetailsDto[0].image
-        ? {
-            url: recipeDetailsDto[0].image.url
-          }
-        : null,
-      url: recipeDetailsDto[0].url,
-      calories: recipeDetailsDto[0].calories,
-      ingredients: recipeDetailsDto[0].ingredients.map(ing => ({
-        text: ing.text,
-        quantity: ing.quantity,
-        measure: ing.measure,
-        food: ing.food,
-        weight: ing.weight,
-        foodId: ing.foodId,
-        image: ing.image ? { url: ing.image.url } : { url: '' }
-      })),
-      nutrients: recipeDetailsDto[0].nutrients.map(nut => ({
-        label: nut.label,
-        quantity: nut.quantity,
-        unit: nut.unit
-      }))
+      day
     })
 
+    const meal = new this.mealModel({
+      recipeDetails: {
+        user: userId,
+        label: `[${mealType}] ${recipeDetailsDto[0].label}`,
+        image: recipeDetailsDto[0].image,
+        url: recipeDetailsDto[0].url,
+        calories: recipeDetailsDto[0].calories,
+        ingredients: recipeDetailsDto[0].ingredients,
+        nutrients: recipeDetailsDto[0].nutrients
+      }
+    })
+
+    if (!dayOfEating) {
+      dayOfEating = new this.dayOfEatingModel({
+        user: userId,
+        day,
+        meals: [meal]
+      })
+    } else {
+      dayOfEating.meals.push(meal)
+    }
+
     try {
-      await recipeDetails.save()
+      await dayOfEating.save()
     } catch (error) {
-      console.error('Error saving recipe details:', error)
+      console.error('Error saving day of eating:', error)
     }
   }
 }

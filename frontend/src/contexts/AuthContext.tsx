@@ -25,9 +25,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const handleStorage = () => getAuthDataFromLocalStorage(setAuthUser);
 
-    window.addEventListener('storage', handleStorage);
-
     handleStorage();
+
+    window.addEventListener('storage', handleStorage);
 
     return () => {
       window.removeEventListener('storage', handleStorage);

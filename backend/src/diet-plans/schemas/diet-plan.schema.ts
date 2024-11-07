@@ -75,3 +75,36 @@ export class RecipeDetails extends Document {
 }
 
 export const RecipeDetailsSchema = SchemaFactory.createForClass(RecipeDetails)
+
+@Schema()
+export class Meal {
+  @Prop({ required: true, type: RecipeDetailsSchema })
+  recipeDetails: RecipeDetails
+}
+
+export const MealSchema = SchemaFactory.createForClass(Meal)
+
+@Schema()
+export class DayOfEating {
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  user: User | Types.ObjectId
+
+  @Prop({ type: [MealSchema], default: [] })
+  meals: Meal[]
+
+  @Prop()
+  day: string
+}
+
+export const DayOfEatingSchema = SchemaFactory.createForClass(DayOfEating)
+
+@Schema()
+export class WeekOfEating {
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  user: User | Types.ObjectId
+
+  @Prop({ type: [DayOfEatingSchema], default: [] })
+  days: DayOfEating[]
+}
+
+export const WeekOfEatingSchema = SchemaFactory.createForClass(WeekOfEating)

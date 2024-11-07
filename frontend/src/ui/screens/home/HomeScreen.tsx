@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { styled } from 'styled-components';
 
-import axiosInstance from '@/api/axiosSetup';
+import { useGenerateDietPlan } from '@/api/diet/hooks';
 import { useUserProfile } from '@/api/user/hooks';
 import { useAuth } from '@/contexts/AuthContext';
 import BodyMetrics from '@/ui/components/bodyMetrics';
@@ -13,24 +13,9 @@ const HomeScreen = () => {
   const { authUser, logout } = useAuth();
   const router = useRouter();
   const { data: userProfile, isFetched } = useUserProfile();
+  const { mutate: generatePlans } = useGenerateDietPlan();
 
   if (!userProfile && isFetched) router.push('/onboarding');
-
-  const getPlans = async () => {
-    const response = await axiosInstance.post(
-      `/diet-plans/generateDietPlan/${authUser?.id}`,
-    );
-
-    console.log(response);
-  };
-
-  const getMeals = async () => {
-    const response = await axiosInstance.get(
-      `/diet-plans/getMeals/${authUser?.id}`,
-    );
-
-    console.log(response);
-  };
 
   if (!userProfile) return null;
 
@@ -44,8 +29,7 @@ const HomeScreen = () => {
         BMR={userProfile.BMR}
         TDEE={userProfile.TDEE}
       />
-      <Button onClick={getPlans}>Get plans</Button>
-      <Button onClick={getMeals}>Get meals</Button>
+      <Button onClick={() => generatePlans()}>Get plans</Button>
       <Button onClick={logout}>Logout</Button>
     </Container>
   );

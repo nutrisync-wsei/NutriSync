@@ -234,15 +234,30 @@ export class AuthController {
         user.displayName
       )
 
-    const serializedUser = JSON.stringify({
-      username: user.displayName,
-      email: user.emails[0].value,
-      id: user.id
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: true
     })
 
-    res.redirect(
-      `http://localhost:3000/home?accessToken=${accessToken}&refreshToken=${refreshToken}&user=${serializedUser}`
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true
+    })
+
+    res.cookie(
+      'user',
+      JSON.stringify({
+        username: user.displayName,
+        email: user.emails[0].value,
+        id: user.id
+      }),
+      {
+        httpOnly: true,
+        secure: true
+      }
     )
+
+    res.redirect('http://localhost:3000/home')
   }
 
   @ApiExcludeEndpoint()
@@ -269,14 +284,40 @@ export class AuthController {
         user.username
       )
 
-    const serializedUser = JSON.stringify({
-      username: user.username,
-      email: user.emails[0].value,
-      id: user.id
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: true
     })
 
-    res.redirect(
-      `http://localhost:3000/home?accessToken=${accessToken}&refreshToken=${refreshToken}&user=${serializedUser}`
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true
+    })
+
+    res.cookie(
+      'user',
+      JSON.stringify({
+        username: user.displayName,
+        email: user.emails[0].value,
+        id: user.id
+      }),
+      {
+        httpOnly: true,
+        secure: true
+      }
     )
+
+    res.redirect('http://localhost:3000/home')
+  }
+
+  @Get('session')
+  @ApiOperation({ summary: 'Get cookies sent in request [endpoint for oauth]' })
+  @ApiResponse({ status: 200, description: 'Sending back cookies' })
+  async getSession(@Req() req: any) {
+    return {
+      accessToken: req.cookies.accessToken,
+      refreshToken: req.cookies.refreshToken,
+      user: req.cookies.user
+    }
   }
 }
