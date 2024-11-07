@@ -29,9 +29,6 @@ export class UserProfile extends Document {
   @Prop({ type: [String] })
   dietaryRestrictions?: string[]
 
-  @Prop({ type: [String] })
-  medicalConditions?: string[]
-
   @Prop()
   targetWeight?: number
 
@@ -55,6 +52,15 @@ export class UserProfile extends Document {
 
   @Prop()
   calfCircumference?: number
+
+  @Prop()
+  BMI?: number
+
+  @Prop()
+  BMR?: number
+
+  @Prop()
+  TDEE?: number
 }
 
 export const UserProfileSchema = SchemaFactory.createForClass(UserProfile)

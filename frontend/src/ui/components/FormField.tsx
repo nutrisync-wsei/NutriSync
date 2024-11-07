@@ -22,6 +22,7 @@ type FormFieldProps<T extends FieldValues> = {
     RegisterOptions<T>,
     'maxLength' | 'minLength' | 'pattern' | 'validate' | 'required'
   >;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const FormField = <T extends FieldValues>({
@@ -32,6 +33,7 @@ const FormField = <T extends FieldValues>({
   fieldVariant,
   control,
   rules,
+  onKeyDown,
 }: FormFieldProps<T>) => {
   const {
     field: { value, onChange, onBlur },
@@ -56,6 +58,7 @@ const FormField = <T extends FieldValues>({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        onKeyDown={onKeyDown}
       />
 
       <Helper

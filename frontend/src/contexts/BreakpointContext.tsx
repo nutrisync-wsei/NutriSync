@@ -1,4 +1,4 @@
-import React, {
+import {
   createContext,
   ReactNode,
   useContext,
@@ -45,12 +45,15 @@ const widthToBreakpoint = (width: number): Breakpoint => {
 };
 
 export const BreakpointProvider = ({ children }: { children: ReactNode }) => {
-  const [windowSize, setWindowSize] = useState(window.innerWidth);
+  const [windowSize, setWindowSize] = useState<number>(0);
   const [currentBreakpoint, setCurrentBreakpoint] = useState<Breakpoint>(
     widthToBreakpoint(windowSize),
   );
 
   useEffect(() => {
+    setWindowSize(window.innerWidth);
+    setCurrentBreakpoint(widthToBreakpoint(window.innerWidth));
+
     const handleResize = () => {
       setWindowSize(window.innerWidth);
       setCurrentBreakpoint(widthToBreakpoint(window.innerWidth));

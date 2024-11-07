@@ -35,7 +35,7 @@ const OnboardingStepsScreen = () => {
       </ContentContainer>
       <ButtonsContainer>
         <Button
-          variant="tertiary"
+          $variant="tertiary"
           onClick={isFirstStepIndex ? router.back : prevStep}
         >
           Back

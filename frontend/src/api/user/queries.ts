@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import axiosInstance from '@/api/axiosSetup';
 
 import { UserData, UserHealthIndicators } from './types';
@@ -8,12 +10,11 @@ const getUserProfile = async ({ userId }: { userId: string }) => {
   return data;
 };
 
-const getHealthIndicators = async (
+const setHealthIndicators = async (
   userData: UserData,
 ): Promise<UserHealthIndicators> => {
   const { data } = await axiosInstance.post('/health-indicators/metrics', {
-    ...userData,
-    gender: 'male',
+    ..._.omit(userData, ['_id', '__v']),
   });
 
   return data;
@@ -38,7 +39,7 @@ const updateUserProfile = async (user: string, userData: Partial<UserData>) => {
 
 const USER_QUERIES = {
   GET_USER_PROFILE: getUserProfile,
-  GET_HEALTH_INDICATORS: getHealthIndicators,
+  SET_HEALTH_INDICATORS: setHealthIndicators,
   CREATE_USER_PROFILE: createUserProfile,
   UPDATE_USER_PROFILE: updateUserProfile,
 };

@@ -18,7 +18,7 @@ const GenderButton = ({ gender }: GenderButtonProps) => {
   return (
     <Button
       onClick={handleClick}
-      variant={data?.gender === gender ? 'secondary' : 'tertiary'}
+      $variant={data?.gender === gender ? 'secondary' : 'tertiary'}
     >
       {gender}
     </Button>

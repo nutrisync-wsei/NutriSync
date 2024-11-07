@@ -36,7 +36,7 @@ const GoalButton = ({ goal }: GoalButtonProps) => {
   return (
     <Button
       onClick={handleClick}
-      variant={data?.goal === goal ? 'secondary' : 'tertiary'}
+      $variant={data?.goal === goal ? 'secondary' : 'tertiary'}
     >
       {GOALS.find((item) => item.type === goal)?.name}
     </Button>

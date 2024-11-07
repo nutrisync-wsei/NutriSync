@@ -234,15 +234,15 @@ export class AuthController {
         user.displayName
       )
 
-    return res.status(HttpStatus.OK).json({
-      accessToken,
-      refreshToken,
-      user: {
-        username: user.displayName,
-        email: user.emails[0].value,
-        id: user.id
-      }
+    const serializedUser = JSON.stringify({
+      username: user.displayName,
+      email: user.emails[0].value,
+      id: user.id
     })
+
+    res.redirect(
+      `http://localhost:3000/home?accessToken=${accessToken}&refreshToken=${refreshToken}&user=${serializedUser}`
+    )
   }
 
   @ApiExcludeEndpoint()
@@ -269,14 +269,14 @@ export class AuthController {
         user.username
       )
 
-    return res.status(HttpStatus.OK).json({
-      accessToken,
-      refreshToken,
-      user: {
-        username: user.username,
-        email: user.emails[0].value,
-        id: user.id
-      }
+    const serializedUser = JSON.stringify({
+      username: user.username,
+      email: user.emails[0].value,
+      id: user.id
     })
+
+    res.redirect(
+      `http://localhost:3000/home?accessToken=${accessToken}&refreshToken=${refreshToken}&user=${serializedUser}`
+    )
   }
 }

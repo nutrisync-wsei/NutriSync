@@ -19,7 +19,12 @@ const SignupScreen = () => {
 
   const router = useRouter();
 
-  const { control, watch, handleSubmit } = useForm<SignupForm>({
+  const {
+    control,
+    watch,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SignupForm>({
     defaultValues: {
       email: '',
       password: '',
@@ -40,6 +45,12 @@ const SignupScreen = () => {
         },
       },
     );
+  };
+
+  const handleEnterPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' && !isSubmitting) {
+      handleSubmit(onSignup)();
+    }
   };
 
   return (
@@ -94,8 +105,9 @@ const SignupScreen = () => {
             }
           },
         }}
+        onKeyDown={handleEnterPress}
       />
-      <Button variant="primary" onClick={handleSubmit(onSignup)}>
+      <Button $variant="primary" onClick={handleSubmit(onSignup)}>
         Sign up
       </Button>
     </Container>

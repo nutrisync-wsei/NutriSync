@@ -8,12 +8,16 @@ import {
   ApiTags
 } from '@nestjs/swagger'
 import { AuthGuard } from 'src/guards/auth.guard'
+import { UserProfileService } from 'src/user-profile/user-profile.service'
 
 @ApiTags('health-indicators')
 @ApiBearerAuth()
 @Controller('health-indicators')
 export class HealthIndicatorsController {
-  constructor(private healthIndicatorsService: HealthIndicatorsService) {}
+  constructor(
+    private healthIndicatorsService: HealthIndicatorsService,
+    private userProfileService: UserProfileService
+  ) {}
 
   @Post('/metrics')
   @UseGuards(AuthGuard)
@@ -31,15 +35,15 @@ export class HealthIndicatorsController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiOperation({ summary: 'Calculate health metrics based on user profile' })
-  getHealthMetrics(@Body() userProfileDto: UserProfileDto) {
+  async getHealthMetrics(@Body() userProfileDto: UserProfileDto) {
     const BMI = this.healthIndicatorsService.calculateBMI(userProfileDto)
     const BMR = this.healthIndicatorsService.calculateBMR(userProfileDto)
     const TDEE = this.healthIndicatorsService.calculateTDEE(userProfileDto)
 
-    return {
+    await this.userProfileService.update(userProfileDto.user, {
       BMI,
       BMR,
       TDEE
-    }
+    })
   }
 }

@@ -1,7 +1,9 @@
-"use client";
-import { styled } from "styled-components";
+'use client';
+import { useRouter } from 'next/navigation';
+import { styled } from 'styled-components';
 
 import axiosInstance from '@/api/axiosSetup';
+import { useUserProfile } from '@/api/user/hooks';
 import { useAuth } from '@/contexts/AuthContext';
 import BodyMetrics from '@/ui/components/bodyMetrics';
 import Button from '@/ui/components/controls/Button';
@@ -9,6 +11,10 @@ import HealthIndicators from '@/ui/components/healthIndicators';
 
 const HomeScreen = () => {
   const { authUser, logout } = useAuth();
+  const router = useRouter();
+  const { data: userProfile, isFetched } = useUserProfile();
+
+  if (!userProfile && isFetched) router.push('/onboarding');
 
   const getPlans = async () => {
     const response = await axiosInstance.post(
@@ -26,12 +32,18 @@ const HomeScreen = () => {
     console.log(response);
   };
 
+  if (!userProfile) return null;
+
   return (
     <Container>
-      {authUser ? `Welcome, ${authUser.username}!` : "Welcome!"}
+      {authUser ? `Welcome, ${authUser.username}!` : 'Welcome!'}
 
       <BodyMetrics />
-      <HealthIndicators />
+      <HealthIndicators
+        BMI={userProfile.BMI}
+        BMR={userProfile.BMR}
+        TDEE={userProfile.TDEE}
+      />
       <Button onClick={getPlans}>Get plans</Button>
       <Button onClick={getMeals}>Get meals</Button>
       <Button onClick={logout}>Logout</Button>

@@ -13,7 +13,6 @@ export type UserData = {
   activityLevel: UserActivityLevel;
   goal: UserGoal;
   dietaryRestrictions?: string[];
-  medicalConditions?: string[];
   targetWeight?: number;
   neckCircumference?: number;
   armCircumference?: number;
@@ -22,10 +21,10 @@ export type UserData = {
   hipsCircumference?: number;
   thighCircumference?: number;
   calfCircumference?: number;
-} & { user: string };
+} & UserHealthIndicators & { user: string };
 
 export type UserHealthIndicators = {
-  BMI: number;
-  BMR: number;
-  TDEE: number;
+  BMI?: number;
+  BMR?: number;
+  TDEE?: number;
 };

@@ -9,7 +9,7 @@ const WelcomeScreen = () => {
 
   return (
     <Container>
-      <Button variant="primary" onClick={() => router.push('login')}>
+      <Button $variant="primary" onClick={() => router.push('login')}>
         Sign in with email
       </Button>
     </Container>

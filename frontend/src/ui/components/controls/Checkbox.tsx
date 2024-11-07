@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
 import Icon from '@/assets/Icon';
@@ -30,28 +29,21 @@ const Checkbox = ({
   checkboxSizeVariant = 'large',
   onChange,
 }: CheckboxProps) => {
-  const [checked, setChecked] = useState(initialState);
-
-  const toggleCheckbox = () => {
-    setChecked(!checked);
+  const handleChange = () => {
     if (onChange) {
-      onChange(!checked);
+      onChange(!initialState);
     }
   };
 
   return (
-    <Container $withLabel={Boolean(label)} onClick={toggleCheckbox}>
+    <Container $withLabel={Boolean(label)} onClick={handleChange}>
       <CheckboxContainer
-        checked={checked}
-        checkboxSizeVariant={checkboxSizeVariant}
-        checkboxColorVariant={checkboxColorVariant}
+        checked={initialState}
+        $checkboxSizeVariant={checkboxSizeVariant}
+        $checkboxColorVariant={checkboxColorVariant}
       >
-        <StyledCheckbox
-          type="checkbox"
-          checked={checked}
-          onChange={toggleCheckbox}
-        />
-        <SuccessIconStyled checked={checked} color="#FFFFFF" />
+        <StyledCheckbox type="checkbox" checked={initialState} readOnly />
+        <SuccessIconStyled checked={initialState} color="#FFFFFF" />
       </CheckboxContainer>
       {label && <CheckboxLabel>{label}</CheckboxLabel>}
     </Container>
@@ -82,14 +74,14 @@ const Container = styled.div<{
 
 const CheckboxContainer = styled.div<{
   checked: boolean;
-  checkboxSizeVariant: CheckboxProps['checkboxSizeVariant'];
-  checkboxColorVariant: CheckboxProps['checkboxColorVariant'];
+  $checkboxSizeVariant: CheckboxProps['checkboxSizeVariant'];
+  $checkboxColorVariant: CheckboxProps['checkboxColorVariant'];
 }>`
-  width: ${({ checkboxSizeVariant }) =>
-    checkboxSizeVariant === 'small' ? '24px' : '32px'};
+  width: ${({ $checkboxSizeVariant }) =>
+    $checkboxSizeVariant === 'small' ? '24px' : '32px'};
   aspect-ratio: 1;
-  background-color: ${({ checked, checkboxColorVariant }) =>
-    checked ? getCheckedColor(checkboxColorVariant) : '#ECF1F4'};
+  background-color: ${({ checked, $checkboxColorVariant }) =>
+    checked ? getCheckedColor($checkboxColorVariant) : '#ECF1F4'};
   border-radius: 8px;
   box-shadow: 0px 2px 2px -1px #4a4a681a inset;
   display: flex;

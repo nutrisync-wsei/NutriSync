@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 import { Step, useOnboardingSteps } from '@/contexts/OnboardingStepsContext';

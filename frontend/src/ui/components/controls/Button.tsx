@@ -4,12 +4,12 @@ import styled, { css } from 'styled-components';
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'link' | 'disabled';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant;
+  $variant?: ButtonVariant;
 }
 
-const Button = ({ children, variant = 'primary', ...rest }: ButtonProps) => {
+const Button = ({ children, $variant = 'primary', ...rest }: ButtonProps) => {
   return (
-    <StyledButton variant={variant} {...rest}>
+    <StyledButton $variant={$variant} {...rest}>
       {children}
     </StyledButton>
   );
@@ -35,7 +35,7 @@ const StyledButton = styled.button<ButtonProps>`
   text-transform: uppercase;
 
   ${(props) => {
-    switch (props.variant) {
+    switch (props.$variant) {
       case 'primary':
         return css`
           color: #ffffff;

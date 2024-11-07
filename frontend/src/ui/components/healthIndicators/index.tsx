@@ -1,22 +1,31 @@
-import React from 'react';
 import styled from 'styled-components';
 
-import { useHealthIndicators } from '@/api/user/hooks';
 import Text from '@/ui/components/Text';
 
-const HealthIndicators = () => {
-  const { data } = useHealthIndicators();
+type HealthIndicatorsProps = {
+  BMI: number;
+  BMR: number;
+  TDEE: number;
+};
+
+const HealthIndicators = ({ BMI, BMR, TDEE }: HealthIndicatorsProps) => {
+  const metrics = {
+    BMI,
+    BMR,
+    TDEE,
+  };
+
+  if (!BMI || !BMR || !TDEE) return null;
 
   return (
     <TileContainer>
       <TileTitle>Health Metrics</TileTitle>
-      {data &&
-        Object.entries(data).map(([key, value]) => (
-          <Metric key={key}>
-            <MetricLabel>{key}:</MetricLabel>
-            <MetricValue>{value.toFixed(2)}</MetricValue>
-          </Metric>
-        ))}
+      {Object.entries(metrics).map(([key, value]) => (
+        <Metric key={key}>
+          <MetricLabel>{key}:</MetricLabel>
+          <MetricValue>{value.toFixed(2)}</MetricValue>
+        </Metric>
+      ))}
     </TileContainer>
   );
 };

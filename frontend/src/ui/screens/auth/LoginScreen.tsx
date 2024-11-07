@@ -14,7 +14,11 @@ const LoginScreen = () => {
   const { mutate } = useLogin();
   const router = useRouter();
 
-  const { control, handleSubmit } = useForm<LoginFormValues>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<LoginFormValues>({
     defaultValues: {
       email: '',
       password: '',
@@ -39,6 +43,12 @@ const LoginScreen = () => {
         },
       },
     );
+  };
+
+  const handleEnterPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' && !isSubmitting) {
+      handleSubmit(onLogin)();
+    }
   };
 
   return (
@@ -70,8 +80,9 @@ const LoginScreen = () => {
             message: 'Invalid password format',
           },
         }}
+        onKeyDown={handleEnterPress}
       />
-      <Button variant="primary" onClick={handleSubmit(onLogin)}>
+      <Button $variant="primary" onClick={handleSubmit(onLogin)}>
         Sign in
       </Button>
     </Container>

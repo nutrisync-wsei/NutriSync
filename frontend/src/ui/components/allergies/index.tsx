@@ -1,19 +1,45 @@
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Button from '../controls/Button';
-import Checkbox from '../controls/Checkbox';
+import { useUpdateUserProfile, useUserProfile } from '@/api/user/hooks';
+import Button from '@/ui/components/controls/Button';
+import Checkbox from '@/ui/components/controls/Checkbox';
+
 import { allergiesList } from './constants';
 import { Allergy } from './types';
 
-const mockData = ['fish-free', 'celery-free', 'dairy-free'];
-
 const Allergies = () => {
   const router = useRouter();
-  console.log('allergiesList:', allergiesList);
+  const [selectedOptions, setSelectedOptions] = useState<Allergy[]>([]);
+  const { mutate: updateUserProfile } = useUpdateUserProfile();
+  const { data: userProfile, isLoading, isError } = useUserProfile();
 
-  const [selectedOptions, setSelectedOptions] = useState<Allergy[]>(mockData);
+  useEffect(() => {
+    if (userProfile?.dietaryRestrictions) {
+      setSelectedOptions(userProfile.dietaryRestrictions);
+    } else {
+      setSelectedOptions([]);
+    }
+  }, [userProfile]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading profile data</div>;
+  }
+
+  const handleCheckboxChange = (value: Allergy) => {
+    setSelectedOptions((prevOptions) => {
+      if (prevOptions.includes(value)) {
+        return prevOptions.filter((item) => item !== value);
+      } else {
+        return [...prevOptions, value];
+      }
+    });
+  };
 
   return (
     <Container>
@@ -25,6 +51,7 @@ const Allergies = () => {
                 label={option.label}
                 initialState={selectedOptions.includes(option.value)}
                 checkboxColorVariant="primary"
+                onChange={() => handleCheckboxChange(option.value)}
               />
             </CheckContainer>
           ))}
@@ -32,11 +59,13 @@ const Allergies = () => {
       </OptionsListContainer>
       <ButtonsContainer>
         <Button
-          onClick={() => console.log('selectedOptions:', selectedOptions)}
+          onClick={() =>
+            updateUserProfile({ dietaryRestrictions: selectedOptions })
+          }
         >
           Save
         </Button>
-        <Button variant="tertiary" onClick={() => router.back()}>
+        <Button $variant="tertiary" onClick={() => router.back()}>
           Back
         </Button>
       </ButtonsContainer>

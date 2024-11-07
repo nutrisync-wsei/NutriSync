@@ -50,7 +50,7 @@ const BodyMetrics = () => {
 
   return (
     <Container>
-      <BodyImage src={BodyGradientImage} alt="body image" />
+      <BodyImage src={BodyGradientImage} alt="body image" priority />
       <Circumferences>
         {circumferenceTiles.map(({ title, type }) => (
           <CircumferenceTile

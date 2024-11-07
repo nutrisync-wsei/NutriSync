@@ -22,42 +22,51 @@ export const useUserProfile = () => {
 export const useCreateUserProfile = () => {
   const { authUser } = useAuth();
   const queryClient = useQueryClient();
+  const setHealth = useSetHealthIndicators();
 
   return useMutation({
     mutationKey: [...USER_KEYS.CREATE_USER_PROFILE, authUser?.id],
     mutationFn: (userData: Partial<UserData>) =>
       USER_QUERIES.CREATE_USER_PROFILE(authUser?.id ?? '', userData),
-    onSuccess: () =>
+    onSuccess: (profileData) => {
       queryClient.invalidateQueries({
         queryKey: [...USER_KEYS.GET_USER_PROFILE, authUser?.id],
-      }),
+      });
+      setHealth.mutate(profileData);
+    },
   });
 };
 
 export const useUpdateUserProfile = () => {
   const { authUser } = useAuth();
   const queryClient = useQueryClient();
+  const setHealth = useSetHealthIndicators();
 
   return useMutation({
     mutationKey: [...USER_KEYS.UPDATE_USER_PROFILE, authUser?.id],
     mutationFn: (userData: Partial<UserData>) =>
       USER_QUERIES.UPDATE_USER_PROFILE(authUser?.id ?? '', userData),
+    onSuccess: (profileData) => {
+      queryClient.invalidateQueries({
+        queryKey: [...USER_KEYS.GET_USER_PROFILE, authUser?.id],
+      });
+      setHealth.mutate(profileData);
+    },
+  });
+};
+
+export const useSetHealthIndicators = () => {
+  const queryClient = useQueryClient();
+  const { authUser } = useAuth();
+
+  return useMutation({
+    mutationKey: [...USER_KEYS.SET_HEALTH_INDICATORS, authUser?.id],
+    mutationFn: (userData: UserData) =>
+      USER_QUERIES.SET_HEALTH_INDICATORS(userData),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [...USER_KEYS.GET_USER_PROFILE, authUser?.id],
       });
     },
-  });
-};
-
-export const useHealthIndicators = () => {
-  const { authUser } = useAuth();
-  const { data } = useUserProfile();
-
-  return useQuery({
-    queryKey: [...USER_KEYS.GET_HEALTH_INDICATORS, authUser?.id],
-    queryFn: USER_QUERIES.GET_HEALTH_INDICATORS.bind(null, data),
-    enabled: Boolean(data),
-    staleTime: 10 * 60 * 1000, // 10 minutes
   });
 };

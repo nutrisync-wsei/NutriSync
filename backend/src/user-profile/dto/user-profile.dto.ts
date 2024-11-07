@@ -63,15 +63,6 @@ export class UserProfileDto {
   dietaryRestrictions?: string[]
 
   @ApiPropertyOptional({
-    type: [String],
-    description: 'Medical Conditions such as diabetes, hypertension, etc.'
-  })
-  @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  medicalConditions?: string[]
-
-  @ApiPropertyOptional({
     type: Number,
     description: 'Target weight of the user [kg]'
   })
@@ -150,4 +141,32 @@ export class UserProfileDto {
   @Min(15)
   @Max(60)
   calfCircumference?: number
+
+  @ApiPropertyOptional({
+    type: Number,
+    description: 'BMI indicator'
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  @Max(100)
+  BMI?: number
+
+  @ApiPropertyOptional({
+    type: Number,
+    description: 'BMR indicator'
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(1200)
+  @Max(10000)
+  BMR?: number
+
+  @ApiPropertyOptional({
+    type: Number,
+    description: 'TDEE indicator'
+  })
+  @IsOptional()
+  @IsNumber()
+  TDEE?: number
 }

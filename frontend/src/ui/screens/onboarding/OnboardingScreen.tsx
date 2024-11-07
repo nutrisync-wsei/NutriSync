@@ -28,7 +28,7 @@ const OnboardingScreen = () => {
             Let's go!
           </Button>
           <Button
-            variant="tertiary"
+            $variant="tertiary"
             onClick={() => {
               router.push('/home');
             }}

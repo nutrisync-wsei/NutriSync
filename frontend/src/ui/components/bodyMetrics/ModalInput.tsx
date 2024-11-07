@@ -68,6 +68,7 @@ const ModalInput = ({
 
   return (
     <Modal
+      appElement={document.getElementById('root') as HTMLElement}
       isOpen={isModalOpen}
       onRequestClose={closeModal}
       style={customStyles}
@@ -88,7 +89,7 @@ const ModalInput = ({
           >
             Set {type}
           </Button>
-          <Button onClick={closeModal} variant="tertiary">
+          <Button onClick={closeModal} $variant="tertiary">
             Close
           </Button>
         </ButtonsContainer>
