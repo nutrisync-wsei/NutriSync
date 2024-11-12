@@ -58,7 +58,7 @@ const Container = styled.div`
   gap: 20px;
   background-color: ${({ theme }) => theme.palette.light};
   padding: 50px 20px 60px;
-  height: 100vh;
+  height: 100svh;
 `;
 
 const ButtonsContainer = styled.div`
