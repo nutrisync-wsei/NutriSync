@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useLayoutEffect, useState } from 'react';
 
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -13,7 +13,7 @@ const AuthWallLayout = ({ children }: AuthWallProps) => {
   const router = useRouter();
   const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (authUser) {
       setIsAuthCheckComplete(true);
     } else {

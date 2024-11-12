@@ -102,6 +102,18 @@ const Footer = styled.footer`
   line-height: 140%;
 `;
 
+const MenuLink = styled.a`
+  ${RubikMedium}
+  font-size: 11px;
+  line-height: 11px;
+`;
+
+const MenuLinkActive = styled.a`
+  ${RubikBold}
+  font-size: 11px;
+  line-height: 11px;
+`;
+
 const Text = {
   H1,
   H2,
@@ -116,6 +128,8 @@ const Text = {
   ButtonText,
   LinkText,
   Footer,
+  MenuLink,
+  MenuLinkActive,
 };
 
 export default Text;
