@@ -1,23 +1,15 @@
-'use client';
-import { usePathname, useRouter } from 'next/navigation';
-import { ReactNode } from 'react';
-import styled, { useTheme } from 'styled-components';
+"use client";
+import { usePathname, useRouter } from "next/navigation";
+import { ReactNode } from "react";
+import styled, { useTheme } from "styled-components";
 
-import Icon from '@/assets/Icon';
-import Text from '@/ui/components/Text';
+import { menuItems } from "@/constants";
+import Text from "@/ui/components/Text";
 
 const NavigationLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const theme = useTheme();
   const pathname = usePathname();
-
-  const menuItems = [
-    { path: '/home', label: 'Home', Icon: Icon.Home },
-    { path: '/diet', label: 'Diet', Icon: Icon.Scale },
-    { path: '/fridge', label: 'Fridge', Icon: Icon.Fridge },
-    { path: '/recipes', label: 'Recipes', Icon: Icon.Stove },
-    { path: '/profile', label: 'Profile', Icon: Icon.Profile },
-  ];
 
   return (
     <Container>

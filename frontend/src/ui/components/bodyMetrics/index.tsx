@@ -1,43 +1,19 @@
-import Image from 'next/image';
-import { useState } from 'react';
-import styled from 'styled-components';
+import Image from "next/image";
+import { useState } from "react";
+import styled from "styled-components";
 
-import { useUserProfile } from '@/api/user/hooks';
-import BodyGradientImage from '@/assets/images/BodyGradient.png';
+import { useUserProfile } from "@/api/user/hooks";
+import BodyGradientImage from "@/assets/images/BodyGradient.png";
 
-import CircumferenceTile from './CircumferenceTile';
-import { circumferenceTiles, compositionItems } from './configs';
-import ModalInput from './ModalInput';
-import { CircumferenceType, CompositionType } from './types';
-
-// const data = [
-//   {
-//     type: 'muscle',
-//     value: 30,
-//   },
-//   {
-//     type: 'essentialFat',
-//     value: 20,
-//   },
-//   {
-//     type: 'storageFat',
-//     value: 10,
-//   },
-//   {
-//     type: 'bone',
-//     value: 40,
-//   },
-//   {
-//     type: 'other',
-//     value: 50,
-//   },
-// ];
+import CircumferenceTile from "./CircumferenceTile";
+import { circumferenceTiles } from "./configs";
+import ModalInput from "./ModalInput";
+import { CircumferenceType } from "./types";
 
 const BodyMetrics = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalActiveType, setModalActiveType] = useState<
-    CircumferenceType | CompositionType | null
-  >();
+  const [modalActiveType, setModalActiveType] =
+    useState<CircumferenceType | null>();
 
   const { data: userData } = useUserProfile();
 
@@ -46,7 +22,7 @@ const BodyMetrics = () => {
     setModalActiveType(null);
   };
 
-  const combinedValues = [...circumferenceTiles, ...compositionItems];
+  const combinedValues = [...circumferenceTiles];
 
   return (
     <Container>
@@ -65,21 +41,6 @@ const BodyMetrics = () => {
           />
         ))}
       </Circumferences>
-      {/* <Composition>
-        {compositionItems.map(({ title, type }) => (
-          <CompositionItem
-            key={type}
-            name={title}
-            percentage={data.find((item) => item.type === type)?.value || 0}
-            // onClick={(activeType: CompositionType) => {
-            //   setIsModalOpen(true);
-            //   setModalActiveType(activeType);
-            // }}
-          />
-        ))}
-      </Composition> */}
-      {/* <MetricsTable metrics={data.metrics} /> */}
-
       {modalActiveType && (
         <ModalInput
           initialValue={userData?.[modalActiveType] || 0}
@@ -87,7 +48,7 @@ const BodyMetrics = () => {
           closeModal={closeModal}
           type={
             combinedValues.find((tile) => tile.type === modalActiveType)
-              ?.title || ''
+              ?.title || ""
           }
           typeValue={modalActiveType}
         />

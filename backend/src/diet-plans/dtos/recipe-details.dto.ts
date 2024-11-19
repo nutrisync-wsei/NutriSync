@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsString, IsOptional, ValidateNested, IsObject } from 'class-validator'
+import {
+  IsString,
+  IsNumber,
+  IsOptional,
+  ValidateNested,
+  IsObject
+} from 'class-validator'
 import { Type } from 'class-transformer'
 import { ImageInfoDto } from './image-info.dto'
 import { IngredientDto } from './ingredient.dto'
@@ -23,7 +29,7 @@ export class RecipeDetailsDto {
   url: string
 
   @ApiProperty({ type: Number })
-  @IsString()
+  @IsNumber()
   calories: number
 
   @ApiProperty({ type: [IngredientDto] })
@@ -35,13 +41,18 @@ export class RecipeDetailsDto {
   @ValidateNested()
   nutrients: NutrientInfoDto[]
 
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  servings: number
+
   constructor(
     label: string,
     image: ImageInfoDto,
     url: string,
     calories: number,
     ingredients: IngredientDto[],
-    nutrients: NutrientInfoDto[]
+    nutrients: NutrientInfoDto[],
+    servings: number
   ) {
     this.label = label
     this.image = image
@@ -49,5 +60,6 @@ export class RecipeDetailsDto {
     this.calories = calories
     this.ingredients = ingredients
     this.nutrients = nutrients
+    this.servings = servings
   }
 }

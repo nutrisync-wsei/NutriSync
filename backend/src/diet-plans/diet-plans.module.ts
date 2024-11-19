@@ -11,6 +11,7 @@ import {
   RecipeDetails,
   RecipeDetailsSchema
 } from './schemas/diet-plan.schema'
+import { UserProfileModule } from 'src/user-profile/user-profile.module'
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import {
       { name: RecipeDetails.name, schema: RecipeDetailsSchema },
       { name: DayOfEating.name, schema: DayOfEatingSchema },
       { name: Meal.name, schema: MealSchema }
-    ])
+    ]),
+    UserProfileModule
   ],
   controllers: [DietPlansController],
   providers: [DietPlansService]

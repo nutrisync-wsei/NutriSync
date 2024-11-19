@@ -1,7 +1,6 @@
 import axiosInstance from '@/api/axiosSetup';
 
 const generatePlan = async (userId: string) => {
-  console.log('e');
   const { data } = await axiosInstance.post(
     `/diet-plans/generateDietPlan/${userId}`,
   );

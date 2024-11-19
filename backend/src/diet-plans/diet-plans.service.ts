@@ -1,25 +1,33 @@
 import { HttpService } from '@nestjs/axios'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { from, map, mergeMap, switchMap, tap } from 'rxjs'
+import {
+  catchError,
+  from,
+  map,
+  mergeMap,
+  switchMap,
+  tap,
+  throwError
+} from 'rxjs'
 import { Base64 } from 'base64-string'
 import { IDietPlanRequest, IDietPlanResponse } from './types'
 import { RecipeDetailsDto } from './dtos/recipe-details.dto'
 import { ImageInfoDto } from './dtos/image-info.dto'
 import { IngredientDto } from './dtos/ingredient.dto'
 import { InjectModel } from '@nestjs/mongoose'
-import { DayOfEating, Meal, RecipeDetails } from './schemas/diet-plan.schema'
+import { DayOfEating, Meal } from './schemas/diet-plan.schema'
 import { Model } from 'mongoose'
 import { NutrientInfoDto } from './dtos/nutrient-info.dto'
 import { mapIndexToWeekDay } from './utilts'
+import { UserProfileService } from 'src/user-profile/user-profile.service'
 
 @Injectable()
 export class DietPlansService {
   constructor(
     private httpService: HttpService,
     private configService: ConfigService,
-    @InjectModel(RecipeDetails.name)
-    private recipeDetailsModel: Model<RecipeDetails>,
+    private userProfileService: UserProfileService,
     @InjectModel(DayOfEating.name)
     private dayOfEatingModel: Model<DayOfEating>,
     @InjectModel(Meal.name)
@@ -34,139 +42,175 @@ export class DietPlansService {
     const base64 = new Base64()
     const authorizationCredentials = `Basic ${base64.encode(`${APP_ID}:${APP_KEY}`)}`
 
-    // TODO: If user can eat a lot of sugar?
-    // TODO: how much calories?
-    // TODO: Create different amount of sections
     const numberOfDays = 7
-    const dietLabel = [
-      'vegan',
-      'vegetarian',
-      'peanut-free',
-      'tree-nut-free',
-      'alcohol-free'
-    ]
 
-    const requestParams: IDietPlanRequest = {
-      size: numberOfDays,
-      plan: {
-        accept: {
-          all: [
-            {
-              health: dietLabel
-            }
-          ]
-        },
-        fit: {
-          ENERC_KCAL: { min: 1000, max: 2000 },
-          'SUGAR.added': { max: 20 }
-        },
-        sections: {
-          Breakfast: {
+    return from(this.userProfileService.findByUserId(userId)).pipe(
+      switchMap(userProfile => {
+        if (!userProfile) {
+          throw new Error('User profile not found.')
+        }
+
+        const GOAL = userProfile.goal
+        const TDEE = userProfile.TDEE
+
+        const caloriesIntake =
+          GOAL === 'lose_weight'
+            ? TDEE - 300
+            : GOAL === 'gain_weight'
+              ? TDEE + 300
+              : TDEE
+
+        const maximumBreakfast = Math.floor(caloriesIntake * 0.3)
+        const maximumLunch = Math.floor(caloriesIntake * 0.5)
+        const maximumDinner = Math.floor(caloriesIntake * 0.4)
+
+        const minProtein = Math.floor(userProfile.weight * 1.5)
+        const maxProtein = Math.floor(userProfile.weight * 2)
+        const minFat =
+          userProfile.gender === 'female'
+            ? userProfile.weight * 1
+            : userProfile.weight * 0.7
+        const maxFat =
+          userProfile.gender === 'female'
+            ? userProfile.weight * 1.3
+            : userProfile.weight * 1
+
+        const requestParams: IDietPlanRequest = {
+          size: numberOfDays,
+          plan: {
             accept: {
               all: [
                 {
-                  dish: [
-                    'drinks',
-                    'egg',
-                    'biscuits and cookies',
-                    'bread',
-                    'pancake',
-                    'cereals'
-                  ]
-                },
-                {
-                  meal: ['breakfast']
+                  health: userProfile.dietaryRestrictions
                 }
               ]
             },
             fit: {
-              ENERC_KCAL: { min: 100, max: 600 }
-            }
-          },
-          Lunch: {
-            accept: {
-              all: [
-                {
-                  dish: [
-                    'main course',
-                    'pasta',
-                    'egg',
-                    'salad',
-                    'soup',
-                    'sandwiches',
-                    'pizza',
-                    'seafood'
+              PROCNT: { min: minProtein, max: maxProtein },
+              FAT: { min: Math.floor(minFat), max: Math.floor(maxFat) }
+            },
+            sections: {
+              Breakfast: {
+                accept: {
+                  all: [
+                    {
+                      dish: [
+                        'drinks',
+                        'egg',
+                        'biscuits and cookies',
+                        'bread',
+                        'pancake',
+                        'cereals'
+                      ]
+                    },
+                    {
+                      meal: ['breakfast']
+                    }
                   ]
                 },
-                {
-                  meal: ['lunch/dinner']
+                fit: {
+                  ENERC_KCAL: {
+                    min: 250,
+                    max: maximumBreakfast
+                  }
                 }
-              ]
-            },
-            fit: {
-              ENERC_KCAL: { min: 300, max: 900 }
-            }
-          },
-          Dinner: {
-            accept: {
-              all: [
-                {
-                  dish: [
-                    'seafood',
-                    'egg',
-                    'salad',
-                    'pizza',
-                    'pasta',
-                    'main course'
+              },
+              Lunch: {
+                accept: {
+                  all: [
+                    {
+                      dish: [
+                        'main course',
+                        'pasta',
+                        'egg',
+                        'salad',
+                        'soup',
+                        'sandwiches',
+                        'pizza',
+                        'seafood'
+                      ]
+                    },
+                    {
+                      meal: ['lunch/dinner']
+                    }
                   ]
                 },
-                {
-                  meal: ['lunch/dinner']
+                fit: {
+                  ENERC_KCAL: {
+                    min: 300,
+                    max: maximumLunch
+                  }
                 }
-              ]
-            },
-            fit: {
-              ENERC_KCAL: { min: 200, max: 900 }
+              },
+              Dinner: {
+                accept: {
+                  all: [
+                    {
+                      dish: [
+                        'seafood',
+                        'egg',
+                        'salad',
+                        'pizza',
+                        'pasta',
+                        'main course'
+                      ]
+                    },
+                    {
+                      meal: ['lunch/dinner']
+                    }
+                  ]
+                },
+                fit: {
+                  ENERC_KCAL: {
+                    min: 300,
+                    max: maximumDinner
+                  }
+                }
+              }
             }
           }
         }
-      }
-    }
 
-    return this.httpService
-      .post<IDietPlanResponse>(URL, requestParams, {
-        headers: {
-          'Content-Type': 'application/json',
-          accept: 'application/json',
-          Authorization: authorizationCredentials,
-          'Edamam-Account-User': APP_USER
-        }
-      })
-      .pipe(
-        map(response => response.data),
-        switchMap(data => {
-          return from(data.selection).pipe(
-            mergeMap((selection, index) => {
-              const dayOfWeek = mapIndexToWeekDay(index)
-              return from(Object.entries(selection.sections)).pipe(
-                mergeMap(([mealType, details]) => {
-                  return this.lookupRecipe(details.assigned).pipe(
-                    tap(recipeDetails => {
-                      this.storeRecipeForUser(
-                        userId,
-                        mealType,
-                        recipeDetails,
-                        dayOfWeek
+        return this.httpService
+          .post<IDietPlanResponse>(URL, requestParams, {
+            headers: {
+              'Content-Type': 'application/json',
+              accept: 'application/json',
+              Authorization: authorizationCredentials,
+              'Edamam-Account-User': APP_USER
+            }
+          })
+          .pipe(
+            map(response => response.data),
+            switchMap(data => {
+              return from(data.selection).pipe(
+                mergeMap((selection, index) => {
+                  const dayOfWeek = mapIndexToWeekDay(index)
+                  return from(Object.entries(selection.sections)).pipe(
+                    mergeMap(([mealType, details]) => {
+                      return this.lookupRecipe(details.assigned).pipe(
+                        tap(recipeDetails => {
+                          this.storeRecipeForUser(
+                            userId,
+                            mealType,
+                            recipeDetails,
+                            dayOfWeek
+                          )
+                        })
                       )
                     })
                   )
                 })
               )
-            })
+            }),
+            map(() => `Diet Plan processing completed for user ${userId}.`)
           )
-        }),
-        map(() => `Diet Plan processing completed for user ${userId}.`) // Informacja końcowa
-      )
+      }),
+      catchError(error => {
+        console.error('Error in generating diet plan:', error)
+        return throwError(() => new Error('Failed to generate diet plan.'))
+      })
+    )
   }
 
   // TODO: Add response type
@@ -178,6 +222,7 @@ export class DietPlansService {
     const URI_ENCODED = encodeURIComponent(recipeUri)
     const FIELDS = [
       'ingredients',
+      'yield',
       'label',
       'dietLabels',
       'healthLabels',
@@ -204,7 +249,6 @@ export class DietPlansService {
         map(response =>
           response.data.hits.map((hit: { recipe: any }) => {
             const recipe = hit.recipe
-
             const proteins = recipe.totalNutrients['PROCNT']
             const fats = recipe.totalNutrients['FAT']
             const carbs = recipe.totalNutrients['CHOCDF']
@@ -253,16 +297,16 @@ export class DietPlansService {
               recipe.uri,
               Math.round(recipe.calories),
               ingredients,
-              nutrients
+              nutrients,
+              recipe.yield
             )
           })
         )
       )
   }
 
-  // TODO: Return in readable format
   getMeals(userId: string) {
-    return this.recipeDetailsModel.find({ user: userId })
+    return this.dayOfEatingModel.find({ user: userId })
   }
 
   private async storeRecipeForUser(
@@ -284,7 +328,8 @@ export class DietPlansService {
         url: recipeDetailsDto[0].url,
         calories: recipeDetailsDto[0].calories,
         ingredients: recipeDetailsDto[0].ingredients,
-        nutrients: recipeDetailsDto[0].nutrients
+        nutrients: recipeDetailsDto[0].nutrients,
+        servings: recipeDetailsDto[0].servings
       }
     })
 

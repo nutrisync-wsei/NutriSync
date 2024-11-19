@@ -72,6 +72,9 @@ export class RecipeDetails extends Document {
 
   @Prop({ type: [NutrientInfoSchema], required: true, default: [] })
   nutrients: NutrientInfo[]
+
+  @Prop()
+  servings: number
 }
 
 export const RecipeDetailsSchema = SchemaFactory.createForClass(RecipeDetails)

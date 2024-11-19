@@ -1,4 +1,4 @@
-import { CircumferenceType, CompositionType } from './types';
+import { CircumferenceType } from './types';
 
 export const circumferenceTiles: {
   title: string;
@@ -23,31 +23,5 @@ export const circumferenceTiles: {
   {
     title: 'Hip',
     type: 'hipsCircumference',
-  },
-];
-
-export const compositionItems: {
-  title: string;
-  type: CompositionType;
-}[] = [
-  {
-    title: 'Muscle',
-    type: 'muscle',
-  },
-  {
-    title: 'Essential Fat',
-    type: 'essentialFat',
-  },
-  {
-    title: 'Storage Fat',
-    type: 'storageFat',
-  },
-  {
-    title: 'Bone',
-    type: 'bone',
-  },
-  {
-    title: 'Other',
-    type: 'other',
   },
 ];

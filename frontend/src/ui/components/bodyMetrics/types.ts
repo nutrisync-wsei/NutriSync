@@ -4,10 +4,3 @@ export type CircumferenceType =
   | 'chestCircumference'
   | 'waistCircumference'
   | 'hipsCircumference';
-
-export type CompositionType =
-  | 'muscle'
-  | 'essentialFat'
-  | 'storageFat'
-  | 'bone'
-  | 'other';
