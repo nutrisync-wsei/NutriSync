@@ -281,7 +281,7 @@ export class DietPlansService {
                   ing.text,
                   +ing.quantity.toFixed(2),
                   ing.food,
-                  ing.weight,
+                  +ing.weight.toFixed(2),
                   ing.foodId,
                   ing.image ? new ImageInfoDto(ing.image) : undefined,
                   ing.measure === '<unit>' ? null : ing.measure
@@ -315,12 +315,7 @@ export class DietPlansService {
     recipeDetailsDto: RecipeDetailsDto,
     day: string
   ) {
-    let dayOfEating = await this.dayOfEatingModel.findOne({
-      user: userId,
-      day
-    })
-
-    const meal = new this.mealModel({
+    const meal = {
       recipeDetails: {
         user: userId,
         label: `[${mealType}] ${recipeDetailsDto[0].label}`,
@@ -331,22 +326,17 @@ export class DietPlansService {
         nutrients: recipeDetailsDto[0].nutrients,
         servings: recipeDetailsDto[0].servings
       }
-    })
-
-    if (!dayOfEating) {
-      dayOfEating = new this.dayOfEatingModel({
-        user: userId,
-        day,
-        meals: [meal]
-      })
-    } else {
-      dayOfEating.meals.push(meal)
     }
 
     try {
-      await dayOfEating.save()
+      await this.dayOfEatingModel.findOneAndUpdate(
+        { user: userId, day },
+        { $push: { meals: meal } },
+        { new: true, upsert: true }
+      )
     } catch (error) {
       console.error('Error saving day of eating:', error)
+      throw error
     }
   }
 }
