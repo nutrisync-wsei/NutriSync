@@ -4,6 +4,7 @@ import { UserProfile } from './schemas/user-profile.schema'
 import { Model } from 'mongoose'
 import { UserProfileDto } from './dto/user-profile.dto'
 import { Messages } from 'src/messages'
+import { ProgressLogDto } from './dto/progress-log.dto'
 
 @Injectable()
 export class UserProfileService {
@@ -40,5 +41,37 @@ export class UserProfileService {
 
   async delete(userId: string) {
     return await this.UserProfileModel.findOneAndDelete({ user: userId })
+  }
+
+  async updateAndLogProgress(
+    userId: string,
+    progressUpdate: Omit<ProgressLogDto, 'timestamp'>
+  ) {
+    const userProfile = await this.findByUserId(userId)
+
+    if (!userProfile)
+      throw new BadRequestException(Messages.USER_PROFILE_NOT_FOUND)
+
+    if (Object.keys(progressUpdate).length === 0) {
+      throw new BadRequestException(Messages.INVALID_UPDATE_DATA)
+    }
+
+    const updatedLog: ProgressLogDto = {
+      ...progressUpdate,
+      timestamp: new Date()
+    }
+
+    userProfile.logs.push(updatedLog)
+    await userProfile.save()
+    return userProfile
+  }
+
+  async getUserProgress(userId: string): Promise<ProgressLogDto[]> {
+    const userProfile = await this.findByUserId(userId)
+
+    if (!userProfile)
+      throw new BadRequestException(Messages.USER_PROFILE_NOT_FOUND)
+
+    return userProfile.logs
   }
 }

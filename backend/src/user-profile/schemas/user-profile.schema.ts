@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Types, Document } from 'mongoose'
 import { User } from 'src/auth/schemas/user.schema'
 import { Gender } from '../types/types'
+import { ProgressLogDto } from '../dto/progress-log.dto'
 
 @Schema()
 export class UserProfile extends Document {
@@ -61,6 +62,9 @@ export class UserProfile extends Document {
 
   @Prop()
   TDEE?: number
+
+  @Prop({ type: [ProgressLogDto], default: [] })
+  logs?: ProgressLogDto[]
 }
 
 export const UserProfileSchema = SchemaFactory.createForClass(UserProfile)

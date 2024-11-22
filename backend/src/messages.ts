@@ -20,5 +20,6 @@ export const Messages = {
   FAILURE_CREATING_PROFILE: 'Failed to create user profile',
   PROFILE_NOT_FOUND: 'User profile not found',
   USER_PROFILE_EXISTS: 'User profile already exists',
-  USER_PROFILE_NOT_FOUND: 'User profile not found'
+  USER_PROFILE_NOT_FOUND: 'User profile not found',
+  INVALID_UPDATE_DATA: 'Invalid update data'
 }

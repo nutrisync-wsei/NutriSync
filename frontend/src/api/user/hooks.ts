@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 
 import USER_KEYS from './keys';
 import USER_QUERIES from './queries';
-import { UserData } from './types';
+import { UserData, UserProgress } from './types';
 
 export const useUserProfile = () => {
   const { authUser } = useAuth();
@@ -14,6 +14,16 @@ export const useUserProfile = () => {
     queryFn: USER_QUERIES.GET_USER_PROFILE.bind(null, {
       userId: authUser?.id ?? '',
     }),
+    enabled: Boolean(authUser?.id),
+    staleTime: 10 * 60 * 1000, // 10 minutes
+  });
+};
+
+export const useUserProgress = () => {
+  const { authUser } = useAuth();
+  return useQuery({
+    queryKey: [...USER_KEYS.GET_USER_PROGRESS, authUser?.id],
+    queryFn: () => USER_QUERIES.GET_USER_PROGRESS(authUser?.id ?? ''),
     enabled: Boolean(authUser?.id),
     staleTime: 10 * 60 * 1000, // 10 minutes
   });
@@ -50,6 +60,25 @@ export const useUpdateUserProfile = () => {
       queryClient.invalidateQueries({
         queryKey: [...USER_KEYS.GET_USER_PROFILE, authUser?.id],
       });
+      setHealth.mutate(profileData);
+    },
+  });
+};
+
+export const useUpdateUserProgress = () => {
+  const { authUser } = useAuth();
+  const queryClient = useQueryClient();
+  const setHealth = useSetHealthIndicators();
+
+  return useMutation({
+    mutationKey: [...USER_KEYS.UPDATE_USER_PROGRESS, authUser?.id],
+    mutationFn: (progress: UserProgress) =>
+      USER_QUERIES.UPDATE_USER_PROGRESS(authUser?.id ?? '', progress),
+    onSuccess: (profileData) => {
+      queryClient.invalidateQueries({
+        queryKey: [...USER_KEYS.GET_USER_PROFILE, authUser?.id],
+      });
+
       setHealth.mutate(profileData);
     },
   });

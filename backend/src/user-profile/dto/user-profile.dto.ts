@@ -10,6 +10,7 @@ import {
   Min
 } from 'class-validator'
 import { ActivityLevel, Gender, Goal } from '../types/types'
+import { ProgressLogDto } from './progress-log.dto'
 
 export class UserProfileDto {
   @ApiProperty({ type: String, description: 'User MongoDB ID' })
@@ -169,4 +170,10 @@ export class UserProfileDto {
   @IsOptional()
   @IsNumber()
   TDEE?: number
+
+  @ApiProperty({
+    type: [ProgressLogDto],
+    description: 'Progress logs'
+  })
+  logs?: ProgressLogDto[]
 }

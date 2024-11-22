@@ -5,6 +5,11 @@ type UserWeight = number;
 type UserActivityLevel = 'low' | 'middle' | 'high';
 type UserGoal = 'lose_weight' | 'maintain_weight' | 'gain_weight';
 
+export type UserProgress = {
+  timestamp?: Date;
+  weight: number;
+};
+
 export type UserData = {
   gender: UserGender;
   age: UserAge;
@@ -21,6 +26,7 @@ export type UserData = {
   hipsCircumference?: number;
   thighCircumference?: number;
   calfCircumference?: number;
+  logs?: UserProgress[];
 } & UserHealthIndicators & { user: string };
 
 export type UserHealthIndicators = {

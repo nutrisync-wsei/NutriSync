@@ -24,6 +24,7 @@ import {
   ApiResponse,
   ApiTags
 } from '@nestjs/swagger'
+import { ProgressLogDto } from './dto/progress-log.dto'
 
 @ApiTags('user-profile')
 @ApiBearerAuth()
@@ -104,6 +105,54 @@ export class UserProfileController {
     } catch (error) {
       this.handleException(error, res)
     }
+  }
+
+  @Put('progress/:userId')
+  @ApiOperation({ summary: 'Update user profile and log progress' })
+  @ApiParam({
+    name: 'userId',
+    type: String,
+    description: 'The ID of the user to update'
+  })
+  @ApiBody({
+    type: ProgressLogDto,
+    description: 'Updated profile weight and timestamp'
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Progress updated and logged',
+    type: UserProfileDto
+  })
+  @UseGuards(AuthGuard)
+  async updateAndLogUserProfile(
+    @Param('userId') userId: string,
+    @Body() updates: ProgressLogDto,
+    @Res() res: Response
+  ) {
+    try {
+      const updatedProfile = await this.userProfileService.updateAndLogProgress(
+        userId,
+        updates
+      )
+      return res.status(HttpStatus.OK).json(updatedProfile)
+    } catch (error) {
+      console.log(error)
+      this.handleException(error, res)
+    }
+  }
+
+  @Get('progress/:userId')
+  @ApiOperation({ summary: 'Get user progress logs' })
+  @ApiParam({ name: 'userId', type: String, description: 'The ID of the user' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: [ProgressLogDto],
+    description: 'Progress data for the user'
+  })
+  async getUserProgress(
+    @Param('userId') userId: string
+  ): Promise<ProgressLogDto[]> {
+    return this.userProfileService.getUserProgress(userId)
   }
 
   private handleException(error: any, res: Response) {

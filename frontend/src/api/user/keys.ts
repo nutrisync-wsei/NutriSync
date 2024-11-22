@@ -3,6 +3,8 @@ const USER_KEYS = {
   SET_HEALTH_INDICATORS: ['setHealthIndicators'],
   CREATE_USER_PROFILE: ['createUserProfile'],
   UPDATE_USER_PROFILE: ['updateUserProfile'],
+  UPDATE_USER_PROGRESS: ['updateUserProgress'],
+  GET_USER_PROGRESS: ['getUserProgress'],
 };
 
 export default USER_KEYS;
