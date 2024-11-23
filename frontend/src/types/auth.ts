@@ -25,5 +25,4 @@ export type AuthUser = {
 export type AuthContextType = {
   authUser: AuthUser | null;
   setAuthUser: (user: AuthUser | null) => void;
-  logout: () => void;
 };

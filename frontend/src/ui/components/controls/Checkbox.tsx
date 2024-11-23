@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import Icon from '@/assets/Icon';
 import Text from '@/ui/components/Text';
-import theme from '@/ui/theme';
+import { palette } from '@/ui/theme';
 
 interface CheckboxProps {
   initialState?: boolean;
@@ -15,10 +15,10 @@ interface CheckboxProps {
 const getCheckedColor = (variant: CheckboxProps['checkboxColorVariant']) => {
   switch (variant) {
     case 'primary':
-      return theme.palette.primaryDark;
+      return palette.primaryDark;
     case 'tertiary':
     default:
-      return theme.palette.tertiary;
+      return palette.tertiary;
   }
 };
 

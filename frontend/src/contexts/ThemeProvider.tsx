@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { ThemeProvider as WebThemeProvider } from 'styled-components';
 
 import { Breakpoint, useBreakpoint } from '@/contexts/BreakpointContext';
-import theme, { Theme } from '@/ui/theme';
+import theme, { palette, Theme } from '@/ui/theme';
 
 const sortedBreakpoints: Exclude<Breakpoint, 'mobile'>[] = [
   'wideDesktop',
@@ -41,7 +41,7 @@ const ThemeProvider = ({
   const globalTheme: Theme = {
     ...theme,
     palette: {
-      ...theme.palette,
+      ...palette,
     },
     select: ({ dark, light }) => (darkMode ? dark : light),
     media: {

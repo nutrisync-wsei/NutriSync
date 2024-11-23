@@ -1,5 +1,4 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import {
   createContext,
   ReactNode,
@@ -20,7 +19,6 @@ export const useAuth = () => {
 };
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     const handleStorage = () => getAuthDataFromLocalStorage(setAuthUser);
@@ -34,18 +32,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  const logout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('user');
-    setAuthUser(null);
-
-    window.dispatchEvent(new Event('storage'));
-    router.push('/login');
-  };
-
   return (
-    <AuthContext.Provider value={{ authUser, setAuthUser, logout }}>
+    <AuthContext.Provider value={{ authUser, setAuthUser }}>
       {children}
     </AuthContext.Provider>
   );

@@ -14,7 +14,7 @@ export const settingsItems = [
   },
   { path: '/profile', label: 'Subscription', Icon: Icon.Subscription },
   {
-    path: '/notifications',
+    path: '/profile',
     label: 'Notifications',
     Icon: Icon.Notifications,
   },

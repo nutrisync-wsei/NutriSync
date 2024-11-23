@@ -10,7 +10,7 @@ import Button from '@/ui/components/controls/Button';
 import HealthIndicators from '@/ui/components/healthIndicators';
 
 const HomeScreen = () => {
-  const { authUser, logout } = useAuth();
+  const { authUser } = useAuth();
   const router = useRouter();
   const { data: userProfile, isFetched } = useUserProfile();
   const { mutate: generatePlans } = useGenerateDietPlan();
@@ -30,7 +30,6 @@ const HomeScreen = () => {
         TDEE={userProfile.TDEE}
       />
       <Button onClick={() => generatePlans()}>Get plans</Button>
-      <Button onClick={logout}>Logout</Button>
     </Container>
   );
 };
