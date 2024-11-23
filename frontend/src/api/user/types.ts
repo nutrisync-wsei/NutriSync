@@ -34,3 +34,11 @@ export type UserHealthIndicators = {
   BMR?: number;
   TDEE?: number;
 };
+
+export type FeedbackType = 'positive' | 'negative' | 'neutral';
+
+export type UserFeedback = {
+  type: FeedbackType;
+  message: string;
+  suggestion?: string;
+};

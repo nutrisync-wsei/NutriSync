@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import Text from '@/ui/components/Text';
 
-const DAYS_OF_WEEK = ['Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'Sb', 'Nd'];
+const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 type DietDaysProps = {
   activeDayIndex: number;
@@ -12,7 +12,7 @@ type DietDaysProps = {
 const DietDays = ({ activeDayIndex, onDayClick }: DietDaysProps) => {
   return (
     <Container>
-      <ActiveIndicator activeDayIndex={activeDayIndex} />
+      <ActiveIndicator $activeDayIndex={activeDayIndex} />
       {DAYS_OF_WEEK.map((day, index) => (
         <Day key={day} onClick={() => onDayClick(index)}>
           <DayText isActive={activeDayIndex === index}>{day}</DayText>
@@ -45,10 +45,10 @@ const DayText = styled(Text.Body)<{ isActive: boolean }>`
   transition: color 0.3s;
 `;
 
-const ActiveIndicator = styled.div<{ activeDayIndex: number }>`
+const ActiveIndicator = styled.div<{ $activeDayIndex: number }>`
   position: absolute;
   z-index: 4;
-  left: ${({ activeDayIndex }) => `${activeDayIndex * 14.28}%`};
+  left: ${({ $activeDayIndex }) => `${$activeDayIndex * 14.28}%`};
   bottom: 0;
   width: 14.28%;
   height: 100%;

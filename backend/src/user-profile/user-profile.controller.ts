@@ -25,6 +25,7 @@ import {
   ApiTags
 } from '@nestjs/swagger'
 import { ProgressLogDto } from './dto/progress-log.dto'
+import { FeedbackDto } from './dto/feedback-dto'
 
 @ApiTags('user-profile')
 @ApiBearerAuth()
@@ -153,6 +154,18 @@ export class UserProfileController {
     @Param('userId') userId: string
   ): Promise<ProgressLogDto[]> {
     return this.userProfileService.getUserProgress(userId)
+  }
+
+  @Get('feedback/:userId')
+  @ApiOperation({ summary: 'Get user feedback' })
+  @ApiParam({ name: 'userId', type: String, description: 'The ID of the user' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: FeedbackDto,
+    description: 'User feedback'
+  })
+  async getFeedback(@Param('userId') userId: string): Promise<FeedbackDto> {
+    return this.userProfileService.generateFeedback(userId)
   }
 
   private handleException(error: any, res: Response) {

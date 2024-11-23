@@ -20,3 +20,9 @@ export const ACTIVITY_MULTIPLIERS = {
   [ActivityLevel.MIDDLE]: 1.55,
   [ActivityLevel.HIGH]: 1.9
 }
+
+export enum FeedbackType {
+  POSITIVE = 'positive',
+  NEGATIVE = 'negative',
+  NEUTRAL = 'neutral'
+}

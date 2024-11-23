@@ -1,14 +1,14 @@
-import Image from "next/image";
-import { useState } from "react";
-import styled from "styled-components";
+import Image from 'next/image';
+import { useState } from 'react';
+import styled from 'styled-components';
 
-import { useUserProfile } from "@/api/user/hooks";
-import BodyGradientImage from "@/assets/images/BodyGradient.png";
+import { useUserProfile } from '@/api/user/hooks';
+import BodyGradientImage from '@/assets/images/BodyGradient.png';
 
-import CircumferenceTile from "./CircumferenceTile";
-import { circumferenceTiles } from "./configs";
-import ModalInput from "./ModalInput";
-import { CircumferenceType } from "./types";
+import CircumferenceTile from './CircumferenceTile';
+import { circumferenceTiles } from './configs';
+import ModalInput from './ModalInput';
+import { CircumferenceType } from './types';
 
 const BodyMetrics = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,7 +48,7 @@ const BodyMetrics = () => {
           closeModal={closeModal}
           type={
             combinedValues.find((tile) => tile.type === modalActiveType)
-              ?.title || ""
+              ?.title || ''
           }
           typeValue={modalActiveType}
         />

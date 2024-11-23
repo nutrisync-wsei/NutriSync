@@ -20,7 +20,7 @@ const DietScreen = () => {
   const {
     label,
     nutrients,
-    image: { url: imageUrl } = {},
+    image: { url: imageUrl } = { url: undefined },
     calories = 0,
     servings,
     ingredients,

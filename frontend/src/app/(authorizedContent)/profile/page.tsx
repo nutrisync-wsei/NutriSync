@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import styled from "styled-components";
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import styled from 'styled-components';
 
-import Icon from "@/assets/Icon";
-import Avatar from "@/assets/images/Avatar.jpg";
-import CircleLimeImage from "@/assets/images/CircleLime.png";
-import CircleWhiteImage from "@/assets/images/CircleWhite.png";
-import Text from "@/components/Text";
-import { settingsItems } from "@/constants";
-import { useAuth } from "@/contexts/AuthContext";
+import Icon from '@/assets/Icon';
+import Avatar from '@/assets/images/Avatar.jpg';
+import CircleLimeImage from '@/assets/images/CircleLime.png';
+import CircleWhiteImage from '@/assets/images/CircleWhite.png';
+import Text from '@/components/Text';
+import { settingsItems } from '@/constants';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Profile = () => {
   const { authUser } = useAuth();

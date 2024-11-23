@@ -10,6 +10,7 @@ import {
   useUserProgress,
 } from '@/api/user/hooks';
 import { UserProgress } from '@/api/user/types';
+import UserFeedback from '@/ui/components/feedback/UserFeedback';
 
 const ProfileInfo = () => {
   const { data: user } = useUserProfile();
@@ -57,6 +58,8 @@ const ProfileInfo = () => {
           <p>No progress data available.</p>
         )}
       </ProgressList>
+
+      <UserFeedback />
     </Container>
   );
 };

@@ -15,7 +15,6 @@ const Button = ({ children, $variant = 'primary', ...rest }: ButtonProps) => {
   );
 };
 
-// TODO: Fonts don't work
 const StyledButton = styled.button<ButtonProps>`
   font-family: 'RubikBold', sans-serif;
   font-weight: 700;

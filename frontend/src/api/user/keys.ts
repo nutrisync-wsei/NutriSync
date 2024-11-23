@@ -5,6 +5,7 @@ const USER_KEYS = {
   UPDATE_USER_PROFILE: ['updateUserProfile'],
   UPDATE_USER_PROGRESS: ['updateUserProgress'],
   GET_USER_PROGRESS: ['getUserProgress'],
+  GET_USER_FEEDBACK: ['getUserFeedback'],
 };
 
 export default USER_KEYS;

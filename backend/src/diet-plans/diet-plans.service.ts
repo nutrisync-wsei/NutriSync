@@ -213,7 +213,6 @@ export class DietPlansService {
     )
   }
 
-  // TODO: Add response type
   lookupRecipe(recipeUri: string) {
     const APP_ID = this.configService.get<string>('EDAMAM_APP_ID')
     const APP_KEY = this.configService.get<string>('EDAMAM_APP_KEY')

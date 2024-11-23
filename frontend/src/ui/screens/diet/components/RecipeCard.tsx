@@ -24,7 +24,7 @@ const RecipeCard = ({ meal }: RecipeCardProps) => {
         <Row>
           <Servings>Servings: {servings}</Servings>
           <Divider />
-          <Calories>{calories / servings} kcal</Calories>
+          <Calories>{Math.round(calories / servings)} kcal</Calories>
         </Row>
       </Content>
     </Container>

@@ -1,6 +1,11 @@
+import { FC, SVGProps } from 'react';
+
+interface CustomSVGProps extends SVGProps<SVGElement> {
+  size?: number;
+}
+
 declare module '*.svg' {
-  import { FC, SVGProps } from 'react';
-  const content: FC<SVGProps<SVGElement>>;
+  const content: FC<CustomSVGProps>;
   export default content;
 }
 

@@ -51,6 +51,12 @@ const getUserProgress = async (user: string) => {
   return data;
 };
 
+const getUserFeedback = async (user: string) => {
+  const { data } = await axiosInstance.get(`/user-profile/feedback/${user}`);
+
+  return data;
+};
+
 const USER_QUERIES = {
   GET_USER_PROFILE: getUserProfile,
   SET_HEALTH_INDICATORS: setHealthIndicators,
@@ -58,6 +64,7 @@ const USER_QUERIES = {
   UPDATE_USER_PROFILE: updateUserProfile,
   UPDATE_USER_PROGRESS: updateUserProgress,
   GET_USER_PROGRESS: getUserProgress,
+  GET_USER_FEEDBACK: getUserFeedback,
 };
 
 export default USER_QUERIES;

@@ -99,3 +99,14 @@ export const useSetHealthIndicators = () => {
     },
   });
 };
+
+export const useUserFeedback = () => {
+  const { authUser } = useAuth();
+
+  return useQuery({
+    queryKey: [...USER_KEYS.GET_USER_FEEDBACK, authUser?.id],
+    queryFn: () => USER_QUERIES.GET_USER_FEEDBACK(authUser?.id ?? ''),
+    enabled: Boolean(authUser?.id),
+    staleTime: 10 * 60 * 1000,
+  });
+};

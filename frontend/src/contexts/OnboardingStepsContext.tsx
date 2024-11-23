@@ -76,11 +76,13 @@ export const OnboardingStepsProvider = ({
 
   const submitData = useCallback(() => {
     if (data && authUser?.id) {
-      createUserProfile({ ...data, user: authUser?.id });
+      createUserProfile(
+        { ...data, user: authUser?.id },
+        {
+          onSuccess: () => router.push('/onboarding/completed'),
+        },
+      );
     }
-
-    // TODO: redirect on query success, for now query gets an error
-    router.push('/onboarding/completed');
   }, [data, router, createUserProfile, authUser]);
 
   const value = useMemo(

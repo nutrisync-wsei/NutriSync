@@ -1,10 +1,10 @@
-"use client";
-import { usePathname, useRouter } from "next/navigation";
-import { ReactNode } from "react";
-import styled, { useTheme } from "styled-components";
+'use client';
+import { usePathname, useRouter } from 'next/navigation';
+import { ReactNode } from 'react';
+import styled, { useTheme } from 'styled-components';
 
-import { menuItems } from "@/constants";
-import Text from "@/ui/components/Text";
+import { menuItems } from '@/constants';
+import Text from '@/ui/components/Text';
 
 const NavigationLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();

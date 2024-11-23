@@ -12,7 +12,6 @@ const OnboardingCompletedScreen = () => {
   const router = useRouter();
 
   useEffect(() => {
-    //TODO: Base on request loading state in the future
     const timeout = setTimeout(() => {
       router.push('/home');
     }, 5000);
