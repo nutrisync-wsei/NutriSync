@@ -42,6 +42,12 @@ const H3 = styled.h3`
   font-size: 24px;
 `;
 
+const H4 = styled.h3`
+  ${RubikBold}
+  letter-spacing: -2%;
+  font-size: 20px;
+`;
+
 const Subtitle = styled.h4`
   ${RubikMedium}
   font-size: 24px;
@@ -49,6 +55,12 @@ const Subtitle = styled.h4`
 
 const Body = styled.p`
   ${RubikLight}
+  font-size: 16px;
+  line-height: 140%;
+`;
+
+const BodyBold = styled.p`
+  ${RubikBold}
   font-size: 16px;
   line-height: 140%;
 `;
@@ -118,8 +130,10 @@ const Text = {
   H1,
   H2,
   H3,
+  H4,
   Subtitle,
   Body,
+  BodyBold,
   Small,
   SmallestLight,
   TinyLight,

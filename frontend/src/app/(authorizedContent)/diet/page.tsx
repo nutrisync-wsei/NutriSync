@@ -1,5 +1,7 @@
+import DietScreen from '@/ui/screens/diet/DietScreen';
+
 const Diet = () => {
-  return <div>Diet</div>;
+  return <DietScreen />;
 };
 
 export default Diet;

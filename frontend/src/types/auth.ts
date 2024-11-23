@@ -14,11 +14,12 @@ export type SignupFormValues = Pick<Credentials, 'email' | 'password'> &
   Pick<User, 'name'>;
 
 export type AuthUser = {
-  id: string;
-  email: string;
-  username: string;
-  accessToken: string;
-  refreshToken: string;
+  authorized?: boolean;
+  id?: string;
+  email?: string;
+  username?: string;
+  accessToken?: string;
+  refreshToken?: string;
 };
 
 export type AuthContextType = {

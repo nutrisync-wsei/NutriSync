@@ -14,7 +14,9 @@ const AuthWallLayout = ({ children }: AuthWallProps) => {
   const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 
   useLayoutEffect(() => {
-    if (authUser) {
+    if (!authUser) return;
+
+    if (authUser.authorized) {
       setIsAuthCheckComplete(true);
     } else {
       router.push('/login');

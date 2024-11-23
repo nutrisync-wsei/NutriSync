@@ -3,6 +3,16 @@ const nextConfig = {
   env: {
     API_URL: process.env.API_URL,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '"edamam-product-images.s3.amazonaws.com',
+        port: '',
+        pathname: '/web-img/**',
+      },
+    ],
+  },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>

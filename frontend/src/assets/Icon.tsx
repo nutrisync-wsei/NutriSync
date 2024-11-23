@@ -1,4 +1,5 @@
 import AboutIcon from '@/assets/svg/About.svg';
+import ArrowLeftIcon from '@/assets/svg/ArrowLeft.svg';
 import ChevronRightIcon from '@/assets/svg/ChevronRight.svg';
 import DisabledIcon from '@/assets/svg/Disabled.svg';
 import ErrorIcon from '@/assets/svg/Error.svg';
@@ -38,6 +39,7 @@ const Icon = {
   Subscription: SubscriptionIcon,
   Support: SupportIcon,
   SettingsProfile: SettingsProfileIcon,
+  ArrowLeft: ArrowLeftIcon,
 };
 
 export default Icon;

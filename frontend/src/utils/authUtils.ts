@@ -9,11 +9,14 @@ export const getAuthDataFromLocalStorage = (
 
   if (user && accessToken && refreshToken) {
     setAuthUser({
+      authorized: true,
       ...JSON.parse(user),
       accessToken,
       refreshToken,
     });
   } else {
-    setAuthUser(null);
+    setAuthUser({
+      authorized: false,
+    });
   }
 };

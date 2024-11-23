@@ -1,4 +1,7 @@
 import axiosInstance from '@/api/axiosSetup';
+import { DietPlan, DietResponse } from '@/types/diet';
+
+import { formatDietData } from './utils';
 
 const generatePlan = async (userId: string) => {
   const { data } = await axiosInstance.post(
@@ -8,9 +11,12 @@ const generatePlan = async (userId: string) => {
   return data;
 };
 
-const getMeals = async (userId: string) => {
-  const { data } = await axiosInstance.get(`/diet-plans/getMeals/${userId}`);
-  return data;
+const getMeals = async (userId: string): Promise<DietPlan> => {
+  const { data } = await axiosInstance.get<DietResponse>(
+    `/diet-plans/getMeals/${userId}`,
+  );
+
+  return formatDietData(data);
 };
 
 const DIET_QUERIES = {

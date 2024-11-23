@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { useAuth } from '@/contexts/AuthContext';
+import { Meal } from '@/types/diet';
 
 import DIET_KEYS from './key';
 import DIET_QUERIES from './queries';
@@ -23,4 +24,15 @@ export const useMeals = () => {
     enabled: Boolean(authUser?.id),
     staleTime: 10 * 60 * 1000, // 10 minuty
   });
+};
+
+export const useMeal = (id: string) => {
+  const { data: meals, ...rest } = useMeals();
+
+  const mealData = meals?.reduce<Meal | undefined>((acc, day) => {
+    if (acc) return acc;
+    return day.meals.find((meal) => meal._id === id);
+  }, undefined);
+
+  return { data: mealData, ...rest };
 };
