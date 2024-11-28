@@ -94,7 +94,7 @@ export class AuthController {
 
   @Post('refresh-token')
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Refresh authentication tokens' })
+  @ApiOperation({ summary: 'Refresh access token' })
   @ApiBody({ type: RefreshTokenDto })
   @ApiResponse({
     status: 200,
@@ -148,7 +148,9 @@ export class AuthController {
   }
 
   @Post('forgot-password')
-  @ApiOperation({ summary: 'Initiate process for password recovery' })
+  @ApiOperation({
+    summary: 'Send password recovery code via email'
+  })
   @ApiBody({ type: ForgotPasswordDto })
   @ApiResponse({ status: 200, description: 'Password recovery email sent' })
   @ApiResponse({
@@ -285,12 +287,10 @@ export class AuthController {
       )
 
     res.cookie('accessToken', accessToken, {
-      httpOnly: true,
       secure: true
     })
 
     res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
       secure: true
     })
 
@@ -302,7 +302,6 @@ export class AuthController {
         id: user.id
       }),
       {
-        httpOnly: true,
         secure: true
       }
     )
@@ -311,7 +310,7 @@ export class AuthController {
   }
 
   @Get('session')
-  @ApiOperation({ summary: 'Get cookies sent in request [endpoint for oauth]' })
+  @ApiOperation({ summary: 'Get cookies sent in request [OAuth]' })
   @ApiResponse({ status: 200, description: 'Sending back cookies' })
   async getSession(@Req() req: any) {
     return {

@@ -24,9 +24,9 @@ async function bootstrap() {
   app.use(cookieParser())
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Auth API')
-    .setDescription('Swagger created to display backend auth endpoints')
-    .setVersion('1.1')
+    .setTitle('NutriSync API')
+    .setDescription('All backend endpoints and DTOs listed')
+    .setVersion('2.0')
     .build()
 
   const document = SwaggerModule.createDocument(app, swaggerConfig)

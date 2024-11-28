@@ -157,7 +157,7 @@ export class UserProfileController {
   }
 
   @Get('feedback/:userId')
-  @ApiOperation({ summary: 'Get user feedback' })
+  @ApiOperation({ summary: 'Generate a new user feedback' })
   @ApiParam({ name: 'userId', type: String, description: 'The ID of the user' })
   @ApiResponse({
     status: HttpStatus.OK,

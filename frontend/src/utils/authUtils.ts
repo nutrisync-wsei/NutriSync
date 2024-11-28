@@ -1,4 +1,27 @@
+import Cookies from 'js-cookie';
+
 import { AuthUser } from '@/types/auth';
+
+export const getAuthDataFromCookies = (
+  setAuthUser: (user: AuthUser | null) => void,
+) => {
+  const user = Cookies.get('user');
+  const accessToken = Cookies.get('accessToken');
+  const refreshToken = Cookies.get('refreshToken');
+
+  if (user && accessToken && refreshToken) {
+    setAuthUser({
+      authorized: true,
+      ...JSON.parse(user),
+      accessToken,
+      refreshToken,
+    });
+  } else {
+    setAuthUser({
+      authorized: false,
+    });
+  }
+};
 
 export const getAuthDataFromLocalStorage = (
   setAuthUser: (user: AuthUser | null) => void,
@@ -15,8 +38,6 @@ export const getAuthDataFromLocalStorage = (
       refreshToken,
     });
   } else {
-    setAuthUser({
-      authorized: false,
-    });
+    getAuthDataFromCookies(setAuthUser);
   }
 };
