@@ -48,6 +48,7 @@ const StyledImage = styled(Image)`
 
 const Content = styled.div`
   gap: 7px;
+  margin-top: 8px;
 `;
 
 const Title = styled(Text.H3)`

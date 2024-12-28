@@ -60,6 +60,7 @@ export const useUpdateUserProfile = () => {
       queryClient.invalidateQueries({
         queryKey: [...USER_KEYS.GET_USER_PROFILE, authUser?.id],
       });
+
       setHealth.mutate(profileData);
     },
   });
@@ -77,6 +78,12 @@ export const useUpdateUserProgress = () => {
     onSuccess: (profileData) => {
       queryClient.invalidateQueries({
         queryKey: [...USER_KEYS.GET_USER_PROFILE, authUser?.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [...USER_KEYS.GET_USER_PROGRESS, authUser?.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [...USER_KEYS.GET_USER_FEEDBACK, authUser?.id],
       });
 
       setHealth.mutate(profileData);

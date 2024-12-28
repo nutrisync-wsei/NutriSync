@@ -57,7 +57,7 @@ const Container = styled.div`
   align-items: center;
   gap: 20px;
   background-color: ${({ theme }) => theme.palette.light};
-  padding: 50px 20px 60px;
+  padding: 50px 20px 100px;
   height: 100svh;
 `;
 

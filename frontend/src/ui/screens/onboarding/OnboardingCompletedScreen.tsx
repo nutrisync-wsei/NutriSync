@@ -4,12 +4,15 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
+import { useGenerateDietPlan, useMeals } from '@/api/diet/hooks';
 import WaveBottomImage from '@/assets/images/WaveBottom.png';
 import WaveTopImage from '@/assets/images/WaveTop.png';
 import Text from '@/ui/components/Text';
 
 const OnboardingCompletedScreen = () => {
   const router = useRouter();
+  const { mutate: generatePlans } = useGenerateDietPlan();
+  const { data: meals, isLoading: mealsLoading } = useMeals();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -20,6 +23,12 @@ const OnboardingCompletedScreen = () => {
       clearTimeout(timeout);
     };
   }, [router]);
+
+  useEffect(() => {
+    if (mealsLoading || (meals && meals.length > 0)) return;
+
+    generatePlans();
+  }, [meals, mealsLoading, generatePlans]);
 
   return (
     <Container>

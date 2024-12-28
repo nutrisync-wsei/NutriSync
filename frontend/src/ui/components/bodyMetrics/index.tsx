@@ -75,6 +75,7 @@ const Circumferences = styled.div`
   justify-content: space-between;
   flex: 1;
   height: 100%;
+  gap: 5px;
 `;
 
 // const Composition = styled.div`

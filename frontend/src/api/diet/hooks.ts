@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { Meal } from '@/types/diet';
@@ -8,10 +8,16 @@ import DIET_QUERIES from './queries';
 
 export const useGenerateDietPlan = () => {
   const { authUser } = useAuth();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationKey: [DIET_KEYS.GENERATE_PLAN, authUser?.id],
     mutationFn: () => DIET_QUERIES.GENERATE_PLAN(authUser?.id ?? ''),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [...DIET_KEYS.GET_MEALS, authUser?.id],
+      });
+    },
   });
 };
 

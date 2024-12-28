@@ -9,14 +9,17 @@ import {
   useUserProfile,
   useUserProgress,
 } from '@/api/user/hooks';
-import { UserProgress } from '@/api/user/types';
+import Button from '@/ui/components/controls/Button';
+import Input from '@/ui/components/controls/TextField';
 import UserFeedback from '@/ui/components/feedback/UserFeedback';
+import Text from '@/ui/components/Text';
+import WeightChart from '@/ui/screens/account/WeightChart';
 
 const ProfileInfo = () => {
   const { data: user } = useUserProfile();
   const [weight, setWeight] = useState<number | ''>(user?.weight || '');
   const { mutate: updateUserProfile } = useUpdateUserProgress();
-  const { data: userProgress, isLoading } = useUserProgress();
+  const { data: userProgress } = useUserProgress();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,9 +34,10 @@ const ProfileInfo = () => {
 
   return (
     <Container>
-      <form onSubmit={handleSubmit}>
+      <Heading>Profile Info</Heading>
+      <StyledForm onSubmit={handleSubmit}>
         <label>
-          Weight:
+          <InputLabel>Enter your current weight:</InputLabel>
           <Input
             type="number"
             value={weight.toString()}
@@ -42,58 +46,32 @@ const ProfileInfo = () => {
           />
         </label>
         <Button type="submit">Update</Button>
-      </form>
-
-      <ProgressList>
-        {isLoading ? (
-          <p>Loading progress...</p>
-        ) : userProgress && userProgress.length > 0 ? (
-          userProgress.map((progress: UserProgress, index: number) => (
-            <ProgressItem key={index}>
-              <p>Date: {String(progress.timestamp) || 'N/A'}</p>
-              <p>Weight: {progress.weight} kg</p>
-            </ProgressItem>
-          ))
-        ) : (
-          <p>No progress data available.</p>
-        )}
-      </ProgressList>
-
+      </StyledForm>
       <UserFeedback />
+      {userProgress?.length > 1 && <WeightChart data={userProgress} />}
     </Container>
   );
 };
 
 const Container = styled.div`
-  width: 300px;
   margin: 0 auto;
   padding: 20px;
   box-shadow: 0 2px 4px #ccc;
+  gap: 20px;
 `;
 
-const Input = styled.input`
-  margin: 10px 0;
-  width: 95%;
-  padding: 8px;
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: blue;
-  color: white;
-  border: none;
-  cursor: pointer;
+const Heading = styled(Text.H3)`
+  margin-bottom: 20px;
 `;
 
-const ProgressList = styled.div`
-  margin-top: 20px;
-`;
-
-const ProgressItem = styled.div`
-  background: #f0f0f0;
-  padding: 10px;
-  margin-bottom: 10px;
+const InputLabel = styled(Text.Body)`
+  margin-bottom: 5px;
 `;
 
 export default ProfileInfo;
