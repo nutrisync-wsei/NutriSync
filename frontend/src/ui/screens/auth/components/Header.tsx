@@ -47,9 +47,7 @@ const Header = ({ screenType }: HeaderProps) => {
         <TextContainer>
           <Title>{headerTitle}</Title>
           {screenType === 'welcome' && (
-            <Subtitle>
-              Some text here that you should sign in or sign up to be healthy
-            </Subtitle>
+            <Subtitle>Welcome to the NutriSync app! </Subtitle>
           )}
         </TextContainer>
       </HeaderContainer>
