@@ -8,8 +8,8 @@ export const menuItems = [
 
 export const settingsItems = [
   {
-    path: '/profile-info',
-    label: 'Personal information',
+    path: '/weight-progress',
+    label: 'Weight Progress',
     Icon: Icon.SettingsProfile,
   },
   { path: '/profile', label: 'Subscription', Icon: Icon.Subscription },

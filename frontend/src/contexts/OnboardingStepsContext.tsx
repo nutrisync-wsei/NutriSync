@@ -21,6 +21,7 @@ export type Step =
   | 'age'
   | 'height'
   | 'weight'
+  | 'dietaryRestrictions'
   | 'activityLevel'
   | 'goal';
 
@@ -31,6 +32,7 @@ const onboardingSteps: Step[] = [
   'age',
   'height',
   'weight',
+  'dietaryRestrictions',
   'activityLevel',
   'goal',
 ] as const;
@@ -75,6 +77,7 @@ export const OnboardingStepsProvider = ({
   }, []);
 
   const submitData = useCallback(() => {
+    debugger;
     if (data && authUser?.id) {
       createUserProfile(
         { ...data, user: authUser?.id },

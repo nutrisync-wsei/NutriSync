@@ -25,6 +25,10 @@ const headerTexts: Record<Step, HeaderItem> = {
     title: 'Height',
     subtitle: 'Enter your',
   },
+  dietaryRestrictions: {
+    title: 'Dietary Restrictions',
+    subtitle: 'Select your',
+  },
   activityLevel: {
     title: 'Activity Level',
     subtitle: 'Access your',
