@@ -3,18 +3,20 @@ import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import Text from '@/components/Text';
+import { useAuth } from '@/contexts/AuthContext';
 import Button from '@/ui/components/controls/Button';
 
 import Header from './components/Header';
 
 const OnboardingScreen = () => {
   const router = useRouter();
+  const { authUser } = useAuth();
 
   return (
     <Container>
       <Header />
       <Content>
-        <Title>Hi, Kevin!</Title>
+        <Title>{authUser ? `Hi, ${authUser.username}!` : 'Hi!'}</Title>
         <MainText>
           We want to provide you the best experience and prepare accurate
           guidelines. Please help us do so and fill in the short survey.

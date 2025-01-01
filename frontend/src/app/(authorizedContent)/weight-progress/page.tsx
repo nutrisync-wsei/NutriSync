@@ -15,7 +15,7 @@ import UserFeedback from '@/ui/components/feedback/UserFeedback';
 import Text from '@/ui/components/Text';
 import WeightChart from '@/ui/screens/account/WeightChart';
 
-const ProfileInfo = () => {
+const WeightProgress = () => {
   const { data: user } = useUserProfile();
   const [weight, setWeight] = useState<number | ''>(user?.weight || '');
   const { mutate: updateUserProfile } = useUpdateUserProgress();
@@ -34,7 +34,7 @@ const ProfileInfo = () => {
 
   return (
     <Container>
-      <Heading>Profile Info</Heading>
+      <Heading>Weight Progress</Heading>
       <StyledForm onSubmit={handleSubmit}>
         <label>
           <InputLabel>Enter your current weight:</InputLabel>
@@ -74,4 +74,4 @@ const InputLabel = styled(Text.Body)`
   margin-bottom: 5px;
 `;
 
-export default ProfileInfo;
+export default WeightProgress;

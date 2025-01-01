@@ -4,6 +4,7 @@ import { Step, useOnboardingSteps } from '@/contexts/OnboardingStepsContext';
 
 import StepActivityLevel from './StepActivityLevel';
 import StepAge from './StepAge';
+import StepDietaryRestrictions from './StepDietaryRestrictions';
 import StepGender from './StepGender';
 import StepGoal from './StepGoal';
 import StepHeight from './StepHeight';
@@ -19,6 +20,8 @@ const getOnboardingStepComponent = (step: Step) => {
       return StepHeight;
     case 'weight':
       return StepWeight;
+    case 'dietaryRestrictions':
+      return StepDietaryRestrictions;
     case 'activityLevel':
       return StepActivityLevel;
     case 'goal':
