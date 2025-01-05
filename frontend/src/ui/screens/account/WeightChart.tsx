@@ -46,7 +46,6 @@ const WeightChart = ({ data }: WeightChartProps) => {
           customLabel: string;
         };
         const currentPointValue = currentPoint.y;
-        console.log('currentPointValue', currentPoint);
 
         if (!currentPointValue) return '';
 
