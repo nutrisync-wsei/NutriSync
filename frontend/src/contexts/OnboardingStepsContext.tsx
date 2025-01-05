@@ -60,11 +60,11 @@ export const OnboardingStepsProvider = ({
   children: ReactNode;
 }) => {
   const router = useRouter();
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [data, setData] = useState<OnboardingData>();
   const { authUser } = useAuth();
 
   const { mutate: createUserProfile } = useCreateUserProfile();
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [data, setData] = useState<OnboardingData>();
 
   const handleStepChange = useCallback((direction: 'next' | 'prev') => {
     setCurrentStepIndex((prev) => {
