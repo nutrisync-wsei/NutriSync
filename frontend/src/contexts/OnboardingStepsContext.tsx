@@ -77,7 +77,6 @@ export const OnboardingStepsProvider = ({
   }, []);
 
   const submitData = useCallback(() => {
-    debugger;
     if (data && authUser?.id) {
       createUserProfile(
         { ...data, user: authUser?.id },
