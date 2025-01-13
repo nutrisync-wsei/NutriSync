@@ -60,7 +60,7 @@ const WeightChart = ({ data }: WeightChartProps) => {
 
         const changeString =
           newestPoint && percentageValue !== 0
-            ? `(${percentageValue.toFixed()}% ${wasPreviousPointSmaller ? 'More' : 'Less'} then the most recent weight).`
+            ? `(${percentageValue.toFixed()}% ${wasPreviousPointSmaller ? 'More' : 'Less'} than the most recent weight).`
             : '(Same as the most recent weight)';
 
         const xAxisDatamax = (

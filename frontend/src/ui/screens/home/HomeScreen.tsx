@@ -27,7 +27,7 @@ const HomeScreen = () => {
           check it out by going to the "Diet" page or by pressing the button
           below.
         </Description>
-        <Button>See your diet</Button>
+        <Button onClick={() => router.push('/diet')}>See your diet</Button>
       </DescriptionContainer>
       <HealthIndicators
         BMI={userProfile.BMI}
