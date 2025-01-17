@@ -11,7 +11,7 @@ import Text from '@/ui/components/Text';
 
 import Servings from './components/Servings';
 
-const DietScreen = () => {
+const MealScreen = () => {
   const { mealId } = useParams();
   const router = useRouter();
 
@@ -154,4 +154,4 @@ const IngredientAmount = styled(Text.Body)`
   color: ${({ theme }) => theme.palette.subtleText};
 `;
 
-export default DietScreen;
+export default MealScreen;

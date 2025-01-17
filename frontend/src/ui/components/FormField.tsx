@@ -15,7 +15,7 @@ type FormFieldProps<T extends FieldValues> = {
   label: string;
   placeholder: string;
   helper?: string;
-  fieldVariant?: 'text' | 'password' | 'email';
+  fieldVariant?: 'text' | 'password' | 'email' | 'number';
   control: Control<T>;
   name: Path<T>;
   rules?: Pick<

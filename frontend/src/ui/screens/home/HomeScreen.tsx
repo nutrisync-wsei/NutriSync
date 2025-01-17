@@ -52,7 +52,7 @@ const Container = styled.div`
 `;
 
 const Heading = styled(Text.H2)`
-  padding: 60px 0 20px;
+  padding: 60px 16px 20px;
   color: ${({ theme }) => theme.palette.primary};
 `;
 

@@ -28,7 +28,7 @@ export const useMeals = () => {
     queryKey: [...DIET_KEYS.GET_MEALS, authUser?.id],
     queryFn: () => DIET_QUERIES.GET_MEALS(authUser?.id ?? ''),
     enabled: Boolean(authUser?.id),
-    staleTime: 10 * 60 * 1000, // 10 minuty
+    staleTime: 10 * 60 * 1000, // 10 minutes
   });
 };
 

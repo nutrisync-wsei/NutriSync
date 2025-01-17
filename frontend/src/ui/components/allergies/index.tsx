@@ -27,7 +27,8 @@ const Allergies = ({ initialValues, setData }: AllergiesProps) => {
 
   useEffect(() => {
     setData(selectedOptions);
-  }, [selectedOptions, setData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOptions]);
 
   return (
     <OptionsListContainer>

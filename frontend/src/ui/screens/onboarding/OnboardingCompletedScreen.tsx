@@ -15,6 +15,12 @@ const OnboardingCompletedScreen = () => {
   const { data: meals, isLoading: mealsLoading } = useMeals();
 
   useEffect(() => {
+    if (mealsLoading || (meals && meals.length > 0)) return;
+
+    generatePlans();
+  }, [meals, mealsLoading, generatePlans]);
+
+  useEffect(() => {
     const timeout = setTimeout(() => {
       router.push('/home');
     }, 5000);
@@ -23,12 +29,6 @@ const OnboardingCompletedScreen = () => {
       clearTimeout(timeout);
     };
   }, [router]);
-
-  useEffect(() => {
-    if (mealsLoading || (meals && meals.length > 0)) return;
-
-    generatePlans();
-  }, [meals, mealsLoading, generatePlans]);
 
   return (
     <Container>

@@ -1,51 +1,59 @@
 /* eslint-disable no-nested-ternary */
 'use client';
 
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import {
-  useUpdateUserProgress,
-  useUserProfile,
-  useUserProgress,
-} from '@/api/user/hooks';
+import { useUpdateUserProgress, useUserProgress } from '@/api/user/hooks';
 import Button from '@/ui/components/controls/Button';
-import Input from '@/ui/components/controls/TextField';
 import UserFeedback from '@/ui/components/feedback/UserFeedback';
+import FormField from '@/ui/components/FormField';
 import Text from '@/ui/components/Text';
 import WeightChart from '@/ui/screens/account/WeightChart';
 
+type WeightFormValues = {
+  weight: number | null;
+};
+
 const WeightProgress = () => {
-  const { data: user } = useUserProfile();
-  const [weight, setWeight] = useState<number | ''>(user?.weight || '');
   const { mutate: updateUserProfile } = useUpdateUserProgress();
   const { data: userProgress } = useUserProgress();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (typeof weight === 'number') {
-      updateUserProfile({ weight });
-    }
-  };
+  const { control, handleSubmit } = useForm<WeightFormValues>({
+    defaultValues: {
+      weight: null,
+    },
+  });
 
-  const handleWeightChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setWeight(parseFloat(event.target.value) || '');
+  const onSubmit = ({ weight }: WeightFormValues) => {
+    if (!weight) return;
+
+    updateUserProfile({ weight: +weight });
   };
 
   return (
     <Container>
       <Heading>Weight Progress</Heading>
-      <StyledForm onSubmit={handleSubmit}>
-        <label>
-          <InputLabel>Enter your current weight:</InputLabel>
-          <Input
-            type="number"
-            value={weight.toString()}
-            onChange={handleWeightChange}
-            required
-          />
-        </label>
-        <Button type="submit">Update</Button>
+      <StyledForm>
+        <FormField
+          label="Enter your current weight:"
+          placeholder="90"
+          name="weight"
+          fieldVariant="number"
+          control={control}
+          rules={{
+            required: 'Weight is required',
+            validate: (value: number | null) => {
+              if (value === null) return 'Weight is required';
+
+              if (value <= 0) return 'Weight must be a positive number';
+              if (value >= 500) return 'Weight must be less than 500';
+
+              return true;
+            },
+          }}
+        />
+        <Button onClick={handleSubmit(onSubmit)}>Update</Button>
       </StyledForm>
       <UserFeedback />
       {userProgress?.length > 1 && <WeightChart data={userProgress} />}
@@ -60,7 +68,7 @@ const Container = styled.div`
   gap: 20px;
 `;
 
-const StyledForm = styled.form`
+const StyledForm = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -68,10 +76,6 @@ const StyledForm = styled.form`
 
 const Heading = styled(Text.H3)`
   margin-bottom: 20px;
-`;
-
-const InputLabel = styled(Text.Body)`
-  margin-bottom: 5px;
 `;
 
 export default WeightProgress;

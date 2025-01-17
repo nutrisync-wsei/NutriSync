@@ -31,7 +31,8 @@ const SliderPicker = ({
 
   useEffect(() => {
     onChangeValue(value);
-  }, [value, onChangeValue]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   useEffect(() => {
     if (typeof initialValue !== 'undefined') {
